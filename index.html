@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Presentasi Gröbner Basis - UIN Malang</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="gradient-overlay"></div>
+<div class="scanlines"></div>
+
+<!-- Corner Logo -->
+<div class="corner-logo">
+    <img src="https://imglink.cc/cdn/cOhz9Z6rwD.png" alt="Logo UIN Malang">
+</div>
+
+<!-- Floating Particles -->
+<div id="particles"></div>
+
+<div class="slides-container">
+    <!-- SLIDE 0 - PEMBUKAAN / COVER UTAMA -->
+    <div class="slide active" id="slide0">
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center;">
+            <!-- Logo Cover Tanpa Border -->
+            <div class="animate-item" style="width: 150px; height: 150px; margin: 0 auto 20px; background: transparent; display: flex; align-items: center; justify-content: center;">
+                <img src="https://imglink.cc/cdn/cOhz9Z6rwD.png" alt="Logo UIN Malang" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <h1 class="animate-item" style="font-size: clamp(32px, 6vw, 56px);">Presentasi</h1>
+            <h1 class="animate-item" style="font-size: clamp(28px, 5vw, 48px); margin-top: -10px; background: linear-gradient(45deg, #FF5E00, #00B2FF); -webkit-background-clip: text; background-clip: text; color: transparent;">Rasionalisasi Penyebut</h1>
+            <h1 class="animate-item" style="font-size: clamp(24px, 4vw, 32px); margin-top: 10px;">dengan Gröbner Basis</h1>
+            
+            <div class="animate-item" style="margin: 30px 0 20px;">
+                <p style="color: #00B2FF; font-size: clamp(14px, 3vw, 20px);">Dosen Pengampu: [Nama Dosen]</p>
+            </div>
+            
+            <div class="animate-item" style="margin-top: 20px;">
+                <p style="color: #FF5E00; font-size: clamp(12px, 2.5vw, 16px);">Mata Kuliah: [Nama Mata Kuliah]</p>
+                <p style="color: #aaaaaa; font-size: clamp(11px, 2vw, 14px); margin-top: 10px;">Tahun Akademik 2024/2025</p>
+            </div>
+            
+            <div class="animate-item" style="margin-top: 40px;">
+                <p style="color: #666; font-size: clamp(10px, 2vw, 13px);">Universitas Islam Negeri Maulana Malik Ibrahim Malang</p>
+                <p style="color: #666; font-size: clamp(10px, 2vw, 13px);">Fakultas Sains dan Teknologi</p>
+            </div>
+        </div>
+        <div class="page-number">Sampul</div>
+    </div>
+
+    <!-- SLIDE 1 - PERKENALAN KELOMPOK -->
+    <div class="slide" id="slide1">
+        <h2 class="animate-item">👥 Tim Presentasi</h2>
+        <p class="animate-item" style="margin-bottom: 30px; color: #aaa; font-size: clamp(14px, 3vw, 18px);">Kelompok [Nama Kelompok] - 4 Orang</p>
+        
+        <div class="team-grid">
+            <div class="team-card animate-item">
+                <div class="avatar">
+                    <img src="foto1.jpg" alt="Foto Ketua" onerror="this.src='https://via.placeholder.com/120x120?text=Foto+1'">
+                </div>
+                <h3 style="color: #FF5E00;">Nama Mahasiswa 1</h3>
+                <p>NIM: 1234567890</p>
+                <p class="role">✧ Koordinator Tim</p>
+                <p class="desc">"Mengkoordinasi jalannya presentasi dan materi Gröbner Basis"</p>
+            </div>
+            
+            <div class="team-card animate-item">
+                <div class="avatar">
+                    <img src="foto2.jpg" alt="Foto Member 2" onerror="this.src='https://via.placeholder.com/120x120?text=Foto+2'">
+                </div>
+                <h3 style="color: #00B2FF;">Nama Mahasiswa 2</h3>
+                <p>NIM: 1234567891</p>
+                <p class="role">✧ Pemateri Teori</p>
+                <p class="desc">"Menjelaskan konsep Gröbner Basis dan Resultant"</p>
+            </div>
+            
+            <div class="team-card animate-item">
+                <div class="avatar">
+                    <img src="foto3.jpg" alt="Foto Member 3" onerror="this.src='https://via.placeholder.com/120x120?text=Foto+3'">
+                </div>
+                <h3 style="color: #FF5E00;">Nama Mahasiswa 3</h3>
+                <p>NIM: 1234567892</p>
+                <p class="role">✧ Demonstrator Koding</p>
+                <p class="desc">"Menunjukkan implementasi dengan Singular CAS"</p>
+            </div>
+            
+            <div class="team-card animate-item">
+                <div class="avatar">
+                    <img src="foto4.JFIF" alt="Foto Member 4" onerror="this.src='https://via.placeholder.com/120x120?text=Foto+4'">
+                </div>
+                <h3 style="color: #00B2FF;">Nama Mahasiswa 4</h3>
+                <p>NIM: 1234567893</p>
+                <p class="role">✧ Penyusun Laporan</p>
+                <p class="desc">"Menyusun kesimpulan dan dokumentasi"</p>
+            </div>
+        </div>
+        
+        <div class="info-footer">
+            <p>📅 Tanggal Presentasi: [Tanggal] | ⏰ Waktu: [Waktu] | 📍 Ruang: [Ruang]</p>
+        </div>
+        <div class="page-number">1 / 14</div>
+    </div>
+
+    <!-- SLIDE 2 - PEMBAGIAN TUGAS -->
+    <div class="slide" id="slide2">
+        <h2 class="animate-item">📋 Pembagian Tugas</h2>
+        <div style="overflow-x: auto;">
+            <table>
+                <thead><tr><th>No</th><th>Nama</th><th>NIM</th><th>Tugas</th><th>Status</th></tr></thead>
+                <tbody>
+                    <tr><td>1</td><td>Nama 1</td><td>1234567890</td><td>Koordinasi tim, pembukaan, penutup</td><td class="status-done">✓ Selesai</td></tr>
+                    <tr><td>2</td><td>Nama 2</td><td>1234567891</td><td>Penyusunan materi teori</td><td class="status-done">✓ Selesai</td></tr>
+                    <tr><td>3</td><td>Nama 3</td><td>1234567892</td><td>Implementasi kode Singular dan demo</td><td class="status-done">✓ Selesai</td></tr>
+                    <tr><td>4</td><td>Nama 4</td><td>1234567893</td><td>Penyusunan laporan dan kesimpulan</td><td class="status-done">✓ Selesai</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="success-box animate-item">
+            <strong>✨ Kesiapan Presentasi:</strong> 100% - Siap dipresentasikan!
+        </div>
+        <div class="page-number">2 / 14</div>
+    </div>
+
+    <!-- SLIDE 3 - ALUR PENYELESAIAN -->
+    <div class="slide" id="slide3">
+        <h2 class="animate-item">📊 Alur Penyelesaian</h2>
+        <div class="flowchart">
+            <div class="flow-item start">🚀 MULAI</div>
+            <div class="arrow-bounce">▼</div>
+            <div class="flow-item">📌 Pemetaan Akar: \(y_1 = \sqrt{3},\; y_2 = \sqrt[3]{5}\)</div>
+            <div class="arrow-bounce">▼</div>
+            <div class="flow-item">📐 Bentuk Ideal: \(I = \langle y_1^2-3,\; y_2^3-5,\; x+y_1+y_2^2 \rangle\)</div>
+            <div class="arrow-bounce">▼</div>
+            <div class="flow-item highlight">⚡ ELIMINASI dengan Resultant</div>
+            <div class="arrow-bounce">▼</div>
+            <div class="flow-item">📈 Polinomial Minimal derajat 6 dalam \(s\)</div>
+            <div class="arrow-bounce">▼</div>
+            <div class="flow-item">🔧 Rasionalisasi: \(\frac{1}{s} = -\frac{(\cdots)}{a_0}\)</div>
+            <div class="arrow-bounce">▼</div>
+            <div class="flow-item">✅ Substitusi & Reduksi ke Basis Medan</div>
+            <div class="arrow-bounce">▼</div>
+            <div class="flow-item end">🎯 SELESAI</div>
+        </div>
+        <div class="page-number">3 / 14</div>
+    </div>
+    <!-- SLIDE 3.5 - MENGAPA KONJUGAT BIASA SULIT -->
+<div class="slide" id="slide3_5">
+    <h2 class="animate-item">🤔 Mengapa Metode Konjugat Biasa Sulit?</h2>
+    
+    <div class="grid-2">
+        <div class="card animate-item">
+            <h3>📌 Untuk √3 saja</h3>
+            <div class="formula" style="font-size: 1rem;">
+                \[ \frac{1}{x+\sqrt{3}} = \frac{x-\sqrt{3}}{x^2-3} \]
+            </div>
+            <p>✅ Cukup <strong>1 kali</strong> perkalian konjugat</p>
+            <p class="status-done">Mudah!</p>
+        </div>
+        
+        <div class="card animate-item">
+            <h3>📌 Untuk ∛5 saja</h3>
+            <div class="formula" style="font-size: 1rem;">
+                \[ \frac{1}{x+\sqrt[3]{5}} = \frac{x^2 - x\sqrt[3]{5} + \sqrt[3]{25}}{x^3+5} \]
+            </div>
+            <p>⚠️ Perlu <strong>3 faktor</strong> konjugat</p>
+            <p class="status-progress">Mulai rumit</p>
+        </div>
+        
+        <div class="card animate-item">
+            <h3>📌 Untuk √3 + ∛25</h3>
+            <div class="formula" style="font-size: 0.9rem;">
+                \[ \frac{1}{x+\sqrt{3}+\sqrt[3]{25}} \]
+            </div>
+            <p>❌ Perlu <strong>6+ kali</strong> perkalian konjugat</p>
+            <p>❌ Hasil pembilang <strong>puluhan suku</strong></p>
+            <p class="status-failed">Sangat rumit!</p>
+        </div>
+    </div>
+    
+    <div class="success-box animate-item">
+        <strong>✨ Kesimpulan:</strong> Metode konjugat biasa tidak praktis untuk kombinasi akar berbeda. 
+        Dibutuhkan pendekatan yang lebih sistematis, yaitu <strong>Gröbner Basis</strong>.
+    </div>
+    <div class="page-number">3b / 15</div>
+</div>
+
+    <!-- SLIDE 4 - TEORI GRÖBNER BASIS -->
+    <div class="slide" id="slide4">
+        <h2 class="animate-item">📚 Teori 1: Gröbner Basis</h2>
+        <span class="badge badge-theory">Landasan Teori</span>
+        <div class="card">
+            <strong>Definisi:</strong> Himpunan \(G \subseteq I\) disebut Gröbner basis terhadap monomial order \(>\) jika:
+            <div class="formula">\[ \langle \operatorname{LT}(g) : g \in G \rangle = \langle \operatorname{LT}(f) : f \in I \rangle \]</div>
+        </div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📖 Teorema Buchberger</h3>
+                <p>Setiap ideal \(I \subseteq k[x_1,\ldots,x_n]\) memiliki Gröbner basis yang dapat dihitung dengan algoritma Buchberger.</p>
+            </div>
+            <div class="card">
+                <h3>📖 Teorema Eliminasi</h3>
+                <p>Jika \(G\) adalah Gröbner basis terhadap lex order dengan \(x_1 > x_2 > \ldots > x_n\), maka \(G \cap k[x_{\ell+1},\ldots,x_n]\) adalah basis dari ideal eliminasi.</p>
+            </div>
+        </div>
+        <div class="page-number">4 / 14</div>
+    </div>
+
+    <!-- SLIDE 5 - TEORI RESULTANT -->
+    <div class="slide" id="slide5">
+        <h2 class="animate-item">📚 Teori 2: Resultant</h2>
+        <span class="badge badge-theory">Alat Eliminasi</span>
+        <div class="card">
+            <strong>Teorema:</strong> \(\operatorname{Res}_x(f,g) = 0 \iff f\) dan \(g\) memiliki akar bersama.
+        </div>
+        <div class="formula formula-neon">
+            \[ \text{minpoly}_s(x) = \operatorname{Res}_{y_2}\left( y_2^3-5,\; \operatorname{Res}_{y_1}(x+y_1+y_2^2,\; y_1^2-3) \right) \]
+        </div>
+        <div class="success-box">
+            <strong>✨ Aplikasi:</strong> Eliminasi variabel bertahap tanpa mencari GCD, menghasilkan polinomial minimal.
+        </div>
+        <div class="page-number">5 / 14</div>
+    </div>
+    <!-- SLIDE 5.5 - DETAIL CARA KERJA RESULTANT -->
+<div class="slide" id="slide5_5">
+    <h2 class="animate-item">🔍 Bagaimana Resultant Bekerja?</h2>
+    
+    <div class="grid-2">
+        <div class="card animate-item">
+            <h3>📐 Definisi</h3>
+            <p>Resultant adalah <strong>determinan matriks Sylvester</strong> yang bernilai nol jika dua polinomial memiliki akar bersama.</p>
+            <div class="formula" style="font-size: 0.8rem;">
+                \[ \text{Res}_x(f,g) = a_m^n \prod_{i=1}^m \prod_{j=1}^n (\alpha_i - \beta_j) \]
+            </div>
+        </div>
+        
+        <div class="card animate-item">
+            <h3>⚡ Aplikasi dalam Eliminasi</h3>
+            <p>Untuk eliminasi \(y_1\):</p>
+            <div class="formula" style="font-size: 0.8rem;">
+                \[ \text{Res}_{y_1}(x+y_1+y_2^2,\; y_1^2-3) \]
+            </div>
+            <p>→ Menghilangkan \(y_1\), menghasilkan polinom dalam \(y_2\) dan \(x\)</p>
+        </div>
+    </div>
+    
+    <div class="card animate-item">
+        <h3>📊 Ilustrasi Eliminasi Bertahap</h3>
+        <div style="display: flex; justify-content: space-around; text-align: center; margin: 20px 0;">
+            <div>
+                <div class="badge badge-practice">Langkah 1</div>
+                <p>Eliminasi \(y_1\)</p>
+                <p style="color: #00B2FF;">\( \text{Res}_{y_1} \)</p>
+                <div class="arrow-bounce">▼</div>
+                <p>Polinom dalam \(y_2, x\)</p>
+            </div>
+            <div style="font-size: 30px; color: #FF5E00;">+</div>
+            <div>
+                <div class="badge badge-practice">Langkah 2</div>
+                <p>Eliminasi \(y_2\)</p>
+                <p style="color: #00B2FF;">\( \text{Res}_{y_2} \)</p>
+                <div class="arrow-bounce">▼</div>
+                <p>Polinom dalam \(x\) saja!</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="page-number">5b / 15</div>
+</div>
+
+   <!-- SLIDE 6 - PEMETAAN DAN IDEAL -->
+<div class="slide" id="slide6">
+    <h2 class="animate-item">🔧 Pemetaan ke Ring Polinomial</h2>
+    <span class="badge badge-practice animate-item">Langkah Praktik 1</span>
+    
+    <div class="formula animate-item">\[ y_1 = \sqrt{3},\quad y_2 = \sqrt[3]{5},\quad \sqrt[3]{25} = y_2^2 \]</div>
+    <div class="formula animate-item">\[ s = x + y_1 + y_2^2 \]</div>
+    <div class="formula formula-neon animate-item">\[ I = \langle y_1^2-3,\; y_2^3-5,\; x+y_1+y_2^2 \rangle \subseteq \mathbb{Q}(x)[y_1,y_2] \]</div>
+    
+    <div class="code-block-wrapper">
+        <button class="copy-btn" onclick="copyCodeFromElement('codeSlide6')">📋 Copy Code</button>
+        <pre id="codeSlide6" class="code-block-pre" style="color: #00d4ff; font-family: 'Courier New', monospace; margin: 0; white-space: pre-wrap; word-wrap: break-word; padding: 15px; padding-right: 100px; font-size: 14px;">
+<span style="color: #ff79c6;">// Definisikan ring polinomial dengan parameter x</span>
+<span style="color: #8be9fd;">ring</span> R = (0,x), (y1, y2), lp;
+
+<span style="color: #ff79c6;">// Bentuk ideal I</span>
+<span style="color: #8be9fd;">ideal</span> I = y1^2 - 3,          <span style="color: #6272a4;">// y1 = sqrt(3)</span>
+          y2^3 - 5,          <span style="color: #6272a4;">// y2 = cuberoot(5)</span>
+          x + y1 + y2^2;     <span style="color: #6272a4;">// penyebut s</span>
+
+<span style="color: #ff79c6;">// Tampilkan ideal</span>
+I;
+        </pre>
+    </div>
+    <div class="output" style="background: rgba(0,178,255,0.1); padding: 12px; border-radius: 8px; font-family: monospace; font-size: 13px;">
+        I[1]=y1^2-3<br>
+        I[2]=y2^3-5<br>
+        I[3]=x+y1+y2^2
+    </div>
+    <div class="page-number">6 / 14</div>
+</div>
+
+    <!-- SLIDE 7 - KODE ELIMINASI -->
+<div class="slide" id="slide7">
+    <h2 class="animate-item">💻 Eliminasi dengan Resultant</h2>
+    <span class="badge badge-practice animate-item">Langkah Praktik 2</span>
+    
+    <div class="code-block-wrapper">
+        <button class="copy-btn" onclick="copyCodeFromElement('codeSlide7')">📋 Copy Code</button>
+        <pre id="codeSlide7" class="code-block-pre" style="color: #00d4ff; font-family: 'Courier New', monospace; margin: 0; white-space: pre-wrap; word-wrap: break-word; padding: 15px; padding-right: 100px; font-size: 14px;">
+<span style="color: #ff79c6;">// Definisikan polinomial penyebut s</span>
+<span style="color: #8be9fd;">poly</span> s = x + y1 + y2^2;
+
+<span style="color: #ff79c6;">// ==========================================</span>
+<span style="color: #ff79c6;">// ELIMINASI y1 (sqrt(3))</span>
+<span style="color: #ff79c6;">// ==========================================</span>
+<span style="color: #8be9fd;">poly</span> res_y1 = <span style="color: #f1fa8c;">resultant</span>(s, y1^2-3, y1);
+
+<span style="color: #ff79c6;">// ==========================================</span>
+<span style="color: #ff79c6;">// ELIMINASI y2 (cuberoot(5))</span>
+<span style="color: #ff79c6;">// ==========================================</span>
+<span style="color: #8be9fd;">poly</span> minpoly_s = <span style="color: #f1fa8c;">resultant</span>(res_y1, y2^3-5, y2);
+
+<span style="color: #ff79c6;">// Tampilkan hasil polinomial minimal</span>
+minpoly_s;
+        </pre>
+    </div>
+    
+    <div class="output" style="background: rgba(0,178,255,0.1); padding: 15px; border-radius: 8px; margin-top: 15px; font-family: monospace; overflow-x: auto; font-size: 13px;">
+        <strong style="color: #FF5E00;">📊 Hasil eliminasi y1:</strong><br>
+        res_y1 = y2^4 - 2(s-x)y2^2 + (s-x)^2 - 3<br><br>
+        <strong style="color: #FF5E00;">📊 Polinomial Minimal (hasil eliminasi y2):</strong><br>
+        minpoly_s = s⁶ - 6x s⁵ + (5x²-9)s⁴ + (-20x³+30x)s³ + (15x⁴-15x²+27)s² + (-6x⁵+36x³-54x)s + (x⁶-9x⁴+9x²-27)
+    </div>
+    <div class="page-number">7 / 14</div>
+</div>
+
+    <!-- SLIDE 8 - POLINOMIAL MINIMAL -->
+    <div class="slide" id="slide8">
+        <h2 class="animate-item">📈 Polinomial Minimal</h2>
+        <div class="formula formula-neon">
+            \[ P(s,x) = s^6 - 6x s^5 + (5x^2-9)s^4 + (-20x^3+30x)s^3 + (15x^4-15x^2+27)s^2 + (-6x^5+36x^3-54x)s + (x^6-9x^4+9x^2-27) = 0 \]
+        </div>
+        <div style="overflow-x: auto;">
+            <table>
+                <tr><th>Pangkat \(s\)</th><th>Koefisien \(a_i(x)\)</th></tr>
+                <tr><td>\(s^6\)</td><td>\(1\)</td></tr>
+                <tr><td>\(s^5\)</td><td>\(-6x\)</td></tr>
+                <tr><td>\(s^4\)</td><td>\(5x^2 - 9\)</td></tr>
+                <tr><td>\(s^3\)</td><td>\(-20x^3 + 30x\)</td></tr>
+                <tr><td>\(s^2\)</td><td>\(15x^4 - 15x^2 + 27\)</td></tr>
+                <tr><td>\(s^1\)</td><td>\(-6x^5 + 36x^3 - 54x\)</td></tr>
+                <tr><td>\(s^0\)</td><td>\(x^6 - 9x^4 + 9x^2 - 27\)</td></tr>
+            </table>
+        </div>
+        <div class="page-number">8 / 14</div>
+    </div>
+
+    <!-- SLIDE 9 - RUMUS RASIONALISASI -->
+    <div class="slide" id="slide9">
+        <h2 class="animate-item">📐 Rumus Rasionalisasi</h2>
+        <div class="formula">\[ a_0(x) + a_1(x)s + a_2(x)s^2 + a_3(x)s^3 + a_4(x)s^4 + a_5(x)s^5 + s^6 = 0 \]</div>
+        <div class="formula formula-neon">
+            \[ \boxed{\frac{1}{s} = -\frac{a_1(x) + a_2(x)s + a_3(x)s^2 + a_4(x)s^3 + a_5(x)s^4 + s^5}{a_0(x)}} \]
+        </div>
+        <div class="page-number">9 / 14</div>
+    </div>
+
+    <!-- SLIDE 10 - BASIS MEDAN -->
+    <div class="slide" id="slide10">
+        <h2 class="animate-item">🌿 Basis Medan</h2>
+        <div class="formula formula-neon">
+            \[ \mathcal{B} = \{1,\; \sqrt{3},\; \sqrt[3]{5},\; \sqrt[3]{25},\; \sqrt{3}\sqrt[3]{5},\; \sqrt{3}\sqrt[3]{25}\} \]
+        </div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>🔗 Reduksi Pangkat</h3>
+                <div>\[ \sqrt{3}^2 = 3,\quad \sqrt[3]{5}^3 = 5,\quad \sqrt[3]{25} = \sqrt[3]{5}^2 \]</div>
+            </div>
+            <div class="card">
+                <h3>📊 Derajat Perluasan</h3>
+                <p>\([\mathbb{Q}(\sqrt{3},\sqrt[3]{5}):\mathbb{Q}] = 2 \times 3 = 6\)</p>
+            </div>
+        </div>
+        <div class="page-number">10 / 14</div>
+    </div>
+    <!-- SLIDE 10.5 - DETAIL BASIS MEDAN -->
+<div class="slide" id="slide10_5">
+    <h2 class="animate-item">🌿 Mengapa Basis Medan Penting?</h2>
+    
+    <div class="card animate-item">
+        <h3>📐 Derajat Perluasan Medan</h3>
+        <div class="formula">
+            \[ [\mathbb{Q}(\sqrt{3},\sqrt[3]{5}):\mathbb{Q}] = 2 \times 3 = 6 \]
+        </div>
+        <p>Artinya: Setiap elemen medan dapat dinyatakan sebagai kombinasi linear dari <strong>6 basis</strong> dengan koefisien di \(\mathbb{Q}\).</p>
+    </div>
+    
+    <div class="grid-2">
+        <div class="card animate-item">
+            <h3>🔢 Basis Medan</h3>
+            <div class="formula" style="font-size: 0.85rem;">
+                \[ \mathcal{B} = \{1, \sqrt{3}, \sqrt[3]{5}, \sqrt[3]{25}, \sqrt{3}\sqrt[3]{5}, \sqrt{3}\sqrt[3]{25}\} \]
+            </div>
+            <p>Ini seperti <strong>vektor basis</strong> di ruang vektor 6 dimensi!</p>
+        </div>
+        
+        <div class="card animate-item">
+            <h3>📝 Koefisien dalam \(\mathbb{Q}(x)\)</h3>
+            <p>Untuk soal kita, koefisiennya berupa <strong>polinomial dalam x</strong>:</p>
+            <div class="formula" style="font-size: 0.75rem;">
+                \[ A(x) = -x^5 + 6x^3 - 9x \]
+                \[ B(x) = -x^4 + 3x^2 - 3 \]
+                \[ C(x) = -x^3 + 3x \]
+                \[ D(x) = x^2 - 1 \]
+                \[ E(x) = -x \]
+                \[ F(x) = 1 \]
+            </div>
+        </div>
+    </div>
+    
+    <div class="success-box animate-item">
+        <strong>🎯 Intinya:</strong> Hasil rasionalisasi selalu dapat ditulis dalam bentuk <strong>6 suku</strong> ini, tidak lebih!
+    </div>
+    <div class="page-number">10b / 15</div>
+</div>
+
+    <!-- SLIDE 11 - HASIL AKHIR -->
+    <div class="slide" id="slide11">
+        <h2 class="animate-item">✅ HASIL AKHIR</h2>
+        <div class="formula" style="font-size: clamp(11px, 2vw, 16px);">
+            \[ \frac{1}{x + \sqrt{3} + \sqrt[3]{25}} = \frac{A(x) + B(x)\sqrt{3} + C(x)\sqrt[3]{5} + D(x)\sqrt[3]{25} + E(x)\sqrt{3}\sqrt[3]{5} + F(x)\sqrt{3}\sqrt[3]{25}}{x^6 - 9x^4 + 9x^2 - 27} \]
+        </div>
+        <div style="overflow-x: auto;">
+            <table>
+                <tr><th>Koefisien</th><th>Polinomial</th></tr>
+                <tr><td>\(A(x)\)</td><td>\(-x^5 + 6x^3 - 9x\)</td></tr>
+                <tr><td>\(B(x)\)</td><td>\(-x^4 + 3x^2 - 3\)</td></tr>
+                <tr><td>\(C(x)\)</td><td>\(-x^3 + 3x\)</td></tr>
+                <tr><td>\(D(x)\)</td><td>\(x^2 - 1\)</td></tr>
+                <tr><td>\(E(x)\)</td><td>\(-x\)</td></tr>
+                <tr><td>\(F(x)\)</td><td>\(1\)</td></tr>
+            </table>
+        </div>
+        <div class="success-box"><strong>✨ Penyebut \(G(x) = x^6 - 9x^4 + 9x^2 - 27\)</strong></div>
+        <div class="page-number">11 / 14</div>
+    </div>
+
+    <!-- SLIDE 12 - KODE SINGULAR LENGKAP -->
+<div class="slide" id="slide12">
+    <h2 class="animate-item">📜 Kode Singular Lengkap</h2>
+    
+    <div class="code-block-wrapper">
+        <button class="copy-btn" onclick="copyCodeFromElement('codeSlide12')">📋 Copy Code</button>
+        <pre id="codeSlide12" class="code-block-pre" style="color: #00d4ff; font-family: 'Courier New', monospace; margin: 0; white-space: pre-wrap; word-wrap: break-word; padding: 15px; padding-right: 100px; font-size: 13px; max-height: 450px; overflow-y: auto;">
+<span style="color: #ff79c6;">// ============================================</span>
+<span style="color: #ff79c6;">// Rasionalisasi 1/(x + sqrt(3) + cuberoot(25))</span>
+<span style="color: #ff79c6;">// dengan Gröbner basis dan resultant</span>
+<span style="color: #ff79c6;">// ============================================</span>
+
+<span style="color: #ff79c6;">// Load library</span>
+<span style="color: #8be9fd;">LIB</span> "general.lib";
+<span style="color: #8be9fd;">LIB</span> "elim.lib";
+
+<span style="color: #ff79c6;">// STEP 1: Definisikan ring polinomial</span>
+<span style="color: #ff79c6;">// (0,x) = field fungsi rasional dalam x</span>
+<span style="color: #ff79c6;">// (y1,y2) = variabel untuk akar</span>
+<span style="color: #ff79c6;">// lp = lexicographic order (y1 > y2)</span>
+<span style="color: #8be9fd;">ring</span> R = (0,x), (y1, y2), lp;
+<span style="color: #8be9fd;">option</span>(redSB);
+
+<span style="color: #ff79c6;">// STEP 2: Bentuk ideal I</span>
+<span style="color: #8be9fd;">ideal</span> I = y1^2 - 3,          <span style="color: #6272a4;">// y1 = sqrt(3)</span>
+          y2^3 - 5,          <span style="color: #6272a4;">// y2 = cuberoot(5)</span>
+          x + y1 + y2^2;     <span style="color: #6272a4;">// penyebut s</span>
+
+<span style="color: #ff79c6;">// STEP 3: Hitung Resultant</span>
+<span style="color: #8be9fd;">poly</span> s = x + y1 + y2^2;
+<span style="color: #8be9fd;">poly</span> res_y1 = <span style="color: #f1fa8c;">resultant</span>(s, y1^2-3, y1);
+<span style="color: #8be9fd;">poly</span> minpoly_s = <span style="color: #f1fa8c;">resultant</span>(res_y1, y2^3-5, y2);
+
+<span style="color: #ff79c6;">// STEP 4: Ekstrak koefisien</span>
+<span style="color: #8be9fd;">poly</span> a0 = <span style="color: #f1fa8c;">coefficient</span>(minpoly_s, s, 0);
+<span style="color: #8be9fd;">poly</span> a1 = <span style="color: #f1fa8c;">coefficient</span>(minpoly_s, s, 1);
+<span style="color: #8be9fd;">poly</span> a2 = <span style="color: #f1fa8c;">coefficient</span>(minpoly_s, s, 2);
+<span style="color: #8be9fd;">poly</span> a3 = <span style="color: #f1fa8c;">coefficient</span>(minpoly_s, s, 3);
+<span style="color: #8be9fd;">poly</span> a4 = <span style="color: #f1fa8c;">coefficient</span>(minpoly_s, s, 4);
+<span style="color: #8be9fd;">poly</span> a5 = <span style="color: #f1fa8c;">coefficient</span>(minpoly_s, s, 5);
+
+<span style="color: #ff79c6;">// STEP 5: Rumus 1/s</span>
+<span style="color: #ff79c6;">// 1/s = -(a1 + a2*s + a3*s^2 + a4*s^3 + a5*s^4 + s^5)/a0</span>
+
+<span style="color: #ff79c6;">// STEP 6: Substitusi ke basis medan</span>
+<span style="color: #8be9fd;">ring</span> R2 = (0,x), (y1, y2), lp;
+<span style="color: #8be9fd;">ideal</span> rel = y1^2-3, y2^3-5;
+<span style="color: #8be9fd;">ideal</span> std_rel = <span style="color: #f1fa8c;">std</span>(rel);
+
+<span style="color: #8be9fd;">poly</span> s2 = x + y1 + y2^2;
+<span style="color: #8be9fd;">poly</span> a0_expr = x^6 - 9*x^4 + 9*x^2 - 27;
+<span style="color: #8be9fd;">poly</span> a1_expr = -6*x^5 + 36*x^3 - 54*x;
+<span style="color: #8be9fd;">poly</span> a2_expr = 15*x^4 - 15*x^2 + 27;
+<span style="color: #8be9fd;">poly</span> a3_expr = -20*x^3 + 30*x;
+<span style="color: #8be9fd;">poly</span> a4_expr = 5*x^2 - 9;
+<span style="color: #8be9fd;">poly</span> a5_expr = -6*x;
+
+<span style="color: #8be9fd;">poly</span> numerator_s = -(a1_expr + a2_expr*s2 + a3_expr*s2^2 + a4_expr*s2^3 + a5_expr*s2^4 + s2^5);
+<span style="color: #8be9fd;">poly</span> num_reduced = <span style="color: #f1fa8c;">reduce</span>(numerator_s, std_rel);
+
+<span style="color: #ff79c6;">// Hasil akhir</span>
+<span style="color: #f1fa8c;">"Hasil Rasionalisasi:"</span>;
+<span style="color: #f1fa8c;">"1/(x + sqrt(3) + cuberoot(25)) = "</span>;
+num_reduced;
+<span style="color: #f1fa8c;">"-----------------------------------------------------------------"</span>;
+a0_expr;
+        </pre>
+    </div>
+    
+    <div class="success-box animate-item" style="margin-top: 15px;">
+        <strong>💡 Hasil polinomial minimal:</strong><br>
+        s⁶ - 6x s⁵ + (5x²-9)s⁴ + (-20x³+30x)s³ + (15x⁴-15x²+27)s² + (-6x⁵+36x³-54x)s + (x⁶-9x⁴+9x²-27) = 0
+    </div>
+    <div class="page-number">12 / 14</div>
+</div>
+
+    <!-- SLIDE 13 - KESIMPULAN -->
+    <div class="slide" id="slide13">
+        <h2 class="animate-item">🎯 Kesimpulan</h2>
+        <div class="grid-2">
+            <div class="card">
+                <h3>✅ Ringkasan Teori</h3>
+                <ul><li>Gröbner Basis (Buchberger)</li><li>Teorema Eliminasi</li><li>Resultant untuk eliminasi</li></ul>
+            </div>
+            <div class="card">
+                <h3>✅ Ringkasan Praktik</h3>
+                <ul><li>Install Singular di WSL</li><li>Bentuk ideal</li><li>Eliminasi dengan resultant</li><li>Rasionalisasi ke basis medan</li></ul>
+            </div>
+        </div>
+        <div class="formula formula-neon">
+            \[ \boxed{\text{Gröbner Basis + Singular = Powerful Algebraic Computation}} \]
+        </div>
+        <div class="page-number">13 / 14</div>
+    </div>
+    <!-- SLIDE 13.5 - PERBANDINGAN METODE -->
+<div class="slide" id="slide13_5">
+    <h2 class="animate-item">📊 Perbandingan Metode</h2>
+    
+    <div style="overflow-x: auto;">
+        <table style="min-width: 500px;">
+            <thead>
+                <tr><th>Aspek</th><th>Konjugat Biasa</th><th>Gröbner Basis</th></tr>
+            </thead>
+            <tbody>
+                <tr class="animate-item"><td>Jumlah operasi</td><td style="color:#ff8888;">6+ kali</td><td style="color:#88ff88;">2 kali resultant</td></tr>
+                <tr class="animate-item"><td>Jumlah suku pembilang</td><td style="color:#ff8888;">Puluhan</td><td style="color:#88ff88;">6 suku terstruktur</td></tr>
+                <tr class="animate-item"><td>Risiko error manual</td><td style="color:#ff8888;">Sangat tinggi</td><td style="color:#88ff88;">Rendah (otomatis)</td></tr>
+                <tr class="animate-item"><td>Waktu pengerjaan</td><td style="color:#ff8888;">>30 menit</td><td style="color:#88ff88;">2-5 menit</td></tr>
+                <tr class="animate-item"><td>Dapat diotomatisasi</td><td style="color:#ff8888;">❌ Sulit</td><td style="color:#88ff88;">✅ Ya (CAS)</td></tr>
+                <tr class="animate-item"><td>Kejelasan struktur</td><td style="color:#ff8888;">❌ Berantakan</td><td style="color:#88ff88;">✅ Rapi</td></tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="success-box animate-item" style="margin-top: 20px;">
+        <strong>🎯 Kesimpulan Akhir:</strong><br>
+        Gröbner Basis + Singular = <strong>Solusi optimal</strong> untuk rasionalisasi bentuk akar kompleks!
+    </div>
+    
+    <div class="page-number">13b / 15</div>
+</div>
+
+    <!-- SLIDE 14 - PENUTUP -->
+    <div class="slide" id="slide14">
+        <h2 class="animate-item">🙏 Terima Kasih</h2>
+        <div class="qna-box">Q & A</div>
+        <p class="thankyou">Terima kasih atas perhatiannya!</p>
+        <p class="question">Ada pertanyaan? Silakan diskusikan.</p>
+        <div class="page-number">14 / 14</div>
+    </div>
+</div>
+
+<!-- Navigation Arrows -->
+<div class="nav-arrow prev" id="prevBtn">
+    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+</div>
+<div class="nav-arrow next" id="nextBtn">
+    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+</div>
+
+<!-- Slide Indicators -->
+<div class="slide-indicators" id="indicators">
+    <div class="indicator active" data-slide="0"></div>
+    <div class="indicator" data-slide="1"></div>
+    <div class="indicator" data-slide="2"></div>
+    <div class="indicator" data-slide="3"></div>
+    <div class="indicator" data-slide="4"></div>
+    <div class="indicator" data-slide="5"></div>
+    <div class="indicator" data-slide="6"></div>
+    <div class="indicator" data-slide="7"></div>
+    <div class="indicator" data-slide="8"></div>
+    <div class="indicator" data-slide="9"></div>
+    <div class="indicator" data-slide="10"></div>
+    <div class="indicator" data-slide="11"></div>
+    <div class="indicator" data-slide="12"></div>
+    <div class="indicator" data-slide="13"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
