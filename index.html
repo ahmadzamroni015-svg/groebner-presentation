@@ -6,7 +6,7 @@
     <title>Correct Solution | Rationalizing 1/(x+√3+∛25) – Matrix Method</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
-        /* === Provided CSS (unchanged) === */
+        /* === Complete CSS (unchanged, black/blue/orange neon theme) === */
         * {
             margin: 0;
             padding: 0;
@@ -276,14 +276,6 @@
             50% { box-shadow: 0 0 30px rgba(255, 94, 0, 0.6); }
         }
 
-        /* Grid Layouts */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin: 20px 0;
-        }
-
         /* Cards */
         .card {
             background: rgba(255, 255, 255, 0.03);
@@ -406,7 +398,7 @@
                 <p class="animate-item" style="color:#aaa;">Complete solution using the quotient ring & matrix method</p>
                 <p class="animate-item" style="margin-top: 20px; font-size: 0.9rem;">▼ Use arrow keys or buttons to navigate ▼</p>
             </div>
-            <div class="page-number">1 / 9</div>
+            <div class="page-number">1 / 8</div>
         </div>
 
         <!-- SLIDE 2: Step 1 -->
@@ -421,7 +413,7 @@
                 <p>The denominator becomes</p>
                 <div class="formula">\[ f = x + y_1 + y_2^2. \]</div>
             </div>
-            <div class="page-number">2 / 9</div>
+            <div class="page-number">2 / 8</div>
         </div>
 
         <!-- SLIDE 3: Step 2 -->
@@ -433,10 +425,10 @@
                 <div class="formula">\[ \mathcal{B} = \{1,\; y_2,\; y_2^2,\; y_1,\; y_1y_2,\; y_1y_2^2\}. \]</div>
                 <p>Hence the quotient space has dimension \(2\times 3 = 6\) over \(\mathbb{Q}(x)\).</p>
             </div>
-            <div class="page-number">3 / 9</div>
+            <div class="page-number">3 / 8</div>
         </div>
 
-        <!-- SLIDE 4: Step 3 & 4 combined (short) -->
+        <!-- SLIDE 4: Step 3 & 4 combined -->
         <div class="slide" id="slide4">
             <span class="badge animate-item">Step 3 &amp; 4</span>
             <h2 class="animate-item">Assume an inverse & expand</h2>
@@ -456,7 +448,7 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">4 / 9</div>
+            <div class="page-number">4 / 8</div>
         </div>
 
         <!-- SLIDE 5: Step 5 -->
@@ -478,7 +470,7 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">5 / 9</div>
+            <div class="page-number">5 / 8</div>
         </div>
 
         <!-- SLIDE 6: Step 6 -->
@@ -501,7 +493,7 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">6 / 9</div>
+            <div class="page-number">6 / 8</div>
         </div>
 
         <!-- SLIDE 7: Step 7 -->
@@ -525,10 +517,10 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">7 / 9</div>
+            <div class="page-number">7 / 8</div>
         </div>
 
-        <!-- SLIDE 8: Step 8 – Final result -->
+        <!-- SLIDE 8: Step 8 – Final result (no extra slide after) -->
         <div class="slide" id="slide8">
             <span class="badge animate-item">Step 8</span>
             <h2 class="animate-item">Final rationalised form</h2>
@@ -555,19 +547,7 @@
                 </div>
                 <p>The denominator \(D(x)\) is the rationalised denominator (a polynomial in \(x\) alone).</p>
             </div>
-            <div class="page-number">8 / 9</div>
-        </div>
-
-        <!-- SLIDE 9: Closing remarks -->
-        <div class="slide" id="slide9">
-            <div style="display: flex; flex-direction: column; justify-content: center; min-height: 70%; text-align: center;">
-                <div class="qna-box" style="font-size: clamp(28px, 5vw, 40px); display: inline-block; padding: 20px 40px; border: 1px solid #FF5E00; border-radius: 12px; margin: 30px auto;">
-                    ✓ Solution Complete
-                </div>
-                <p style="color:#00B2FF;">Matrix method verified by symbolic computation.</p>
-                <p style="margin-top: 30px; font-size: 0.9rem;">The rationalisation holds for all \(x\) with \(D(x)\neq 0\).</p>
-            </div>
-            <div class="page-number">9 / 9</div>
+            <div class="page-number">8 / 8</div>
         </div>
     </div>
 
@@ -582,8 +562,7 @@
     <div class="slide-indicators" id="indicatorsContainer"></div>
 
     <script>
-        // === Provided JavaScript (with small adaptions) ===
-        // Create floating particles
+        // Floating particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             if (!particlesContainer) return;
@@ -604,7 +583,7 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         let currentSlide = 0;
-        const totalSlides = slides.length;
+        const totalSlides = slides.length;  // = 8
 
         // Create indicators dynamically
         for (let i = 0; i < totalSlides; i++) {
@@ -660,7 +639,7 @@
             });
         });
 
-        // Initialize particles
+        // Initialize
         createParticles();
     </script>
 </body>
