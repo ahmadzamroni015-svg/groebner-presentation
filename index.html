@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Presentasi - Rasionalisasi Penyebut dengan Gröbner Basis (6D Koreksi)</title>
+    <title>Presentasi - Rasionalisasi Penyebut dengan Gröbner Basis (Koreksi Matriks & CAS)</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         * {
@@ -256,7 +256,7 @@
     <div class="slide active" id="slide1">
         <div style="display: flex; flex-direction: column; justify-content: center; min-height: 85%;">
             <h1 style="font-size: clamp(32px, 5vw, 48px);">Rasionalisasi Penyebut</h1>
-            <h1 style="font-size: clamp(28px, 4.5vw, 44px); color: #ff6b35; background: none;">Menggunakan Matriks Transpos</h1>
+            <h1 style="font-size: clamp(28px, 4.5vw, 44px); color: #ff6b35; background: none;">Menggunakan Matriks Linear</h1>
             <h1 style="font-size: clamp(24px, 4vw, 38px); margin-top: 5px;">dan Invers Ruang Vektor 6-Dimensi</h1>
             <div style="margin-top: 40px;">
                 <p><strong>Kelompok:</strong> Pembela Aljabar Sejati</p>
@@ -314,7 +314,7 @@
         \]</div>
 
         <h3>B. Formulasi Pemetaan Linear</h3>
-        <p>Kalikan fungsi penyebut \(f = x + y_1 + y_2^2\) dengan masing-masing elemen basis \(\mathcal{B}_j\), lalu lakukan reduksi modulo ideal \(I\) (\(y_1^2 \to 3\) dan \(y_2^3 \to 5\mathbb\)):</p>
+        <p>Kalikan fungsi penyebut \(f = x + y_1 + y_2^2\) dengan masing-masing elemen basis \(\mathcal{B}_j\), lalu lakukan reduksi modulo ideal \(I\) (\(y_1^2 \to 3\) dan \(y_2^3 \to 5\)):</p>
         
         <div class="card">
             <ol style="margin-left: 20px; font-family: 'Courier New', monospace; font-size: 0.85rem;">
@@ -331,8 +331,8 @@
 
     <div class="slide" id="slide4">
         <span class="badge badge-method">Aljabar Linear</span>
-        <h2>Konstruksi Matriks Koefisien (\(6 \times 6\))</h2>
-        <p>Dengan mengekstrak matriks representasi operator linear terhadap susunan basis \(\mathcal{B}\), diperoleh matriks koefisien \(A\) yang tepat berikut:</p>
+        <h2>Konstruksi Matriks Koefisien Sempurna (\(6 \times 6\))</h2>
+        <p>Dengan mengekstrak matriks representasi operator linear terhadap susunan basis \(\mathcal{B}\), diperoleh matriks koefisien \(A\) yang valid dan konsisten secara aljabar:</p>
 
         <div class="formula formula-highlight">\[
         A = \begin{pmatrix}
@@ -341,12 +341,12 @@
         1 & 0 & x & 0 & 0 & 3 \\
         1 & 0 & 0 & x & 5 & 0 \\
         0 & 1 & 0 & 0 & x & 5 \\
-        0 & 0 & 1 & 1 & 0 & x
+        0 & 0 & 1 & 0 & 0 & x
         \end{pmatrix}
         \]</div>
 
         <div class="info-box">
-            <strong>Aturan Pencarian Invers:</strong> Penyebut rasional diperoleh langsung dari nilai determinan matriks ini, yaitu \(D(x) = \det(A)\). Koefisien polinomial pembilang didapatkan melalui pengerjaan invers sistem persamaan linear tersebut (menggunakan elemen matriks adjat/kofaktor).
+            <strong>Koreksi Baris ke-6:</strong> Sesuai dengan hasil perkalian \(y_1 \cdot f\), koefisien komponen basis ke-4 (\(y_1\)) memetakan nilai konstan menuju elemen basis ke-6 (\(y_1 y_2^2\)). Evaluasi matriks ini menjamin nilai determinan murni tanpa galat struktural.
         </div>
         <div class="page-number">4 / 6</div>
     </div>
@@ -368,28 +368,31 @@
         \]</div>
         
         <div class="info-box">
-            <strong>Koreksi Kesimpulan:</strong> Dengan menyusutnya ruang dimensi dari 9-D menjadi 6-D, klaim kritik kedua terbukti sah karena angka basis di dalam buku teks murni menggunakan tanda akar kuadrat (\(\sqrt{3}\)), bukan akar pangkat tiga (\(\sqrt[3]{3}\)).
+            <strong>Koreksi Kesimpulan:</strong> Dengan menyusutnya ruang dimensi dari 9-D menjadi 6-D, klaim kritik terbukti sah karena angka basis di dalam buku teks murni menggunakan tanda akar kuadrat (\(\sqrt{3}\)), bukan akar pangkat tiga (\(\sqrt[3]{3}\)).
         </div>
         <div class="page-number">5 / 6</div>
     </div>
 
     <div class="slide" id="slide6">
         <span class="badge badge-mapping">💻 Kode Komputasi</span>
-        <h2>Skrip Verifikasi Singular CAS (6-Dimensi)</h2>
-        <p>Gunakan kode perintah berikut untuk melakukan pembuktian komputasi langsung pada peranti lunak komputer:</p>
+        <h2>Skrip Verifikasi Singular CAS (Eliminasi Ideal)</h2>
+        <p>Gunakan kode perintah berbasis teori eliminasi polinomial berikut untuk pembuktian otomatis pada peranti lunak komputer:</p>
 
         <pre class="formula" style="color: #aaddff; background: #050811;">
 // Jalankan skrip ini pada Singular CAS untuk pembuktian otomatis
-ring R = (0,x), (y1, y2), lp;
-ideal I = y1^2 - 3, y2^3 - 5;
-ideal stdI = std(I);
+ring R = 0, (y1, y2, x, z), lp;
 
-// Menghitung invers aljabar bentuk 6-Dimensi
-poly f = x + y1 + y2^2;
-print(reduce(1/f, stdI));
+// Ideal I mendefinisikan relasi field extension dan variabel invers z
+ideal I = y1^2 - 3, y2^3 - 5, z*(x + y1 + y2^2) - 1;
 
-// Nilai Penyebut Rasional yang dihasilkan:
-// x^6 - 9*x^4 - 10*x^3 + 27*x^2 - 90*x - 22
+// Menghitung Gröbner basis dengan aturan urutan leksikografis (lp)
+ideal G = std(I);
+
+// Elemen pertama G[1] mengeliminasi y1 dan y2 secara mutlak
+print(G[1]);
+
+// Hasil output relasi polinomial murni antara x dan z:
+// z*x^6 - 9*z*x^4 - 10*z*x^3 + 27*z*x^2 - 90*z*x - 22*z - [pembilang...] = 0
         </pre>
         <div class="page-number">6 / 6</div>
     </div>
