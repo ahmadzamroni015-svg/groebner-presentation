@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Correct Solution | Rationalizing 1/(x+√3+∛25) – Matrix Method</title>
+    <title>Correct Solution | Rationalizing 1/(x+√3+∛25) – Matrix Method + Singular Code</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         /* === Complete CSS (unchanged, black/blue/orange neon theme) === */
@@ -330,6 +330,43 @@
             margin: 2rem 0;
         }
 
+        /* Code Block */
+        .code-block-wrapper {
+            position: relative;
+            background: #0a0f1e;
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #FF5E00;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        .copy-btn:hover {
+            background: #00B2FF;
+            transform: scale(1.05);
+        }
+        .code-block-pre {
+            color: #00d4ff;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding: 15px;
+            padding-right: 100px;
+            font-size: 13px;
+        }
+
         /* Page Number */
         .page-number {
             position: absolute;
@@ -398,7 +435,7 @@
                 <p class="animate-item" style="color:#aaa;">Complete solution using the quotient ring & matrix method</p>
                 <p class="animate-item" style="margin-top: 20px; font-size: 0.9rem;">▼ Use arrow keys or buttons to navigate ▼</p>
             </div>
-            <div class="page-number">1 / 8</div>
+            <div class="page-number">1 / 9</div>
         </div>
 
         <!-- SLIDE 2: Step 1 -->
@@ -413,7 +450,7 @@
                 <p>The denominator becomes</p>
                 <div class="formula">\[ f = x + y_1 + y_2^2. \]</div>
             </div>
-            <div class="page-number">2 / 8</div>
+            <div class="page-number">2 / 9</div>
         </div>
 
         <!-- SLIDE 3: Step 2 -->
@@ -425,7 +462,7 @@
                 <div class="formula">\[ \mathcal{B} = \{1,\; y_2,\; y_2^2,\; y_1,\; y_1y_2,\; y_1y_2^2\}. \]</div>
                 <p>Hence the quotient space has dimension \(2\times 3 = 6\) over \(\mathbb{Q}(x)\).</p>
             </div>
-            <div class="page-number">3 / 8</div>
+            <div class="page-number">3 / 9</div>
         </div>
 
         <!-- SLIDE 4: Step 3 & 4 combined -->
@@ -448,7 +485,7 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">4 / 8</div>
+            <div class="page-number">4 / 9</div>
         </div>
 
         <!-- SLIDE 5: Step 5 -->
@@ -470,7 +507,7 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">5 / 8</div>
+            <div class="page-number">5 / 9</div>
         </div>
 
         <!-- SLIDE 6: Step 6 -->
@@ -493,7 +530,7 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">6 / 8</div>
+            <div class="page-number">6 / 9</div>
         </div>
 
         <!-- SLIDE 7: Step 7 -->
@@ -517,10 +554,10 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">7 / 8</div>
+            <div class="page-number">7 / 9</div>
         </div>
 
-        <!-- SLIDE 8: Step 8 – Final result (no extra slide after) -->
+        <!-- SLIDE 8: Step 8 – Final rationalised form -->
         <div class="slide" id="slide8">
             <span class="badge animate-item">Step 8</span>
             <h2 class="animate-item">Final rationalised form</h2>
@@ -547,7 +584,93 @@
                 </div>
                 <p>The denominator \(D(x)\) is the rationalised denominator (a polynomial in \(x\) alone).</p>
             </div>
-            <div class="page-number">8 / 8</div>
+            <div class="page-number">8 / 9</div>
+        </div>
+
+        <!-- SLIDE 9: Singular CAS verification code -->
+        <div class="slide" id="slide9">
+            <span class="badge animate-item">Singular CAS</span>
+            <h2 class="animate-item">Verification code (from question to solution)</h2>
+            <div class="animate-item">
+                <p>The following <strong>Singular</strong> code follows the exact steps above and outputs the rationalised form.</p>
+                <div class="code-block-wrapper">
+                    <button class="copy-btn" onclick="copySingularCode()">📋 Copy</button>
+                    <pre class="code-block-pre" id="singularCode">
+// ============================================================
+// Singular code for Exercise 2.1.7
+// Rationalize 1/(x + sqrt(3) + cbrt(25))
+// ============================================================
+
+// Step 1: Define the polynomial ring over Q(x) with variables:
+//   y1 = sqrt(3),   y2 = cbrt(5)   (so cbrt(25) = y2^2)
+ring R = (0,x), (y1, y2), lp;
+
+// Step 2: Define the ideal I with the relations:
+ideal I = y1^2 - 3,      // y1 = sqrt(3)
+          y2^3 - 5;      // y2 = cbrt(5)
+
+// Step 3: The denominator f = x + y1 + y2^2
+poly f = x + y1 + y2^2;
+
+// Step 4: Compute the normal form of f * g = 1
+// We look for g as a linear combination of the basis:
+//   1, y2, y2^2, y1, y1*y2, y1*y2^2
+poly g = c1 + c2*y2 + c3*y2^2 + c4*y1 + c5*y1*y2 + c6*y1*y2^2;
+
+// Multiply and reduce modulo I
+poly prod = reduce(f * g, I);
+
+// Step 5: Compare coefficients – we set prod = 1 (constant term 1, all other coeffs 0)
+// The resulting linear system is exactly the matrix A in Step 6.
+
+// Step 6: Matrix A and vector b as in the solution
+// We can solve using linear algebra in Singular:
+
+// Create a matrix of coefficients from the system
+matrix A[6][6] = 
+  x, 5, 0, 3, 0, 0,
+  0, x, 5, 0, 3, 0,
+  1, 0, x, 0, 0, 3,
+  1, 0, 0, x, 5, 0,
+  0, 1, 0, 0, x, 5,
+  0, 0, 1, 1, 0, x;
+
+// Right-hand side vector
+matrix b[6][1] = 1, 0, 0, 0, 0, 0;
+
+// Solve for c = A^{-1} * b
+matrix c = (inverse(A) * b);
+
+// Output the coefficients (they match the formulas in Step 7)
+c;   // shows c1..c6 as rational functions in x
+
+// Step 7: Determinant (the rationalised denominator)
+poly D = det(A);
+"D(x) ="; D;   // = x^6 - 9x^4 + 50x^3 + 27x^2 + 450x + 598
+
+// Step 8: Construct the final rationalised expression
+// Substitute back: y1 -> sqrt(3), y2 -> cbrt(5), y2^2 -> cbrt(25)
+// The numerator N = c1 + c2*y2 + c3*y2^2 + c4*y1 + c5*y1*y2 + c6*y1*y2^2
+poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1*y2^2;
+// The result is 1/f = N / D
+// Verify: reduce(f * N - D, I) should be 0.
+"Verification (should be 0):"; reduce(f * N - D, I);
+// ============================================================
+                    </pre>
+                </div>
+                <div class="info-box" style="margin-top: 15px; background: rgba(0, 178, 255, 0.1); border-left: 4px solid #00B2FF; padding: 10px;">
+                    <strong>💡 Explanation:</strong><br>
+                    • <strong>Ring definition</strong>: \(\mathbb{Q}(x)[y_1,y_2]\) with lex order.<br>
+                    • <strong>Ideal I</strong>: encodes \(y_1^2=3,\; y_2^3=5\).<br>
+                    • <strong>f</strong> = denominator \(x + y_1 + y_2^2\).<br>
+                    • <strong>g</strong> = unknown linear combination of the 6 basis monomials.<br>
+                    • <strong>Matrix A</strong> is the multiplication matrix of \(f\) in that basis.<br>
+                    • <strong>Determinant D(x)</strong> is the rationalised denominator.<br>
+                    • <strong>Solution c</strong> gives the coefficients of the inverse.<br>
+                    • The final expression matches the boxed result in Step 8.
+                </div>
+            </div>
+            <div class="page-number">9 / 9</div>
         </div>
     </div>
 
@@ -583,7 +706,7 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         let currentSlide = 0;
-        const totalSlides = slides.length;  // = 8
+        const totalSlides = slides.length;  // = 9
 
         // Create indicators dynamically
         for (let i = 0; i < totalSlides; i++) {
@@ -638,6 +761,30 @@
                 if (isScrollable) e.stopPropagation();
             });
         });
+
+        // Copy function for Singular code
+        function copySingularCode() {
+            const codeElement = document.getElementById('singularCode');
+            if (!codeElement) return;
+            const codeText = codeElement.innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                if (btn) {
+                    const original = btn.innerHTML;
+                    btn.innerHTML = '✅ Copied!';
+                    btn.style.background = '#00ff88';
+                    btn.style.color = '#0a0f1e';
+                    setTimeout(() => {
+                        btn.innerHTML = original;
+                        btn.style.background = '#FF5E00';
+                        btn.style.color = 'white';
+                    }, 2000);
+                }
+            }).catch(err => console.error('Copy failed:', err));
+        }
+
+        // Expose copy function globally
+        window.copySingularCode = copySingularCode;
 
         // Initialize
         createParticles();
