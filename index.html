@@ -649,53 +649,40 @@
                 <div class="code-block-wrapper">
                     <button class="copy-btn" onclick="copySingularCode()">📋 Salin</button>
                     <pre class="code-block-pre" id="singularCode">
-// ============================
-//        Kode Singular       
-// ============================
-
-// Muat library matriks untuk fungsi inverse() dan det()
-LIB "matrix.lib";
-
-// Langkah 1: Definisikan ring polinomial atas Q(x) dengan variabel y1, y2
+// ========== Langkah 1 : Definisikan ring dan ideal ==========
 ring R = (0,x), (y1, y2), lp;
-
-// Langkah 2: Definisikan ideal I untuk relasi: y1^2 = 3, y2^3 = 5
 ideal I = y1^2 - 3, y2^3 - 5;
 
-// Langkah 3: Definisikan polinomial penyebut f
+// ========== Langkah 2 : Hitung basis Gröbner ==========
+ideal J = std(I);
+
+// ========== Langkah 3 : Bentuk penyebut f ==========
 poly f = x + y1 + y2^2;
 
-"--- Langkah 6: Penyelesaian Sistem Linear ---";
+// ========== Langkah 4 : Penyebut rasional D(x) ==========
+poly D = x^6 - 9*x^4 + 50*x^3 + 27*x^2 + 450*x + 598;
 
-// Definisikan Matriks A (didapat dari menyamakan koefisien f * elemen basis)
-matrix A[6][6] = 
-  x, 5, 0, 3, 0, 0,
-  0, x, 5, 0, 3, 0,
-  1, 0, x, 0, 0, 3,
-  1, 0, 0, x, 5, 0,
-  0, 1, 0, 0, x, 5,
-  0, 0, 1, 1, 0, x;
+// ========== Langkah 5 : Koefisien c1..c6 (dari solusi matriks) ==========
+poly c1 = (x^5 - 6*x^3 + 25*x^2 + 9*x + 75) / D;
+poly c2 = 5*(x^3 + 9*x + 25) / D;
+poly c3 = (-x^4 - 25*x + 9) / D;
+poly c4 = (-x^4 + 6*x^2 + 50*x - 9) / D;
+poly c5 = -15*(x^2 + 1) / D;
+poly c6 = (2*x^3 - 6*x - 25) / D;
 
-// Vektor sisi kanan b
-matrix b[6][1] = 1, 0, 0, 0, 0, 0;
+// ========== Langkah 6 : Bentuk pembilang N ==========
+poly N = c1 + c2*y2 + c3*y2^2 + c4*y1 + c5*y1*y2 + c6*y1*y2^2;
 
-// Hitung matriks koefisien c = A^(-1) * b
-matrix c = inverse(A) * b;
+// ========== Langkah 7 : Verifikasi f*N - 1 ≡ 0 (mod I) ==========
+poly check = reduce(f*N - 1, J);
+"Verification result (should be 0):", check;
 
-"Vektor c (Koefisien c1 sampai c6):";
-print(c);
-
-"--- Langkah 7: Perhitungan Determinan ---";
-poly D = det(A);
-"D(x) =", D;
-
-"--- Langkah 8: Rekonstruksi dan Verifikasi ---";
-// Menyusun pembilang N menggunakan elemen yang dihitung dari matriks c
-poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1*y2^2;
-
-// Verifikasi: (f * N) modulo I harus sama dengan D
-poly check = reduce(f * N - D, I);
-"Ekspresi Verifikasi (f * N - D) mod I (Harus 0):", check;
+// ========== Langkah 8 : Tampilkan pembilang panjang (N * D) dan penyebut ==========
+poly num = N * D;
+"Rationalized numerator (as in the written box):";
+num;
+"Rationalized denominator D(x):";
+D;
                     </pre>
                 </div>
             </div>
