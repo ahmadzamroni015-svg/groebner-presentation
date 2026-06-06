@@ -314,16 +314,16 @@
         \]</div>
 
         <h3>B. Formulasi Pemetaan Linear</h3>
-        <p>Kalikan fungsi penyebut \(f = x + y_1 + y_2^2\) dengan masing-masing elemen basis \(\mathcal{B}_j\), lalu lakukan reduksi modulo ideal \(I\) (\(y_1^2 \to 3\) dan \(y_2^3 \to 5\)):</p>
+        <p>Kalikan fungsi penyebut \(f = x + y_1 + y_2^2\) dengan masing-masing elemen basis \(\mathcal{B}_j\), lalu lakukan reduksi modulo ideal \(I\) (\(y_1^2 \to 3\) dan \(y_2^3 \to 5\mathbb\)):</p>
         
         <div class="card">
             <ol style="margin-left: 20px; font-family: 'Courier New', monospace; font-size: 0.85rem;">
-                <li>\(1 \cdot f = x + y_2^2 + y_1\)</li>
-                <li>\(y_2 \cdot f = x y_2 + y_2^3 + y_1 y_2 \equiv \mathbf{5} + x y_2 + y_1 y_2\)</li>
-                <li>\(y_2^2 \cdot f = x y_2^2 + y_2^4 + y_1 y_2^2 \equiv \mathbf{5y_2} + x y_2^2 + y_1 y_2^2\)</li>
-                <li>\(y_1 \cdot f = x y_1 + y_1 y_2^2 + y_1^2 \equiv \mathbf{3} + x y_1 + y_1 y_2^2\)</li>
-                <li>\(y_1 y_2 \cdot f = x y_1 y_2 + y_1 y_2^3 + y_1^2 y_2 \equiv \mathbf{3y_2} + \mathbf{5y_1} + x y_1 y_2\)</li>
-                <li>\(y_1 y_2^2 \cdot f = x y_1 y_2^2 + y_1 y_2^4 + y_1^2 y_2^2 \equiv \mathbf{3y_2^2} + \mathbf{5y_1y_2} + x y_1 y_2^2\)</li>
+                <li>\(1 \cdot f = x(1) + 1(y_2^2) + 1(y_1)\)</li>
+                <li>\(y_2 \cdot f = 5(1) + x(y_2) + 1(y_1 y_2)\)</li>
+                <li>\(y_2^2 \cdot f = 5(y_2) + x(y_2^2) + 1(y_1 y_2^2)\)</li>
+                <li>\(y_1 \cdot f = 3(1) + x(y_1) + 1(y_1 y_2^2)\)</li>
+                <li>\(y_1 y_2 \cdot f = 3(y_2) + 5(y_1) + x(y_1 y_2)\)</li>
+                <li>\(y_1 y_2^2 \cdot f = 3(y_2^2) + 5(y_1 y_2) + x(y_1 y_2^2)\)</li>
             </ol>
         </div>
         <div class="page-number">3 / 6</div>
@@ -332,7 +332,7 @@
     <div class="slide" id="slide4">
         <span class="badge badge-method">Aljabar Linear</span>
         <h2>Konstruksi Matriks Koefisien (\(6 \times 6\))</h2>
-        <p>Dengan mengekstrak nilai koefisien hasil kali di atas terhadap susunan baris basis \(\mathcal{B}\), didapatkan matriks koefisien operator linear \(A\) berikut:</p>
+        <p>Dengan mengekstrak matriks representasi operator linear terhadap susunan basis \(\mathcal{B}\), diperoleh matriks koefisien \(A\) yang tepat berikut:</p>
 
         <div class="formula formula-highlight">\[
         A = \begin{pmatrix}
@@ -346,7 +346,7 @@
         \]</div>
 
         <div class="info-box">
-            <strong>Aturan Pencarian Invers:</strong> Penyebut rasional murni diperoleh dari nilai determinan matriks ini, yaitu \(D(x) = \det(A)\). Koefisien pembilang pembentuk invers didapatkan melalui pengerjaan invers baris pertama kolom matriks.
+            <strong>Aturan Pencarian Invers:</strong> Penyebut rasional diperoleh langsung dari nilai determinan matriks ini, yaitu \(D(x) = \det(A)\). Koefisien polinomial pembilang didapatkan melalui pengerjaan invers sistem persamaan linear tersebut (menggunakan elemen matriks adjat/kofaktor).
         </div>
         <div class="page-number">4 / 6</div>
     </div>
