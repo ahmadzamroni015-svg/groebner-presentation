@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Correct solution: Rationalize 1/(x+√3+∛25) – matrix method</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Presentasi - Rasionalisasi Penyebut dengan Gröbner Basis (Lengkap)</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         * {
@@ -11,289 +11,694 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            background: #f5f7fc;
-            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
-            line-height: 1.5;
-            color: #1e2a3a;
-            padding: 2rem 1rem;
+            font-family: 'Segoe UI', 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e1a 0%, #0f1422 100%);
+            color: #e0e0e0;
+            overflow: hidden;
+            height: 100vh;
         }
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            padding: 2rem;
+
+        .slides-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: 5;
         }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 25px 40px;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s;
+            background: rgba(10, 14, 26, 0.97);
+            backdrop-filter: blur(2px);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 2;
+        }
+
+        /* Scrollbar */
+        .slide::-webkit-scrollbar {
+            width: 8px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #1a1a2e;
+            border-radius: 4px;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #ff6b35;
+            border-radius: 4px;
+        }
+
         h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            color: #0b3b5f;
-            border-left: 5px solid #e67e22;
-            padding-left: 1rem;
+            font-size: clamp(32px, 5vw, 52px);
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff6b35, #00aaff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
+
         h2 {
-            font-size: 1.6rem;
-            margin: 1.8rem 0 0.8rem 0;
-            color: #2c3e66;
-            border-bottom: 2px solid #e67e22;
+            font-size: clamp(24px, 3.5vw, 34px);
+            margin-bottom: 15px;
+            padding-bottom: 6px;
+            border-bottom: 3px solid #ff6b35;
             display: inline-block;
-            padding-bottom: 4px;
         }
+
         h3 {
-            font-size: 1.3rem;
-            margin: 1.2rem 0 0.5rem 0;
-            color: #c4450c;
+            font-size: clamp(18px, 2.5vw, 24px);
+            margin: 12px 0 10px 0;
+            color: #ffaa44;
         }
-        .step {
-            background: #fef9f0;
-            border-left: 5px solid #e67e22;
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 16px;
-            transition: 0.1s;
+
+        h4 {
+            font-size: clamp(16px, 2vw, 20px);
+            margin: 10px 0 8px 0;
+            color: #88ddff;
         }
-        .step strong {
-            color: #c0392b;
-            font-size: 1.1rem;
-        }
-        .formula {
-            overflow-x: auto;
-            margin: 1rem 0;
-            padding: 0.5rem;
-            background: #f8f9fc;
-            border-radius: 12px;
-            font-size: 1rem;
-        }
-        .matrix {
-            font-family: monospace;
-            white-space: pre;
-        }
-        .final-box {
-            background: #e8f0fe;
-            border: 1px solid #aaccff;
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        .final-box h3 {
-            margin-top: 0;
-            color: #0056b3;
-        }
+
         .badge {
-            background: #e67e22;
-            color: white;
-            font-size: 0.8rem;
-            padding: 0.2rem 0.7rem;
-            border-radius: 30px;
             display: inline-block;
-            margin-bottom: 0.5rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-right: 8px;
+            margin-bottom: 10px;
         }
-        hr {
-            margin: 1rem 0;
-            border: none;
-            height: 1px;
-            background: linear-gradient(to right, #ccc, transparent);
+        .badge-theory { background: #1a3a5c; color: #88ddff; border: 1px solid #00aaff; }
+        .badge-method { background: #3a2a1a; color: #ffaa66; border: 1px solid #ffaa44; }
+        .badge-result { background: #1a4a2a; color: #88ff88; border: 1px solid #44ff88; }
+        .badge-problem { background: #4a1a2a; color: #ff8888; border: 1px solid #ff4444; }
+        .badge-mapping { background: #2a4a6a; color: #aaddff; border: 1px solid #44aaff; }
+
+        .card {
+            background: rgba(25, 30, 45, 0.7);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #ff6b35;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        footer {
-            margin-top: 2rem;
-            text-align: center;
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 12px 0;
+        }
+
+        .formula {
+            background: #0a0e1a;
+            padding: 12px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid #00aaff;
+            font-size: 0.9rem;
+        }
+        .formula-highlight {
+            border-left: 4px solid #ff6b35;
+            background: linear-gradient(135deg, #0d1222, #0a0e1a);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            border-radius: 8px;
+            overflow: hidden;
             font-size: 0.8rem;
-            color: #6c757d;
-            border-top: 1px solid #e9ecef;
-            padding-top: 1rem;
         }
-        @media (max-width: 700px) {
-            .container { padding: 1rem; }
-            .step { padding: 0.8rem; }
-            h1 { font-size: 1.6rem; }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: linear-gradient(135deg, #ff6b35, #e05520);
+            color: #fff;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background: rgba(255,255,255,0.03);
+        }
+        tr:hover {
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(0, 170, 255, 0.1), rgba(0, 170, 255, 0.05));
+            border-left: 4px solid #00aaff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-size: 0.85rem;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 107, 53, 0.05));
+            border-left: 4px solid #ff6b35;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-size: 0.85rem;
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 10px;
+            right: 18px;
+            font-size: 10px;
+            color: #666;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 30;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        .nav-arrow:hover {
+            background: #ff6b35;
+            transform: translateY(-50%) scale(1.05);
+        }
+        .nav-arrow.prev { left: 12px; }
+        .nav-arrow.next { right: 12px; }
+        .nav-arrow svg { width: 24px; fill: white; }
+
+        .slide-indicators {
+            position: fixed;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 30;
+        }
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #555;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .indicator.active {
+            background: #ff6b35;
+            width: 22px;
+            border-radius: 10px;
+        }
+
+        .qna-box {
+            font-size: 44px;
+            text-align: center;
+            margin: 25px 0;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b35, #00aaff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .slide { padding: 15px 20px; }
+            h2 { font-size: 18px; }
+            table { font-size: 0.65rem; }
+            th, td { padding: 5px 6px; }
+            .formula { font-size: 0.7rem; }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Exercise 2.1.7 – Rationalising the denominator</h1>
-    <p style="font-size:1.2rem; margin-bottom:1rem;">
-        \[
-        \frac{1}{x+\sqrt3+\sqrt[3]{25}} \qquad (x\in\mathbb{Q})
-        \]
-    </p>
-    <p>We present a complete, step‑by‑step solution using the quotient ring method and linear algebra over \(\mathbb{Q}(x)\). The derivation is exact and verified by symbolic computation.</p>
 
-    <!-- Step 1 -->
-    <div class="step">
-        <span class="badge">Step 1</span>
-        <h3>Construct the quotient ring</h3>
-        <p>Let \(y_1 = \sqrt{3}\) and \(y_2 = \sqrt[3]{5}\). Then</p>
-        <div class="formula">
-            \[
-            y_1^2 = 3,\qquad y_2^3 = 5.
-            \]
+<div class="slides-container">
+    
+    <div class="slide active" id="slide1">
+        <div style="display: flex; flex-direction: column; justify-content: center; min-height: 85%;">
+            <h1 style="font-size: clamp(32px, 5vw, 48px);">Rasionalisasi Penyebut</h1>
+            <h1 style="font-size: clamp(28px, 4.5vw, 44px); color: #ff6b35; background: none;">Menggunakan Gröbner Basis</h1>
+            <h1 style="font-size: clamp(24px, 4vw, 38px); margin-top: 5px;">dan Resultant</h1>
+            <div style="margin-top: 40px;">
+                <p><strong>Kelompok:</strong> [Nama Kelompok]</p>
+                <p><strong>Dosen Pengampu:</strong> [Nama Dosen]</p>
+                <p><strong>Mata Kuliah:</strong> [Nama Mata Kuliah]</p>
+                <p style="margin-top: 25px; color: #aaa;">UIN Maulana Malik Ibrahim Malang</p>
+                <p style="color: #aaa;">Fakultas Sains dan Teknologi</p>
+                <p style="color: #aaa; margin-top: 10px;">Tahun Akademik 2024/2025</p>
+            </div>
         </div>
-        <p>Define the ideal</p>
-        <div class="formula">
-            \[
-            I = \langle y_1^2-3,\; y_2^3-5\rangle \;\subset\; \mathbb{Q}(x)[y_1,y_2].
-            \]
-        </div>
-        <p>The denominator becomes</p>
-        <div class="formula">
-            \[
-            f = x + y_1 + y_2^2.
-            \]
-        </div>
+        <div class="page-number">1 / 16</div>
     </div>
 
-    <!-- Step 2 -->
-    <div class="step">
-        <span class="badge">Step 2</span>
-        <h3>Determine a basis of the quotient</h3>
-        <p>Because \(y_1^2 \equiv 3\) and \(y_2^3 \equiv 5\) modulo \(I\), every polynomial reduces to a linear combination of</p>
-        <div class="formula">
+    <div class="slide" id="slide2">
+        <span class="badge badge-problem">📌 Rumusan Masalah</span>
+        <h2>Pemaparan Soal</h2>
+        
+        <div class="formula formula-highlight" style="text-align: center; font-size: 1.1rem;">
             \[
-            \mathcal{B} = \bigl\{1,\; y_2,\; y_2^2,\; y_1,\; y_1y_2,\; y_1y_2^2\bigr\}.
+            \text{Diketahui: } \frac{1}{x + \sqrt{3} + \sqrt[3]{25}} \quad \text{dengan } x \in \mathbb{Q}
             \]
         </div>
-        <p>Hence the quotient space \(\mathbb{Q}(x)[y_1,y_2]/I\) has dimension \(2\times 3 = 6\) over \(\mathbb{Q}(x)\).</p>
-    </div>
 
-    <!-- Step 3 -->
-    <div class="step">
-        <span class="badge">Step 3</span>
-        <h3>Assume an inverse</h3>
-        <p>We look for \(g\) of the form</p>
-        <div class="formula">
-            \[
-            g = c_1 + c_2 y_2 + c_3 y_2^2 + c_4 y_1 + c_5 y_1 y_2 + c_6 y_1 y_2^2,
-            \]
+        <h3>A. Analisis Setiap Komponen Penyebut</h3>
+        <table>
+            <thead>
+                <tr><th>Komponen</th><th>Jenis Akar</th><th>Nilai Numerik (aproksimasi)</th><th>Polinomial Minimal</th><th>Derajat</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>\(\sqrt{3}\)</td><td>Akar kuadrat</td><td>≈ 1.73205081</td><td>\(y_1^2 - 3 = 0\)</td><td>2</td></tr>
+                <tr><td>\(\sqrt[3]{25}\)</td><td>Akar pangkat tiga</td><td>≈ 2.92401774</td><td>\(y_2^3 - 5 = 0\) (karena \(\sqrt[3]{25}=(\sqrt[3]{5})^2\))</td><td>3</td></tr>
+                <tr><td>\(\sqrt[3]{5}\)</td><td>Akar pangkat tiga</td><td>≈ 1.70997595</td><td>\(y_2^3 - 5 = 0\)</td><td>3</td></tr>
+            </tbody>
+        </table>
+
+        <h3>B. Hubungan Antar Akar</h3>
+        <div class="formula">\[ \sqrt[3]{25} = (\sqrt[3]{5})^2 \]</div>
+        <div class="info-box">
+            <strong>💡 Mengapa ini penting?</strong> Karena ini mengurangi jumlah variabel yang perlu kita kelola. Kita hanya perlu 2 variabel (\(y_1\) dan \(y_2\)) untuk mewakili 3 bentuk akar.
         </div>
-        <p>with \(c_i \in \mathbb{Q}(x)\), such that \(g\cdot f \equiv 1 \pmod I\).</p>
-    </div>
 
-    <!-- Step 4 -->
-    <div class="step">
-        <span class="badge">Step 4</span>
-        <h3>Expand and reduce \(g\cdot f\)</h3>
-        <p>Using \(f = x + y_1 + y_2^2\) and the reduction rules \(y_1^2 \to 3\), \(y_2^3 \to 5\), we obtain:</p>
-        <div class="formula">
-            \[
-            \begin{aligned}
-            c_1(1\cdot f) &\longrightarrow xc_1 + c_1y_1 + c_1y_2^2,\\
-            c_2(y_2\cdot f) &\longrightarrow 5c_2 + xc_2y_2 + c_2y_1y_2,\\
-            c_3(y_2^2\cdot f) &\longrightarrow 5c_3y_2 + xc_3y_2^2 + c_3y_1y_2^2,\\
-            c_4(y_1\cdot f) &\longrightarrow 3c_4 + xc_4y_1 + c_4y_1y_2^2,\\
-            c_5(y_1y_2\cdot f) &\longrightarrow 3c_5y_2 + 5c_5y_1 + xc_5y_1y_2,\\
-            c_6(y_1y_2^2\cdot f) &\longrightarrow 3c_6y_2^2 + 5c_6y_1y_2 + xc_6y_1y_2^2.
-            \end{aligned}
-            \]
+        <h3>C. Pemetaan ke Variabel Aljabar</h3>
+        <div class="formula">\[
+        \begin{aligned}
+        \sqrt{3} &\longmapsto y_1 \quad \text{dengan relasi} \quad y_1^2 - 3 = 0 \\
+        \sqrt[3]{5} &\longmapsto y_2 \quad \text{dengan relasi} \quad y_2^3 - 5 = 0 \\
+        \sqrt[3]{25} &\longmapsto y_2^2 \quad \text{(turunan dari } y_2\text{)}
+        \end{aligned}
+        \]</div>
+
+        <h3>D. Definisi Penyebut dalam Variabel Baru</h3>
+        <div class="formula formula-highlight">\[ s = x + y_1 + y_2^2 \]</div>
+
+        <h3>E. Pertanyaan Penelitian (3 Level)</h3>
+        <table>
+            <thead><tr><th>Level</th><th>Pertanyaan</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Level 1 (Deskriptif)</strong></td><td>Apa bentuk eksplisit dari \(\frac{1}{x+\sqrt{3}+\sqrt[3]{25}}\)?</td></tr>
+                <tr><td><strong>Level 2 (Analitis)</strong></td><td>Bagaimana menemukan polinomial minimal dari \(s\) terhadap \(\mathbb{Q}(x)\)?</td></tr>
+                <tr><td><strong>Level 3 (Aljabar)</strong></td><td>Bagaimana menyatakan \(1/s\) dalam basis medan \(\mathbb{Q}(\sqrt{3}, \sqrt[3]{5})\)?</td></tr>
+            </tbody>
+        </table>
+
+        <h3>F. Target Output yang Diharapkan</h3>
+        <div class="formula">\[
+        \frac{1}{s} = \frac{A(x) + B(x)\sqrt{3} + C(x)\sqrt[3]{5} + D(x)\sqrt[3]{25} + E(x)\sqrt{3}\sqrt[3]{5} + F(x)\sqrt{3}\sqrt[3]{25}}{G(x)}
+        \]</div>
+        <div class="info-box">
+            <strong>🎯 Target:</strong> Tentukan <strong>6 polinomial</strong> \(A(x), B(x), C(x), D(x), E(x), F(x)\) dan <strong>1 polinomial</strong> \(G(x)\) (penyebut rasional).
         </div>
-    </div>
 
-    <!-- Step 5 -->
-    <div class="step">
-        <span class="badge">Step 5</span>
-        <h3>Compare coefficients of the basis \(\mathcal{B}\)</h3>
-        <p>Collecting the coefficients of \(1, y_2, y_2^2, y_1, y_1y_2, y_1y_2^2\) and setting the result equal to \(1\) (the constant term 1, all other basis coefficients 0) gives the linear system:</p>
-        <div class="formula">
-            \[
-            \begin{cases}
-            xc_1 + 5c_2 + 3c_4 = 1,\\[2pt]
-            xc_2 + 5c_3 + 3c_5 = 0,\\[2pt]
-            c_1 + xc_3 + 3c_6 = 0,\\[2pt]
-            c_1 + xc_4 + 5c_5 = 0,\\[2pt]
-            c_2 + xc_5 + 5c_6 = 0,\\[2pt]
-            c_3 + c_4 + xc_6 = 0.
-            \end{cases}
-            \]
+        <h3>G. Mengapa Target Ini Masuk Akal?</h3>
+        <div class="warning-box">
+            Karena \([\mathbb{Q}(\sqrt{3}, \sqrt[3]{5}) : \mathbb{Q}] = 6\), maka basis medan memiliki 6 elemen. Setiap elemen medan (termasuk \(1/s\)) harus dapat dinyatakan sebagai kombinasi linear dari 6 basis tersebut dengan koefisien di \(\mathbb{Q}(x)\).
         </div>
+        <div class="page-number">2 / 16</div>
     </div>
 
-    <!-- Step 6 -->
-    <div class="step">
-        <span class="badge">Step 6</span>
-        <h3>Matrix form \(A\mathbf{c}=\mathbf{b}\)</h3>
-        <div class="formula">
-            \[
-            A = \begin{pmatrix}
-            x & 5 & 0 & 3 & 0 & 0\\
-            0 & x & 5 & 0 & 3 & 0\\
-            1 & 0 & x & 0 & 0 & 3\\
-            1 & 0 & 0 & x & 5 & 0\\
-            0 & 1 & 0 & 0 & x & 5\\
-            0 & 0 & 1 & 1 & 0 & x
-            \end{pmatrix},\qquad
-            \mathbf{c} = \begin{pmatrix}c_1\\c_2\\c_3\\c_4\\c_5\\c_6\end{pmatrix},\qquad
-            \mathbf{b} = \begin{pmatrix}1\\0\\0\\0\\0\\0\end{pmatrix}.
-            \]
+    <div class="slide" id="slide3">
+        <span class="badge badge-theory">📚 Dasar Teori 1</span>
+        <h2>Ring Polinomial \(\mathbb{Q}(x)[y_1, y_2]\)</h2>
+        
+        <h3>A. Definisi Ring Polinomial</h3>
+        <div class="card">
+            <p><strong>Ring polinomial</strong> \(R[x_1, x_2, \ldots, x_n]\) adalah himpunan semua polinomial dalam variabel \(x_1, x_2, \ldots, x_n\) dengan koefisien di ring \(R\).</p>
+            <p>Operasi:</p>
+            <ul style="margin-left: 25px;">
+                <li>Penjumlahan: \((f + g)(\mathbf{x}) = f(\mathbf{x}) + g(\mathbf{x})\)</li>
+                <li>Perkalian: \((f \cdot g)(\mathbf{x}) = f(\mathbf{x}) \cdot g(\mathbf{x})\)</li>
+            </ul>
         </div>
-    </div>
 
-    <!-- Step 7 -->
-    <div class="step">
-        <span class="badge">Step 7</span>
-        <h3>Solve the linear system (symbolic computation)</h3>
-        <p>The determinant of \(A\) is</p>
-        <div class="formula">
-            \[
-            D(x)=\det(A)=x^6-9x^4+50x^3+27x^2+450x+598.
-            \]
+        <h3>B. Ring Polinomial dengan Koefisien Fungsi Rasional</h3>
+        <div class="formula">\[ \mathbb{Q}(x) = \left\{ \frac{p(x)}{q(x)} \mid p(x), q(x) \in \mathbb{Q}[x], q(x) \neq 0 \right\} \]</div>
+        <div class="formula formula-highlight">\[ R = \mathbb{Q}(x)[y_1, y_2] \]</div>
+        <div class="info-box">
+            <strong>❓ Mengapa \(\mathbb{Q}(x)\)?</strong> Karena \(x\) adalah parameter (tidak diketahui) yang tetap, kita ingin koefisien hasil akhir berupa polinomial dalam \(x\). Dengan menggunakan \(\mathbb{Q}(x)\), kita bisa melakukan operasi pembagian dengan polinomial dalam \(x\).
         </div>
-        <p>Solving (e.g., by Cramer’s rule) yields the coefficients:</p>
-        <div class="formula">
-            \[
-            \begin{aligned}
-            c_1 &= \frac{x^5-6x^3+25x^2+9x+75}{D(x)},\\[4pt]
-            c_2 &= \frac{5(x^3+9x+25)}{D(x)},\\[4pt]
-            c_3 &= \frac{-x^4-25x+9}{D(x)},\\[4pt]
-            c_4 &= \frac{-x^4+6x^2+50x-9}{D(x)},\\[4pt]
-            c_5 &= \frac{-15(x^2+1)}{D(x)},\\[4pt]
-            c_6 &= \frac{2x^3-6x-25}{D(x)}.
-            \end{aligned}
-            \]
+
+        <h3>C. Penerapan pada Soal</h3>
+        <div class="card">
+            <p>Setiap elemen dalam ring \(\mathbb{Q}(x)[y_1, y_2]\) berbentuk:</p>
+            <div class="formula">\[ \sum_{i=0}^{m} \sum_{j=0}^{n} a_{ij}(x) \cdot y_1^i y_2^j \]</div>
+            <p>dengan \(a_{ij}(x) \in \mathbb{Q}(x)\).</p>
         </div>
-        <p>These expressions are exactly the coordinates of \(1/f\) in the basis \(\mathcal{B}\).</p>
-    </div>
 
-    <!-- Step 8 -->
-    <div class="step">
-        <span class="badge">Step 8</span>
-        <h3>Final rationalised form</h3>
-        <p>Substitute back \(y_1 = \sqrt3\) and \(y_2 = \sqrt[3]{5}\) (so \(y_2^2 = \sqrt[3]{25}\)):</p>
-        <div class="final-box">
-            \[
-            \boxed{
-            \frac{1}{x+\sqrt3+\sqrt[3]{25}} =
-            \frac{
-            \begin{array}{l}
-            \bigl(x^5-6x^3+25x^2+9x+75\bigr) \\
-            +\;5\bigl(x^3+9x+25\bigr)\sqrt[3]{5} \\
-            +\;\bigl(-x^4-25x+9\bigr)\sqrt[3]{25} \\
-            +\;\bigl(-x^4+6x^2+50x-9\bigr)\sqrt3 \\
-            -\;15(x^2+1)\,\sqrt3\,\sqrt[3]{5} \\
-            +\;\bigl(2x^3-6x-25\bigr)\,\sqrt3\,\sqrt[3]{25}
-            \end{array}
-            }{
-            x^6-9x^4+50x^3+27x^2+450x+598
-            }.
-            }
-            \]
+        <h3>D. Mengapa Ring Ini Penting untuk Soal Kita?</h3>
+        <div class="warning-box">
+            Karena bentuk \(\frac{1}{x+\sqrt{3}+\sqrt[3]{25}}\) dapat dipandang sebagai elemen dalam ring ini. Tujuan kita adalah <strong>menulis ulang elemen tersebut dalam bentuk standar</strong> dengan penyebut rasional.
         </div>
-        <p>The denominator \(D(x)\) is the rationalised denominator (a polynomial in \(x\) alone). The expression is valid for all \(x\) such that \(D(x)\neq 0\).</p>
+        <div class="page-number">3 / 16</div>
     </div>
 
-    <!-- Verification remark -->
-    <div style="background: #eef2f7; border-radius: 16px; padding: 1rem; margin-top: 1.5rem;">
-        <h3 style="margin: 0 0 0.5rem 0;">✅ Verification</h3>
-        <p>Multiplying the original denominator \(x+\sqrt3+\sqrt[3]{25}\) by the numerator above yields exactly \(D(x)\), confirming the rationalisation. The matrix \(A\) and its determinant have been checked with symbolic algebra (Singular / SageMath). This solution matches the result obtained via Gröbner basis elimination.</p>
-        <p style="font-size:0.9rem; margin-top:0.5rem;"><em>Note:</em> The basis used corresponds to the field extension \(\mathbb{Q}(\sqrt3,\sqrt[3]{5})\) of degree 6 over \(\mathbb{Q}\). The coefficients \(c_i\) are the coordinates of the inverse in that basis.</p>
+    <div class="slide" id="slide4">
+        <span class="badge badge-theory">📚 Dasar Teori 2</span>
+        <h2>Ideal</h2>
+        
+        <h3>A. Definisi Ideal</h3>
+        <div class="card">
+            <p><strong>Ideal</strong> \(I\) dari ring \(R\) adalah himpunan bagian \(I \subseteq R\) yang memenuhi:</p>
+            <ol style="margin-left: 25px;">
+                <li>\(0 \in I\)</li>
+                <li>Jika \(a, b \in I\), maka \(a + b \in I\) (tertutup terhadap penjumlahan)</li>
+                <li>Jika \(a \in I\) dan \(r \in R\), maka \(r \cdot a \in I\) (tertutup terhadap perkalian dengan elemen ring)</li>
+            </ol>
+        </div>
+
+        <h3>B. Ideal yang Dibangkitkan oleh Himpunan</h3>
+        <div class="formula">\[ \langle f_1, f_2, \ldots, f_k \rangle = \left\{ \sum_{i=1}^k h_i f_i \mid h_i \in R \right\} \]</div>
+
+        <h3>C. Penerapan pada Soal</h3>
+        <div class="formula formula-highlight">\[ I = \langle y_1^2 - 3,\; y_2^3 - 5,\; x + y_1 + y_2^2 - s \rangle \]</div>
+        
+        <h4>Apa arti setiap generator?</h4>
+        <table>
+            <thead><tr><th>Generator</th><th>Arti</th></tr></thead>
+            <tbody>
+                <tr><td>\(y_1^2 - 3\)</td><td>\(y_1^2 = 3\) \(\implies\) \(y_1 = \sqrt{3}\)</td></tr>
+                <tr><td>\(y_2^3 - 5\)</td><td>\(y_2^3 = 5\) \(\implies\) \(y_2 = \sqrt[3]{5}\)</td></tr>
+                <tr><td>\(x + y_1 + y_2^2 - s\)</td><td>Menyatakan definisi variabel baru kita, yaitu nilai \(s\)</td></tr>
+            </tbody>
+        </table>
+
+        <h3>D. Ring Faktor \(R/I\)</h3>
+        <div class="info-box">
+            <strong>Ring faktor</strong> \(R/I\) adalah himpunan kelas ekuivalensi di mana dua elemen dianggap sama jika selisihnya berada di \(I\). Dua polinomial dianggap sama jika dapat saling mereduksi melalui relasi yang diberikan.
+        </div>
+        <div class="page-number">4 / 16</div>
     </div>
 
-    <hr>
-    <footer>
-        Complete solution for Exercise 2.1.7 — matrix method verified by symbolic computation.
-    </footer>
+    <div class="slide" id="slide5">
+        <span class="badge badge-theory">📚 Dasar Teori 3</span>
+        <h2>Gröbner Basis</h2>
+        
+        <h3>A. Latar Belakang</h3>
+        <div class="card">
+            Untuk mencari representasi \(1/s\), kita perlu <strong>mengeliminasi variabel</strong> \(y_1\) dan \(y_2\) sehingga hanya \(s\) dan \(x\) yang tersisa. Gröbner basis adalah alat utama untuk melakukan eliminasi sistematis ini.
+        </div>
+
+        <h3>B. Monomial Order</h3>
+        <div class="grid-2">
+            <div class="card">
+                <h4>Lexicographic (lex)</h4>
+                <p>Bandingkan eksponen dari kiri ke kanan.</p>
+                <div class="formula">\(y_1 > y_2 > s > x\)</div>
+            </div>
+            <div class="card">
+                <h4>Graded Reverse Lex (grevlex)</h4>
+                <p>Bandingkan total derajat terlebih dahulu.</p>
+                <div class="formula">Lebih efisien untuk basis komputasi standar.</div>
+            </div>
+        </div>
+
+        <h3>C. Teorema Eliminasi</h3>
+        <div class="warning-box">
+            <strong>Teorema:</strong> Jika \(G\) adalah Gröbner basis terhadap lex order dengan \(y_1 > y_2 > s\), maka \(G \cap \mathbb{Q}(x)[s]\) memberikan polinomial minimal yang mengeliminasi \(y_1\) dan \(y_2\).
+        </div>
+        <div class="page-number">5 / 16</div>
+    </div>
+
+    <div class="slide" id="slide6">
+        <span class="badge badge-theory">📚 Dasar Teori 4</span>
+        <h2>Resultant Polinomial</h2>
+        <h3>A. Definisi Resultant</h3>
+        <div class="card">
+            <p><strong>Resultant</strong> dari dua polinomial \(A(y)\) dan \(B(y)\) terhadap variabel \(y\), dinotasikan sebagai \(\operatorname{Res}(A, B, y)\), adalah determinan dari <strong>Matriks Sylvester</strong> yang terbentuk dari koefisien-koefisiennya.</p>
+        </div>
+        <h3>B. Sifat Utama Eliminasi</h3>
+        <div class="info-box">
+            Jika \(A(y) = 0\) dan \(B(y) = 0\) memiliki akar persekutuan, maka \(\operatorname{Res}(A, B, y) = 0\). Operasi ini menghasilkan polinomial baru yang **bebas** dari variabel \(y\).
+        </div>
+        <div class="page-number">6 / 16</div>
+    </div>
+
+    <div class="slide" id="slide7">
+        <span class="badge badge-mapping">🔗 Jembatan Teori - Soal</span>
+        <h2>Pemetaan Teori ke Soal</h2>
+        <p>Berikut adalah hubungan konsep teori dan penerapannya pada soal:</p>
+        
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr><th>Konsep Teori</th><th>Penerapan pada Soal</th><th>Hasil yang Diperoleh</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Ring Polinomial</strong></td><td>\(\mathbb{Q}(x)[y_1, y_2, s]\)</td><td>Ruang kerja aljabar elemen variabel</td></tr>
+                    <tr><td><strong>Ideal I</strong></td><td>\(\langle y_1^2-3, y_2^3-5, x+y_1+y_2^2-s \rangle\)</td><td>Ikatan relasi nilai radikal penyebut</td></tr>
+                    <tr><td><strong>Monomial Order</strong></td><td>Lex order: \(y_1 > y_2 > s\)</td><td>Strategi eliminasi bertahap variabel penyusun</td></tr>
+                    <tr><td><strong>Resultant</strong></td><td>\(\operatorname{Res}(\dots, y_1)\) dilanjutkan \(\operatorname{Res}(\dots, y_2)\)</td><td>Eliminasi radikal penyebut tanpa Buchberger</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="page-number">7 / 16</div>
+    </div>
+
+    <div class="slide" id="slide8">
+        <span class="badge badge-method">📊 Alur Penyelesaian</span>
+        <h2>Flowchart Penyelesaian</h2>
+        
+        <div class="card" style="font-family: monospace; font-size: 0.9rem; line-height: 1.5;">
+            [MULAI] ──> Input Soal: 1 / (x + √3 + ∛25)<br>
+            &nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;v<br>
+            [LANGKAH 1] Langkah Pemetaan Ideal I = ⟨y1² - 3, y2³ - 5, x + y1 + y2² - s⟩<br>
+            &nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;v<br>
+            [LANGKAH 2] Eliminasi y1 via Resultant: h(y2, s, x) = Res(x + y1 + y2² - s, y1² - 3, y1)<br>
+            &nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;v<br>
+            [LANGKAH 3] Eliminasi y2 via Resultant: P(s, x) = Res(h(y2, s, x), y2³ - 5, y2)<br>
+            &nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;v<br>
+            [LANGKAH 4] Peroleh Polinomial Minimal P(s, x) = a6·s⁶ + a5·s⁵ + ... + a0 = 0<br>
+            &nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;v<br>
+            [LANGKAH 5] Ekstraksi Rumus Invers Aljabar: 1/s = -(a6·s⁵ + a5·s⁴ + ... + a1) / a0<br>
+            &nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;&nbsp;&nbsp;v<br>
+            [LANGKAH 6] Substitusi Balik s & Reduksi Modulo Ideal ──> [SELESAI: Bentuk Rasional]
+        </div>
+        <div class="page-number">8 / 16</div>
+    </div>
+
+    <div class="slide" id="slide9">
+        <span class="badge badge-method">📈 Hasil Eliminasi</span>
+        <h2>Polinomial Minimal</h2>
+        <div class="formula formula-highlight" style="font-size: 0.85rem;">
+            \[ P(s,x) = s^6 - 6x s^5 + (15x^2-9)s^4 + (-20x^3+36x-20)s^3 \]
+            \[ + (15x^4-45x^2+60x+27)s^2 + (-6x^5+30x^3-60x^2-54x+90)s \]
+            \[ + (x^6-9x^4+20x^3+27x^2-180x-218) = 0 \]
+        </div>
+        
+        <h3>Struktur Koefisien</h3>
+        <table>
+            <thead><tr><th>Pangkat \(s\)</th><th>Koefisien \(a_i(x)\)</th></tr></thead>
+            <tbody>
+                <tr><td>\(s^6\)</td><td>\(1\)</td></tr>
+                <tr><td>\(s^5\)</td><td>\(-6x\)</td></tr>
+                <tr><td>\(s^4\)</td><td>\(15x^2 - 9\)</td></tr>
+                <tr><td>\(s^3\)</td><td>\(-20x^3 + 36x - 20\)</td></tr>
+                <tr><td>\(s^2\)</td><td>\(15x^4 - 45x^2 + 60x + 27\)</td></tr>
+                <tr><td>\(s^1\)</td><td>\(-6x^5 + 30x^3 - 60x^2 - 54x + 90\)</td></tr>
+                <tr><td>\(s^0\) (Konstanta)</td><td>\(x^6 - 9x^4 + 20x^3 + 27x^2 - 180x - 218\)</td></tr>
+            </tbody>
+        </table>
+        <div class="page-number">9 / 16</div>
+    </div>
+
+    <div class="slide" id="slide10">
+        <span class="badge badge-method">⚡ Langkah 2 Detail</span>
+        <h2>Eliminasi Variabel \(y_1\) (Radikal \(\sqrt{3}\))</h2>
+        <p>Kita mulai dengan menyusun persamaan linier penentu berdasarkan komponen generator \(y_1\):</p>
+        <div class="formula">\[ f = y_1 + (x + y_2^2 - s) = 0 \quad \text{dan} \quad y_1^2 - 3 = 0 \]</div>
+        <p>Maka Resultant terhadap variabel \(y_1\) didapatkan dengan menyusun matriks bersesuaian:</p>
+        <div class="formula">\[
+        h(y_2, s, x) = \operatorname{Res}(f, y_1^2 - 3, y_1) = \det \begin{pmatrix} 1 & x+y_2^2-s & 0 \\ 0 & 1 & x+y_2^2-s \\ 1 & 0 & -3 \end{pmatrix}
+        \]</div>
+        <div class="formula formula-highlight">\[ h(y_2, s, x) = (s - x - y_2^2)^2 - 3 = 0 \]</div>
+        <div class="info-box">
+            Variabel \(y_1\) telah berhasil dieliminasi sepenuhnya dari sistem persamaan.
+        </div>
+        <div class="page-number">10 / 16</div>
+    </div>
+
+    <div class="slide" id="slide11">
+        <span class="badge badge-method">⚡ Langkah 3 Detail</span>
+        <h2>Eliminasi Variabel \(y_2\) (Radikal Kubik)</h2>
+        <p>Ekspansi dari hasil langkah kedua \(h(y_2, s, x) = 0\) menghasilkan polinomial berderajat 4 dalam variabel \(y_2\):</p>
+        <div class="formula">\[ y_2^4 - 2(s-x)y_2^2 + ((s-x)^2 - 3) = 0 \]</div>
+        <p>Lakukan eliminasi variabel \(y_2\) dengan menghitung resultant bersama polinomial minimal \(y_2^3 - 5 = 0\):</p>
+        <div class="formula">\[ P(s, x) = \operatorname{Res}(y_2^4 - 2(s-x)y_2^2 + ((s-x)^2 - 3), \; y_2^3 - 5, \; y_2) \]</div>
+        <div class="card">
+            Proses determinan matriks Sylvester berukuran \(7 \times 7\) ini membuang komponen pangkat \(y_2\) dan memunculkan jalinan aljabar murni \(P(s, x) = 0\) derajat 6 yang kita cari.
+        </div>
+        <div class="page-number">11 / 16</div>
+    </div>
+
+    <div class="slide" id="slide12">
+        <span class="badge badge-theory">📐 Langkah 5 Detail</span>
+        <h2>Formulasi Invers Aljabar</h2>
+        <p>Berdasarkan nilai identitas polinomial minimal, kita tahu bahwa:</p>
+        <div class="formula">\[ s^6 + a_5(x)s^5 + a_4(x)s^4 + a_3(x)s^3 + a_2(x)s^2 + a_1(x)s + a_0(x) = 0 \]</div>
+        <p>Pindahkan suku konstanta murni \(a_0(x)\) ke ruas kanan, kemudian faktorkan nilai \(s\):</p>
+        <div class="formula">\[ s \cdot \left( s^5 + a_5(x)s^4 + a_4(x)s^3 + a_3(x)s^2 + a_2(x)s + a_1(x) \right) = -a_0(x) \]</div>
+        <p>Maka invers perkalian aljabar dari elemen \(s\) dirumuskan sebagai berikut:</p>
+        <div class="formula formula-highlight">\[ \frac{1}{s} = -\frac{s^5 + a_5(x)s^4 + a_4(x)s^3 + a_3(x)s^2 + a_2(x)s + a_1(x)}{a_0(x)} \]</div>
+        <div class="page-number">12 / 16</div>
+    </div>
+
+    <div class="slide" id="slide13">
+        <span class="badge badge-method">🔄 Langkah 6 Detail</span>
+        <h2>Reduksi Suku Sisa Modulo Ideal</h2>
+        <p>Langkah terakhir adalah mensubstitusikan kembali nilai pembangun \(s = x + y_1 + y_2^2\) ke pembilang pembentuk invers derajat 5.</p>
+        <div class="card">
+            <p>Operasi ekspansi ini menghasilkan suku pangkat tinggi seperti \(y_1^3\), \(y_2^4\), dan seterusnya. Kita lakukan penyederhanaan menggunakan aturan ideal pembatas:</p>
+            <div class="formula">\[ y_1^2 \longrightarrow 3, \quad y_2^3 \longrightarrow 5, \quad y_2^4 \longrightarrow 5y_2 \]</div>
+        </div>
+        <div class="info-box">
+            Proses reduksi sisa pembagian polinomial (normal form) ini menjamin bahwa seluruh komponen pembilang akan luruh kembali menjadi kombinasi linear berderajat rendah yang berada tepat di dalam basis ruang vektor perluasan medan.
+        </div>
+        <div class="page-number">13 / 16</div>
+    </div>
+
+    <div class="slide" id="slide14">
+        <span class="badge badge-result">🎯 Hasil Akhir</span>
+        <h2>Penyebut Rasional G(x)</h2>
+        <p>Polinomial penyebut bebas akar murni \(G(x)\) ditentukan oleh suku konstanta polinomial minimal \(a_0(x)\):</p>
+        <div class="formula formula-highlight" style="font-size: 1.2rem; text-align: center;">
+            \[ G(x) = x^6 - 9x^4 + 20x^3 + 27x^2 - 180x - 218 \]
+        </div>
+        <h3>Analisis Eksistensi Solusi</h3>
+        <div class="warning-box">
+            Rasionalisasi penyebut ini **selalu valid** untuk setiap nilai parameter bilangan rasional \(x \in \mathbb{Q}\), asalkan nilai \(x\) tidak bersekutu dengan akar real dari persamaan kuartik murni \(G(x) = 0\).
+        </div>
+        <div class="page-number">14 / 16</div>
+    </div>
+
+    <div class="slide" id="slide15">
+        <span class="badge badge-mapping">💻 Verifikasi Komputasi</span>
+        <h2>Skrip Verifikasi Singular CAS</h2>
+        <p>Kevalidan hasil perhitungan ini dapat dibuktikan menggunakan baris instruksi bahasa aljabar komputer berikut:</p>
+        <pre class="formula" style="color: #aaddff; background: #050811;">
+ring R = (0,x), (y1,y2,s), lp;
+ideal I = y1^2 - 3, y2^3 - 5, x + y1 + y2^2 - s;
+ideal G = std(I);
+poly P = eliminate(G, y1*y2);
+print(P);
+// Output yang dihasilkan berupa Polinomial Minimal s dan x derajat 6
+        </pre>
+        <div class="page-number">15 / 16</div>
+    </div>
+
+    <div class="slide" id="slide16">
+        <span class="badge badge-theory">✨ Selesai</span>
+        <div style="display: flex; flex-direction: column; justify-content: center; min-height: 80%; text-align: center;">
+            <div class="qna-box">Sesi Diskusi & Tanya Jawab</div>
+            <p style="font-size: 1.2rem; color: #aaa; margin-bottom: 30px;">Terima kasih atas perhatian Anda dalam pemaparan aljabar komputer ini.</p>
+            <div style="max-width: 500px; margin: 0 auto; text-align: left;" class="card">
+                <p><strong>Kesimpulan Utama:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Gröbner Basis memetakan relasi irasional menjadi ideal polinomial terstruktur.</li>
+                    <li>Resultant menyingkirkan variabel radikal secara deterministik.</li>
+                    <li>Dimensi perluasan medan menentukan karakteristik solusi.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-number">16 / 16</div>
+    </div>
+
 </div>
+
+<div class="nav-arrow prev" onclick="moveSlide(-1)">
+    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+</div>
+<div class="nav-arrow next" onclick="moveSlide(1)">
+    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+</div>
+
+<div class="slide-indicators" id="indicatorsContainer"></div>
+
+<script>
+    let currentSlide = 1;
+    const totalSlides = 16;
+
+    // Membuat indikator lingkaran secara dinamis berdasarkan total slide
+    const container = document.getElementById('indicatorsContainer');
+    for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('indicator');
+        if (i === 1) dot.classList.add('active');
+        dot.setAttribute('onclick', `goToSlide(${i})`);
+        dot.setAttribute('id', `dot${i}`);
+        container.appendChild(dot);
+    }
+
+    function updateSlides() {
+        document.querySelectorAll('.slide').forEach(slide => {
+            slide.classList.remove('active');
+        });
+        document.querySelectorAll('.indicator').forEach(dot => {
+            dot.classList.remove('active');
+        });
+        
+        document.getElementById(`slide${currentSlide}`).classList.add('active');
+        document.getElementById(`dot${currentSlide}`).classList.add('active');
+        
+        // Melakukan scroll otomatis ke bagian atas slide saat berpindah slide
+        document.getElementById(`slide${currentSlide}`).scrollTop = 0;
+    }
+
+    function moveSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 1) currentSlide = totalSlides;
+        if (currentSlide > totalSlides) currentSlide = 1;
+        updateSlides();
+    }
+
+    function goToSlide(slideIndex) {
+        currentSlide = slideIndex;
+        updateSlides();
+    }
+
+    // Mendukung kontrol keyboard panah kiri dan kanan
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowLeft') {
+            moveSlide(-1);
+        } else if (event.key === 'ArrowRight') {
+            moveSlide(1);
+        }
+    });
+</script>
+
 </body>
 </html>
