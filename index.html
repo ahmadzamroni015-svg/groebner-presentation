@@ -6,7 +6,7 @@
     <title>Correct Solution | Rationalizing 1/(x+√3+∛25) – Matrix Method + Singular Code</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
-        /* === Complete CSS (unchanged, black/blue/orange neon theme) === */
+        /* === Complete CSS (black/blue/orange neon theme) === */
         * {
             margin: 0;
             padding: 0;
@@ -367,6 +367,16 @@
             font-size: 13px;
         }
 
+        /* Info Box */
+        .info-box {
+            background: rgba(0, 178, 255, 0.1);
+            border-left: 4px solid #00B2FF;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-size: 0.85rem;
+        }
+
         /* Page Number */
         .page-number {
             position: absolute;
@@ -435,7 +445,7 @@
                 <p class="animate-item" style="color:#aaa;">Complete solution using the quotient ring & matrix method</p>
                 <p class="animate-item" style="margin-top: 20px; font-size: 0.9rem;">▼ Use arrow keys or buttons to navigate ▼</p>
             </div>
-            <div class="page-number">1 / 9</div>
+            <div class="page-number">1 / 10</div>
         </div>
 
         <!-- SLIDE 2: Step 1 -->
@@ -450,7 +460,7 @@
                 <p>The denominator becomes</p>
                 <div class="formula">\[ f = x + y_1 + y_2^2. \]</div>
             </div>
-            <div class="page-number">2 / 9</div>
+            <div class="page-number">2 / 10</div>
         </div>
 
         <!-- SLIDE 3: Step 2 -->
@@ -462,7 +472,7 @@
                 <div class="formula">\[ \mathcal{B} = \{1,\; y_2,\; y_2^2,\; y_1,\; y_1y_2,\; y_1y_2^2\}. \]</div>
                 <p>Hence the quotient space has dimension \(2\times 3 = 6\) over \(\mathbb{Q}(x)\).</p>
             </div>
-            <div class="page-number">3 / 9</div>
+            <div class="page-number">3 / 10</div>
         </div>
 
         <!-- SLIDE 4: Step 3 & 4 combined -->
@@ -485,7 +495,7 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">4 / 9</div>
+            <div class="page-number">4 / 10</div>
         </div>
 
         <!-- SLIDE 5: Step 5 -->
@@ -507,7 +517,7 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">5 / 9</div>
+            <div class="page-number">5 / 10</div>
         </div>
 
         <!-- SLIDE 6: Step 6 -->
@@ -530,7 +540,7 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">6 / 9</div>
+            <div class="page-number">6 / 10</div>
         </div>
 
         <!-- SLIDE 7: Step 7 -->
@@ -554,7 +564,7 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">7 / 9</div>
+            <div class="page-number">7 / 10</div>
         </div>
 
         <!-- SLIDE 8: Step 8 – Final rationalised form -->
@@ -584,7 +594,7 @@
                 </div>
                 <p>The denominator \(D(x)\) is the rationalised denominator (a polynomial in \(x\) alone).</p>
             </div>
-            <div class="page-number">8 / 9</div>
+            <div class="page-number">8 / 10</div>
         </div>
 
         <!-- SLIDE 9: Singular CAS verification code -->
@@ -658,7 +668,7 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
 // ============================================================
                     </pre>
                 </div>
-                <div class="info-box" style="margin-top: 15px; background: rgba(0, 178, 255, 0.1); border-left: 4px solid #00B2FF; padding: 10px;">
+                <div class="info-box">
                     <strong>💡 Explanation:</strong><br>
                     • <strong>Ring definition</strong>: \(\mathbb{Q}(x)[y_1,y_2]\) with lex order.<br>
                     • <strong>Ideal I</strong>: encodes \(y_1^2=3,\; y_2^3=5\).<br>
@@ -670,7 +680,20 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
                     • The final expression matches the boxed result in Step 8.
                 </div>
             </div>
-            <div class="page-number">9 / 9</div>
+            <div class="page-number">9 / 10</div>
+        </div>
+
+        <!-- SLIDE 10: Thank you / End slide -->
+        <div class="slide" id="slide10">
+            <div style="display: flex; flex-direction: column; justify-content: center; min-height: 70%; text-align: center;">
+                <div class="qna-box" style="font-size: clamp(28px, 5vw, 40px); display: inline-block; padding: 20px 40px; border: 1px solid #FF5E00; border-radius: 12px; margin: 30px auto;">
+                    ✓ Thank You
+                </div>
+                <p style="color:#00B2FF; font-size: 1.2rem;">Full solution complete – rationalization verified.</p>
+                <p style="margin-top: 20px; color: #aaa;">Matrix method + Singular CAS verification.</p>
+                <p style="margin-top: 40px; font-size: 0.9rem;">End of presentation. Use arrow keys to review.</p>
+            </div>
+            <div class="page-number">10 / 10</div>
         </div>
     </div>
 
@@ -706,7 +729,7 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         let currentSlide = 0;
-        const totalSlides = slides.length;  // = 9
+        const totalSlides = slides.length;  // = 10
 
         // Create indicators dynamically
         for (let i = 0; i < totalSlides; i++) {
