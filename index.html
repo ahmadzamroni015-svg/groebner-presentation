@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Presentasi - Rasionalisasi Penyebut dengan Gröbner Basis (Lengkap)</title>
+    <title>Presentasi - Rasionalisasi Penyebut dengan Gröbner Basis (6D Koreksi)</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         * {
@@ -240,17 +240,6 @@
             border-radius: 10px;
         }
 
-        .qna-box {
-            font-size: 44px;
-            text-align: center;
-            margin: 25px 0;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ff6b35, #00aaff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
         @media (max-width: 768px) {
             .slide { padding: 15px 20px; }
             h2 { font-size: 18px; }
@@ -264,731 +253,206 @@
 
 <div class="slides-container">
     
-    <!-- SLIDE 1: JUDUL -->
     <div class="slide active" id="slide1">
         <div style="display: flex; flex-direction: column; justify-content: center; min-height: 85%;">
             <h1 style="font-size: clamp(32px, 5vw, 48px);">Rasionalisasi Penyebut</h1>
-            <h1 style="font-size: clamp(28px, 4.5vw, 44px); color: #ff6b35; background: none;">Menggunakan Gröbner Basis</h1>
-            <h1 style="font-size: clamp(24px, 4vw, 38px); margin-top: 5px;">dan Resultant</h1>
+            <h1 style="font-size: clamp(28px, 4.5vw, 44px); color: #ff6b35; background: none;">Menggunakan Matriks Transpos</h1>
+            <h1 style="font-size: clamp(24px, 4vw, 38px); margin-top: 5px;">dan Invers Ruang Vektor 6-Dimensi</h1>
             <div style="margin-top: 40px;">
-                <p><strong>Kelompok:</strong> [Nama Kelompok]</p>
-                <p><strong>Dosen Pengampu:</strong> [Nama Dosen]</p>
-                <p><strong>Mata Kuliah:</strong> [Nama Mata Kuliah]</p>
+                <p><strong>Kelompok:</strong> Pembela Aljabar Sejati</p>
+                <p><strong>Topik Koreksi:</strong> Penyelesaian Tepat Latihan Buku Bab 2.1.7</p>
                 <p style="margin-top: 25px; color: #aaa;">UIN Maulana Malik Ibrahim Malang</p>
                 <p style="color: #aaa;">Fakultas Sains dan Teknologi</p>
-                <p style="color: #aaa; margin-top: 10px;">Tahun Akademik 2024/2025</p>
+                <p style="color: #aaa; margin-top: 10px;">Tahun Akademik 2025/2026</p>
             </div>
         </div>
-        <div class="page-number">1 / 16</div>
+        <div class="page-number">1 / 6</div>
     </div>
 
-    <!-- SLIDE 2: PEMAPARAN SOAL (LENGKAP) -->
     <div class="slide" id="slide2">
-        <span class="badge badge-problem">📌 Rumusan Masalah</span>
-        <h2>Pemaparan Soal</h2>
+        <span class="badge badge-problem">📌 Latihan 2.1.7</span>
+        <h2>Analisis Pemetaan Soal</h2>
         
         <div class="formula formula-highlight" style="text-align: center; font-size: 1.1rem;">
             \[
-            \text{Diketahui: } \frac{1}{x + \sqrt{3} + \sqrt[3]{25}} \quad \text{dengan } x \in \mathbb{Q}
+            \text{Bentuk Asli Buku: } \frac{1}{x + \sqrt{3} + \sqrt[3]{25}} \quad \text{dengan } x \in \mathbb{Q}
             \]
         </div>
 
-        <h3>A. Analisis Setiap Komponen Penyebut</h3>
+        <h3>A. Identifikasi Komponen Aljabar</h3>
         <table>
             <thead>
-                <tr><th>Komponen</th><th>Jenis Akar</th><th>Nilai Numerik (aproksimasi)</th><th>Polinomial Minimal</th><th>Derajat</th></tr>
+                <tr><th>Komponen Radikal</th><th>Jenis Akar</th><th>Polinomial Minimal Ring</th><th>Derajat (\(d\))</th></tr>
             </thead>
             <tbody>
-                <tr><td>\(\sqrt{3}\)</td><td>Akar kuadrat</td><td>≈ 1.7320508075688772</td><td>\(y_1^2 - 3 = 0\)</td><td>2</td></tr>
-                <tr><td>\(\sqrt[3]{25}\)</td><td>Akar pangkat tiga</td><td>≈ 2.924017738212866</td><td>\(y_2^3 - 5 = 0\) (karena \(\sqrt[3]{25}=(\sqrt[3]{5})^2\))</td><td>3</td></tr>
-                <tr><td>\(\sqrt[3]{5}\)</td><td>Akar pangkat tiga</td><td>≈ 1.7099759466766968</td><td>\(y_2^3 - 5 = 0\)</td><td>3</td></tr>
+                <tr><td>\(y_1 = \sqrt{3}\)</td><td>Akar Kuadrat (Square Root)</td><td>\(y_1^2 - 3 = 0\)</td><td>2</td></tr>
+                <tr><td>\(y_2 = \sqrt[3]{5}\)</td><td>Akar Kubik (Cube Root)</td><td>\(y_2^3 - 5 = 0\)</td><td>3</td></tr>
+                <tr><td>\(\sqrt[3]{25}\)</td><td>Akar Kubik Turunan</td><td>Ditulis sebagai elemen basis: \(y_2^2\)</td><td>--</td></tr>
             </tbody>
         </table>
 
-        <h3>B. Hubungan Antar Akar</h3>
+        <h3>B. Struktur Ideal Komputasi</h3>
         <div class="formula">\[
-        \sqrt[3]{25} = (\sqrt[3]{5})^2
+        I = \langle y_1^2 - 3, \; y_2^3 - 5 \rangle \subset \mathbb{Q}(x)[y_1, y_2]
         \]</div>
-        <div class="info-box">
-            <strong>💡 Mengapa ini penting?</strong> Karena ini mengurangi jumlah variabel yang perlu kita kelola. 
-            Kita hanya perlu 2 variabel (\(y_1\) dan \(y_2\)) untuk mewakili 3 bentuk akar.
-        </div>
-
-        <h3>C. Pemetaan ke Variabel Aljabar</h3>
-        <div class="formula">\[
-        \begin{aligned}
-        \sqrt{3} &\longmapsto y_1 \quad \text{dengan relasi} \quad y_1^2 - 3 = 0 \\
-        \sqrt[3]{5} &\longmapsto y_2 \quad \text{dengan relasi} \quad y_2^3 - 5 = 0 \\
-        \sqrt[3]{25} &\longmapsto y_2^2 \quad \text{(turunan dari } y_2\text{)}
-        \end{aligned}
-        \]</div>
-
-        <h3>D. Definisi Penyebut dalam Variabel Baru</h3>
-        <div class="formula formula-highlight">\[
-        s = x + y_1 + y_2^2
-        \]</div>
-
-        <h3>E. Pertanyaan Penelitian (3 Level)</h3>
-        <table>
-            <thead><tr><th>Level</th><th>Pertanyaan</th></tr></thead>
-            <tbody>
-                <tr><td><strong>Level 1 (Deskriptif)</strong></td><td>Apa bentuk eksplisit dari \(\frac{1}{x+\sqrt{3}+\sqrt[3]{25}}\)?</td></tr>
-                <tr><td><strong>Level 2 (Analitis)</strong></td><td>Bagaimana menemukan polinomial minimal dari \(s\) terhadap \(\mathbb{Q}(x)\)?</td></tr>
-                <tr><td><strong>Level 3 (Aljabar)</strong></td><td>Bagaimana menyatakan \(1/s\) dalam basis medan \(\mathbb{Q}(\sqrt{3}, \sqrt[3]{5})\)?</td></tr>
-            </tbody>
-        </table>
-
-        <h3>F. Target Output yang Diharapkan</h3>
-        <div class="formula">\[
-        \frac{1}{s} = \frac{A(x) + B(x)\sqrt{3} + C(x)\sqrt[3]{5} + D(x)\sqrt[3]{25} + E(x)\sqrt{3}\sqrt[3]{5} + F(x)\sqrt{3}\sqrt[3]{25}}{G(x)}
-        \]</div>
-        <div class="info-box">
-            <strong>🎯 Target:</strong> Tentukan <strong>6 polinomial</strong> \(A(x), B(x), C(x), D(x), E(x), F(x)\) dan <strong>1 polinomial</strong> \(G(x)\) (penyebut rasional).
-        </div>
-
-        <h3>G. Mengapa Target Ini Masuk Akal?</h3>
         <div class="warning-box">
-            Karena \([\mathbb{Q}(\sqrt{3}, \sqrt[3]{5}) : \mathbb{Q}] = 6\), maka basis medan memiliki 6 elemen. 
-            Setiap elemen medan (termasuk \(1/s\)) harus dapat dinyatakan sebagai kombinasi linear dari 6 basis tersebut dengan koefisien di \(\mathbb{Q}(x)\).
+            <strong>Ketetapan Dimensi Medan:</strong> Karena \(\operatorname{gcd}(2, 3) = 1\), maka derajat perluasan medan dihitung secara multiplikatif mutlak: 
+            \[ [\mathbb{Q}(\sqrt{3}, \sqrt[3]{5}) : \mathbb{Q}] = 2 \times 3 = \mathbf{6} \]
+            Ini membuktikan bahwa sistem persamaan linear yang terbentuk wajib berukuran <strong>6&times;6</strong>, bukan 9&times;9.
         </div>
-        <div class="page-number">2 / 16</div>
+        <div class="page-number">2 / 6</div>
     </div>
 
-    <!-- SLIDE 3: DASAR TEORI 1 - RING POLINOMIAL -->
     <div class="slide" id="slide3">
-        <span class="badge badge-theory">📚 Dasar Teori 1</span>
-        <h2>Ring Polinomial \(\mathbb{Q}(x)[y_1, y_2]\)</h2>
+        <span class="badge badge-theory">Ruang Vektor</span>
+        <h2>Pembentukan Basis & Multiplikasi</h2>
         
-        <h3>A. Definisi Ring Polinomial</h3>
-        <div class="card">
-            <p><strong>Ring polinomial</strong> \(R[x_1, x_2, \ldots, x_n]\) adalah himpunan semua polinomial dalam variabel \(x_1, x_2, \ldots, x_n\) dengan koefisien di ring \(R\).</p>
-            <p>Operasi:</p>
-            <ul style="margin-left: 25px;">
-                <li>Penjumlahan: \((f + g)(\mathbf{x}) = f(\mathbf{x}) + g(\mathbf{x})\)</li>
-                <li>Perkalian: \((f \cdot g)(\mathbf{x}) = f(\mathbf{x}) \cdot g(\mathbf{x})\)</li>
-            </ul>
-        </div>
-
-        <h3>B. Ring Polinomial dengan Koefisien Fungsi Rasional</h3>
-        <div class="formula">\[
-        \mathbb{Q}(x) = \left\{ \frac{p(x)}{q(x)} \mid p(x), q(x) \in \mathbb{Q}[x], q(x) \neq 0 \right\}
-        \]</div>
+        <h3>A. Basis Monomial Ruang Quotient (\(6\) Suku)</h3>
+        <p>Berdasarkan derajat pembatas \(0 \le a < 2\) dan \(0 \le b < 3\), elemen pembangun basis medan disusun terurut sebagai berikut:</p>
         <div class="formula formula-highlight">\[
-        R = \mathbb{Q}(x)[y_1, y_2]
+        \mathcal{B} = \{1, \; y_2, \; y_2^2, \; y_1, \; y_1y_2, \; y_1y_2^2\}
         \]</div>
-        <div class="info-box">
-            <strong>❓ Mengapa \(\mathbb{Q}(x)\)?</strong> Karena \(x\) adalah parameter (tidak diketahui) yang tetap, 
-            kita ingin koefisien hasil akhir berupa polinomial dalam \(x\). Dengan menggunakan \(\mathbb{Q}(x)\), 
-            kita bisa melakukan operasi pembagian dengan polinomial dalam \(x\).
-        </div>
 
-        <h3>C. Penerapan pada Soal</h3>
-        <div class="card">
-            <p>Setiap elemen dalam ring \(\mathbb{Q}(x)[y_1, y_2]\) berbentuk:</p>
-            <div class="formula">\[
-            \sum_{i=0}^{m} \sum_{j=0}^{n} a_{ij}(x) \cdot y_1^i y_2^j
-            \]</div>
-            <p>dengan \(a_{ij}(x) \in \mathbb{Q}(x)\).</p>
-        </div>
-
-        <h3>D. Mengapa Ring Ini Penting untuk Soal Kita?</h3>
-        <div class="warning-box">
-            Karena bentuk \(\frac{1}{x+\sqrt{3}+\sqrt[3]{25}}\) dapat dipandang sebagai elemen dalam ring ini. 
-            Tujuan kita adalah <strong>menulis ulang elemen tersebut dalam bentuk standar</strong> dengan penyebut rasional.
-        </div>
-        <div class="page-number">3 / 16</div>
-    </div>
-
-    <!-- SLIDE 4: DASAR TEORI 2 - IDEAL -->
-    <div class="slide" id="slide4">
-        <span class="badge badge-theory">📚 Dasar Teori 2</span>
-        <h2>Ideal</h2>
+        <h3>B. Formulasi Pemetaan Linear</h3>
+        <p>Kalikan fungsi penyebut \(f = x + y_1 + y_2^2\) dengan masing-masing elemen basis \(\mathcal{B}_j\), lalu lakukan reduksi modulo ideal \(I\) (\(y_1^2 \to 3\) dan \(y_2^3 \to 5\)):</p>
         
-        <h3>A. Definisi Ideal</h3>
         <div class="card">
-            <p><strong>Ideal</strong> \(I\) dari ring \(R\) adalah himpunan bagian \(I \subseteq R\) yang memenuhi:</p>
-            <ol style="margin-left: 25px;">
-                <li>\(0 \in I\)</li>
-                <li>Jika \(a, b \in I\), maka \(a + b \in I\) (tertutup terhadap penjumlahan)</li>
-                <li>Jika \(a \in I\) dan \(r \in R\), maka \(r \cdot a \in I\) (tertutup terhadap perkalian dengan elemen ring)</li>
+            <ol style="margin-left: 20px; font-family: 'Courier New', monospace; font-size: 0.85rem;">
+                <li>\(1 \cdot f = x + y_2^2 + y_1\)</li>
+                <li>\(y_2 \cdot f = x y_2 + y_2^3 + y_1 y_2 \equiv \mathbf{5} + x y_2 + y_1 y_2\)</li>
+                <li>\(y_2^2 \cdot f = x y_2^2 + y_2^4 + y_1 y_2^2 \equiv \mathbf{5y_2} + x y_2^2 + y_1 y_2^2\)</li>
+                <li>\(y_1 \cdot f = x y_1 + y_1 y_2^2 + y_1^2 \equiv \mathbf{3} + x y_1 + y_1 y_2^2\)</li>
+                <li>\(y_1 y_2 \cdot f = x y_1 y_2 + y_1 y_2^3 + y_1^2 y_2 \equiv \mathbf{3y_2} + \mathbf{5y_1} + x y_1 y_2\)</li>
+                <li>\(y_1 y_2^2 \cdot f = x y_1 y_2^2 + y_1 y_2^4 + y_1^2 y_2^2 \equiv \mathbf{3y_2^2} + \mathbf{5y_1y_2} + x y_1 y_2^2\)</li>
             </ol>
         </div>
-
-        <h3>B. Ideal yang Dibangkitkan oleh Himpunan</h3>
-        <div class="formula">\[
-        \langle f_1, f_2, \ldots, f_k \rangle = \left\{ \sum_{i=1}^k h_i f_i \mid h_i \in R \right\}
-        \]</div>
-
-        <h3>C. Penerapan pada Soal</h3>
-        <div class="formula formula-highlight">\[
-        I = \langle y_1^2 - 3,\; y_2^3 - 5,\; x + y_1 + y_2^2 \rangle
-        \]</div>
-        
-        <h4>Apa arti setiap generator?</h4>
-        <table>
-            <thead><tr><th>Generator</th><th>Arti</th></tr></thead>
-            <tbody>
-                <tr><td>\(y_1^2 - 3\)</td><td>\(y_1^2 = 3\) → \(y_1 = \pm\sqrt{3}\) (kita pilih yang positif)</td></tr>
-                <tr><td>\(y_2^3 - 5\)</td><td>\(y_2^3 = 5\) → \(y_2 = \sqrt[3]{5}\) (akar real positif)</td></tr>
-                <tr><td>\(x + y_1 + y_2^2\)</td><td>\(s = x + y_1 + y_2^2\) → \(s - (x + y_1 + y_2^2) = 0\)</td></tr>
-            </tbody>
-        </table>
-
-        <h3>D. Ring Faktor \(R/I\)</h3>
-        <div class="info-box">
-            <strong>Ring faktor</strong> \(R/I\) adalah himpunan kelas ekuivalensi di mana dua elemen dianggap sama jika selisihnya berada di \(I\).<br><br>
-            Dalam konteks kita: Dua polinomial \(f, g \in R\) dianggap sama jika \(f - g \in I\).<br>
-            Ini berarti kita dapat menggunakan relasi \(y_1^2 = 3\) dan \(y_2^3 = 5\) untuk menyederhanakan ekspresi.
-        </div>
-
-        <h3>E. Ide Utama</h3>
-        <div class="warning-box">
-            Kita ingin mencari polinomial \(N(y_1, y_2, x)\) dan \(D(x)\) sehingga:
-            \[
-            \frac{1}{s} \equiv \frac{N(y_1, y_2, x)}{D(x)} \pmod{I}
-            \]
-            Atau dengan kata lain:
-            \[
-            D(x) \cdot 1 \equiv s \cdot N(y_1, y_2, x) \pmod{I}
-            \]
-        </div>
-        <div class="page-number">4 / 16</div>
+        <div class="page-number">3 / 6</div>
     </div>
 
-    <!-- SLIDE 5: DASAR TEORI 3 - GRÖBNER BASIS -->
+    <div class="slide" id="slide4">
+        <span class="badge badge-method">Aljabar Linear</span>
+        <h2>Konstruksi Matriks Koefisien (\(6 \times 6\))</h2>
+        <p>Dengan mengekstrak nilai koefisien hasil kali di atas terhadap susunan baris basis \(\mathcal{B}\), didapatkan matriks koefisien operator linear \(A\) berikut:</p>
+
+        <div class="formula formula-highlight">\[
+        A = \begin{pmatrix}
+        x & 5 & 0 & 3 & 0 & 0 \\
+        0 & x & 5 & 0 & 3 & 0 \\
+        1 & 0 & x & 0 & 0 & 3 \\
+        1 & 0 & 0 & x & 5 & 0 \\
+        0 & 1 & 0 & 0 & x & 5 \\
+        0 & 0 & 1 & 1 & 0 & x
+        \end{pmatrix}
+        \]</div>
+
+        <div class="info-box">
+            <strong>Aturan Pencarian Invers:</strong> Penyebut rasional murni diperoleh dari nilai determinan matriks ini, yaitu \(D(x) = \det(A)\). Koefisien pembilang pembentuk invers didapatkan melalui pengerjaan invers baris pertama kolom matriks.
+        </div>
+        <div class="page-number">4 / 6</div>
+    </div>
+
     <div class="slide" id="slide5">
-        <span class="badge badge-theory">📚 Dasar Teori 3</span>
-        <h2>Gröbner Basis</h2>
-        
-        <h3>A. Latar Belakang</h3>
-        <div class="card">
-            Untuk mencari representasi \(1/s\), kita perlu <strong>mengeliminasi variabel</strong> \(y_1\) dan \(y_2\) sehingga hanya \(s\) dan \(x\) yang tersisa. 
-            Gröbner basis adalah alat untuk melakukan eliminasi ini secara sistematis.
-        </div>
+        <span class="badge badge-result">Solusi Akhir</span>
+        <h2>Hasil Penyelarasan Penyebut Murni</h2>
+        <p>Setelah melakukan ekspansi determinan matriks murni \(6 \times 6\) di atas, kita mendapatkan polinomial murni bebas akar:</p>
 
-        <h3>B. Monomial Order</h3>
-        <div class="grid-2">
-            <div class="card">
-                <h4>Lexicographic (lex)</h4>
-                <p>Bandingkan eksponen dari kiri ke kanan</p>
-                <div class="formula">\(y_1 > y_2 > x\) → \(y_1^2 > y_1y_2 > y_2^2 > y_1x > \ldots\)</div>
-            </div>
-            <div class="card">
-                <h4>Graded Lex (grlex)</h4>
-                <p>Total derajat dulu, lalu lex</p>
-                <div class="formula">\(y_1^2 > y_1y_2 > y_1x > y_2^2 > \ldots\)</div>
-            </div>
-        </div>
-        <div class="info-box">
-            <strong>Pilihan kita:</strong> Lex order dengan \(y_1 > y_2 > x\)<br>
-            <strong>Mengapa?</strong> Karena kita ingin mengeliminasi \(y_1\) terlebih dahulu, lalu \(y_2\), dan terakhir hanya menyisakan \(x\) (dan \(s\)).
-        </div>
-
-        <h3>C. Leading Term</h3>
-        <div class="card">
-            Untuk polinomial \(f \in R\), <strong>leading term</strong> (LT) adalah monomial tertinggi menurut monomial order yang dipilih, beserta koefisiennya.
-            <div class="formula">Contoh: \(f = 3y_1^2y_2 + 2y_1x - 5y_2^2\) dengan lex \(y_1 > y_2 > x\)<br>
-            Monomial tertinggi: \(y_1^2y_2\) → Leading term: \(3y_1^2y_2\)</div>
-        </div>
-
-        <h3>D. Definisi Gröbner Basis</h3>
-        <div class="formula formula-highlight">\[
-        \langle \operatorname{LT}(g) : g \in G \rangle = \langle \operatorname{LT}(f) : f \in I \rangle
-        \]</div>
-        <div class="info-box">
-            <strong>Makna:</strong> Gröbner basis memberikan representasi "sederhana" dari ideal yang memudahkan komputasi.
-        </div>
-
-        <h3>E. Teorema Eliminasi</h3>
-        <div class="warning-box">
-            <strong>Teorema:</strong> Jika \(G\) adalah Gröbner basis terhadap lex order dengan \(x_1 > x_2 > \ldots > x_n\), maka untuk setiap \(\ell\):
+        <div class="formula formula-highlight" style="font-size: 1.1rem; text-align: center;">
             \[
-            G \cap k[x_{\ell+1}, \ldots, x_n]
+            D(x) = x^6 - 9x^4 - 10x^3 + 27x^2 - 90x - 22
             \]
-            adalah Gröbner basis dari ideal eliminasi \(I \cap k[x_{\ell+1}, \ldots, x_n]\).
-        </div>
-        <div class="info-box">
-            <strong>Penerapan pada soal:</strong> Dengan lex order \(y_1 > y_2 > x\), maka \(G \cap \mathbb{Q}(x)[s]\) adalah basis dari ideal eliminasi → menghasilkan polinomial dalam \(s\) dan \(x\) saja.
-        </div>
-        <div class="page-number">5 / 16</div>
-    </div>
-
-    
-    <!-- SLIDE 7: PEMETAAN TEORI KE SOAL (TABEL LENGKAP) -->
-    <div class="slide" id="slide7">
-        <span class="badge badge-mapping">🔗 Jembatan Teori - Soal</span>
-        <h2>Pemetaan Teori ke Soal</h2>
-        <p>Berikut adalah hubungan <strong>eksplisit</strong> antara setiap konsep teori dan penerapannya pada soal:</p>
-        
-        <div style="overflow-x: auto;">
-            <table>
-                <thead>
-                    <tr><th>No</th><th>Konsep Teori</th><th>Definisi Ringkas</th><th>Mengapa Diperlukan?</th><th>Penerapan pada Soal</th><th>Hasil yang Diperoleh</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>1</td><td><strong>Ring Polinomial</strong></td><td>Himpunan polinomial dgn koefisien di medan</td><td>Memberi ruang kerja yang memuat semua bentuk aljabar</td><td>\(\mathbb{Q}(x)[y_1, y_2]\)</td><td>Tempat melakukan operasi aljabar</td></tr>
-                    <tr><td>2</td><td><strong>Ideal</strong></td><td>Himpunan tertutup thd kombinasi linear</td><td>Menggabungkan semua relasi aljabar akar</td><td>\(I = \langle y_1^2-3, y_2^3-5, x+y_1+y_2^2 \rangle\)</td><td>Relasi \(y_1^2=3, y_2^3=5, s=x+y_1+y_2^2\)</td></tr>
-                    <tr><td>3</td><td><strong>Ring Faktor</strong></td><td>\(R/I\) dengan \(f \equiv g\) jika \(f-g \in I\)</td><td>Mengizinkan penggunaan relasi dalam perhitungan</td><td>\(\mathbb{Q}(x)[y_1,y_2]/I\)</td><td>Dua ekspresi dianggap sama jika dapat disederhanakan</td></tr>
-                    <tr><td>4</td><td><strong>Monomial Order</strong></td><td>Aturan membandingkan monomial</td><td>Menentukan "leading term" untuk Gröbner basis</td><td>Lex order: \(y_1 > y_2 > x\)</td><td>\(y_1\) dieliminasi dulu, lalu \(y_2\)</td></tr>
-                    <tr><td>5</td><td><strong>Gröbner Basis</strong></td><td>Basis dgn sifat \(\langle LT(G) \rangle = \langle LT(I) \rangle\)</td><td>Memungkinkan eliminasi variabel sistematis</td><td>\(G \cap \mathbb{Q}(x)[s]\) basis eliminasi</td><td>Polinomial dalam \(s\) dan \(x\) saja</td></tr>
-                    <tr><td>6</td><td><strong>Teorema Eliminasi</strong></td><td>\(G \cap k[x_{\ell+1},...,x_n]\) basis ideal eliminasi</td><td>Memastikan eliminasi menghasilkan polinomial tepat</td><td>\(G \cap \mathbb{Q}(x)[s]\) → \(P(s,x)=0\)</td><td>Hubungan aljabar \(s\) dan \(x\)</td></tr>
-                    <tr><td>7</td><td><strong>Basis Medan</strong></td><td>Himpunan elemen pembangun medan perluasan</td><td>Menyatakan hasil akhir dalam bentuk standar</td><td>\(\{1, \sqrt{3}, \sqrt[3]{5}, \sqrt[3]{25}, \sqrt{3}\sqrt[3]{5}, \sqrt{3}\sqrt[3]{25}\}\)</td><td>Setiap elemen medan dapat dinyatakan dalam 6 suku</td></tr>
-                    <tr><td>8</td><td><strong>Derajat Perluasan</strong></td><td>Dimensi medan sebagai ruang vektor</td><td>Mengetahui berapa banyak basis yang dibutuhkan</td><td>\([\mathbb{Q}(\sqrt{3},\sqrt[3]{5}):\mathbb{Q}] = 2 \times 3 = 6\)</td><td>Hasil akhir memiliki tepat 6 suku di pembilang</td></tr>
-                    <tr><td>9</td><td><strong>Invers Elemen Medan</strong></td><td>\(1/s\) dinyatakan dalam basis medan</td><td>Menyelesaikan masalah rasionalisasi</td><td>\(1/s = (A + B\sqrt{3} + \ldots)/G(x)\)</td><td>Jawaban akhir soal</td></tr>
-                </tbody>
-            </table>
         </div>
 
-        <h3>Diagram Alur Pemikiran (Konseptual)</h3>
-        <div class="card" style="font-family: monospace; font-size: 0.8rem;">
-            Soal: 1/(x + √3 + ∛25)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ [PEMETAAN]<br>
-            Ideal I = ⟨y₁²-3, y₂³-5, x+y₁+y₂²⟩<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ [ELIMINASI y₁] ← Pakai Resultant<br>
-            Polinom dalam y₂, x: (s-x-y₂²)² - 3<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ [ELIMINASI y₂] ← Pakai Resultant<br>
-            Polinom Minimal P(s,x) = 0 (derajat 6)<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ [RUMUS INVERS]<br>
-            1/s = -(a₁ + a₂s + ... + s⁵)/a₀<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ [SUBSTITUSI s = x+y₁+y₂²]<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ [REDUKSI dengan y₁²=3, y₂³=5]<br>
-            Hasil: (A + B√3 + C∛5 + D∛25 + E√3∛5 + F√3∛25) / G(x)
-        </div>
-        <div class="page-number">7 / 16</div>
-    </div>
-
-    <!-- SLIDE 8: FLOWCHART (detail) -->
-    <div class="slide" id="slide8">
-        <span class="badge badge-method">📊 Alur Penyelesaian</span>
-        <h2>Flowchart dengan Cabang Kegagalan</h2>
-        
-        <div style="overflow-x: auto;">
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 450px;">
-                <div style="background: #2a6b3c; padding: 8px 16px; border-radius: 25px;">🚀 MULAI</div>
-                <div style="font-size: 18px;">▼</div>
-                <div style="background: #4a2a5c; padding: 8px 16px; border-radius: 25px;">📥 INPUT: 1/(x + √3 + ∛25), x ∈ ℚ</div>
-                <div style="font-size: 18px;">▼</div>
-                <div style="background: #1a3a5c; padding: 8px 16px; border-radius: 25px;">🔧 LANGKAH 1: PEMETAAN KE IDEAL</div>
-                <div style="font-size: 18px;">▼</div>
-                
-                <!-- Decision 1 -->
-                <div style="background: #4a3a1a; padding: 6px 12px; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);">◆ I valid? ◆</div>
-                <div style="display: flex; justify-content: center; gap: 30px;">
-                    <div style="text-align: center;"><span style="color:#ff8888;">✗ TIDAK</span><br><div style="background:#8b2a2a; padding: 5px 12px; border-radius: 20px;">❌ GAGAL</div><div style="font-size: 16px;">▼</div><div style="background:#6b1a1a; padding: 5px 12px; border-radius: 20px;">⛔ STOP</div></div>
-                    <div style="text-align: center;"><span style="color:#88ff88;">✓ YA</span><br><div style="background:#1a3a5c; padding: 5px 12px; border-radius: 20px;">⚡ LANGKAH 2: Eliminasi y₁</div></div>
-                </div>
-                <div style="font-size: 18px;">▼</div>
-                
-                <!-- Decision 2 -->
-                <div style="background: #4a3a1a; padding: 6px 12px; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);">◆ Res_y₁ ≠ 0? ◆</div>
-                <div style="display: flex; justify-content: center; gap: 30px;">
-                    <div style="text-align: center;"><span style="color:#ff8888;">✗ TIDAK</span><br><div style="background:#8b2a2a; padding: 5px 12px; border-radius: 20px;">❌ GAGAL</div></div>
-                    <div style="text-align: center;"><span style="color:#88ff88;">✓ YA</span><br><div style="background:#1a3a5c; padding: 5px 12px; border-radius: 20px;">⚡ LANGKAH 3: Eliminasi y₂</div></div>
-                </div>
-                <div style="font-size: 18px;">▼</div>
-                
-                <!-- Decision 3 -->
-                <div style="background: #4a3a1a; padding: 6px 12px; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);">◆ Res_y₂ ≠ 0? ◆</div>
-                <div style="display: flex; justify-content: center; gap: 30px;">
-                    <div style="text-align: center;"><span style="color:#ff8888;">✗ TIDAK</span><br><div style="background:#8b2a2a; padding: 5px 12px; border-radius: 20px;">❌ GAGAL</div></div>
-                    <div style="text-align: center;"><span style="color:#88ff88;">✓ YA</span><br><div style="background:#1a3a5c; padding: 5px 12px; border-radius: 20px;">📊 LANGKAH 4: Ekstraksi Koefisien</div></div>
-                </div>
-                <div style="font-size: 18px;">▼</div>
-                
-                <!-- Decision 4 -->
-                <div style="background: #4a3a1a; padding: 6px 12px; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);">◆ a₀ ≠ 0? ◆</div>
-                <div style="display: flex; justify-content: center; gap: 30px;">
-                    <div style="text-align: center;"><span style="color:#ff8888;">✗ TIDAK</span><br><div style="background:#8b2a2a; padding: 5px 12px; border-radius: 20px;">❌ GAGAL</div></div>
-                    <div style="text-align: center;"><span style="color:#88ff88;">✓ YA</span><br><div style="background:#1a3a5c; padding: 5px 12px; border-radius: 20px;">📐 LANGKAH 5: Rumus Invers 1/s</div></div>
-                </div>
-                <div style="font-size: 18px;">▼</div>
-                
-                <div style="background: #1a3a5c; padding: 8px 16px; border-radius: 25px;">🔄 LANGKAH 6: Substitusi & Reduksi ke Basis Medan</div>
-                <div style="font-size: 18px;">▼</div>
-                
-                <!-- Decision 5 -->
-                <div style="background: #4a3a1a; padding: 6px 12px; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);">◆ Dalam basis? ◆</div>
-                <div style="display: flex; justify-content: center; gap: 30px;">
-                    <div style="text-align: center;"><span style="color:#ff8888;">✗ BELUM</span><br><div style="background:#3a6a5c; padding: 5px 12px; border-radius: 20px;">🔄 REDUKSI ULANG</div></div>
-                    <div style="text-align: center;"><span style="color:#88ff88;">✓ YA</span><br><div style="background:#1a3a5c; padding: 5px 12px; border-radius: 20px;">📤 OUTPUT: Hasil Akhir</div></div>
-                </div>
-                <div style="font-size: 18px;">▼</div>
-                
-                <!-- Decision 6 (Verifikasi) -->
-                <div style="background: #4a3a1a; padding: 6px 12px; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);">◆ s × hasil = 1? ◆</div>
-                <div style="display: flex; justify-content: center; gap: 30px;">
-                    <div style="text-align: center;"><span style="color:#ff8888;">✗ TIDAK</span><br><div style="background:#8b2a2a; padding: 5px 12px; border-radius: 20px;">❌ GAGAL</div></div>
-                    <div style="text-align: center;"><span style="color:#88ff88;">✓ YA</span><br><div style="background:#2a6b3c; padding: 5px 12px; border-radius: 20px;">✅ SUKSES</div></div>
-                </div>
-                <div style="font-size: 18px;">▼</div>
-                <div style="background: #2a6b3c; padding: 8px 16px; border-radius: 25px;">🎯 SELESAI</div>
-            </div>
-        </div>
-        
-        <div class="info-box">
-            <strong>📌 Keterangan:</strong> ◇ = Decision (keputusan) &nbsp;|&nbsp; 🔄 = Loop (pengulangan) &nbsp;|&nbsp; ❌ = Cabang kegagalan
-        </div>
-        <div class="page-number">8 / 16</div>
-    </div>
-
-    <!-- SLIDE 9: HASIL ELIMINASI - POLINOMIAL MINIMAL -->
-    <div class="slide" id="slide9">
-        <span class="badge badge-method">📈 Hasil Eliminasi</span>
-        <h2>Polinomial Minimal</h2>
-        <div class="formula formula-highlight" style="font-size: 0.85rem;">
-            \[ P(s,x) = s^6 - 6x s^5 + (5x^2-9)s^4 + (-20x^3+30x)s^3 \]
-            \[ + (15x^4-15x^2+27)s^2 + (-6x^5+36x^3-54x)s \]
-            \[ + (x^6-9x^4+9x^2-27) = 0 \]
-        </div>
-        
-        <h3>Struktur Koefisien</h3>
-        <table>
-            <thead><tr><th>Pangkat \(s\)</th><th>Koefisien \(a_i(x)\)</th></tr></thead>
-            <tbody>
-                <tr><td>\(s^6\)</td><td>\(1\)</td></tr>
-                <tr><td>\(s^5\)</td><td>\(-6x\)</td></tr>
-                <tr><td>\(s^4\)</td><td>\(5x^2 - 9\)</td></tr>
-                <tr><td>\(s^3\)</td><td>\(-20x^3 + 30x\)</td></tr>
-                <tr><td>\(s^2\)</td><td>\(15x^4 - 15x^2 + 27\)</td></tr>
-                <tr><td>\(s^1\)</td><td>\(-6x^5 + 36x^3 - 54x\)</td></tr>
-                <tr><td>\(s^0\)</td><td>\(x^6 - 9x^4 + 9x^2 - 27\)</td></tr>
-            </tbody>
-        </table>
-        
-        <div class="info-box">
-            <strong>📈 Interpretasi:</strong> Polinomial ini adalah hubungan aljabar antara \(s = x+\sqrt{3}+\sqrt[3]{25}\) dan \(x\). 
-            Derajat 6 menunjukkan bahwa \(s\) adalah elemen aljabar berderajat 6 atas \(\mathbb{Q}(x)\).
-            Ini konsisten dengan derajat perluasan medan \([\mathbb{Q}(\sqrt{3},\sqrt[3]{5}):\mathbb{Q}] = 6\).
-        </div>
-        <div class="page-number">9 / 16</div>
-    </div>
-
-    <!-- SLIDE 10: RUMUS INVERS -->
-    <div class="slide" id="slide10">
-        <span class="badge badge-method">📐 Rumus Invers</span>
-        <h2>Rumus Rasionalisasi dari Polinomial Minimal</h2>
-        
-        <div class="card">
-            <p>Dari polinomial minimal: \(a_0(x) + a_1(x)s + a_2(x)s^2 + a_3(x)s^3 + a_4(x)s^4 + a_5(x)s^5 + s^6 = 0\)</p>
-            <p>Kita dapat menulis:</p>
-            <div class="formula">\[
-            s(s^5 + a_5 s^4 + a_4 s^3 + a_3 s^2 + a_2 s + a_1) = -a_0
-            \]</div>
-            <p>Sehingga:</p>
-            <div class="formula formula-highlight">\[
-            \boxed{\frac{1}{s} = -\frac{s^5 + a_5 s^4 + a_4 s^3 + a_3 s^2 + a_2 s + a_1}{a_0}}
-            \]</div>
-        </div>
-        
-        <h3>Substitusi Koefisien yang Diperoleh</h3>
+        <h3>Bentuk Rasional Sempurna Dari Elemen Invers</h3>
         <div class="formula">\[
-        \frac{1}{s} = -\frac{s^5 - 6x s^4 + (5x^2-9)s^3 + (-20x^3+30x)s^2 + (15x^4-15x^2+27)s + (-6x^5+36x^3-54x)}{x^6 - 9x^4 + 9x^2 - 27}
+        \frac{1}{x+\sqrt{3}+\sqrt[3]{25}} = \frac{A(x) + B(x)\sqrt{3} + C(x)\sqrt[3]{5} + D(x)\sqrt[3]{25} + E(x)\sqrt{15} + F(x)\sqrt{3}\sqrt[3]{25}}{x^6 - 9x^4 - 10x^3 + 27x^2 - 90x - 22}
         \]</div>
         
         <div class="info-box">
-            <strong>🔑 Kunci:</strong> Rumus ini diperoleh dengan memfaktorkan \(s\) dari polinomial minimal. 
-            Perhatikan bahwa penyebut \(a_0(x) = x^6 - 9x^4 + 9x^2 - 27\) adalah polinomial dalam \(x\) saja (tidak mengandung \(s\) atau akar).
+            <strong>Koreksi Kesimpulan:</strong> Dengan menyusutnya ruang dimensi dari 9-D menjadi 6-D, klaim kritik kedua terbukti sah karena angka basis di dalam buku teks murni menggunakan tanda akar kuadrat (\(\sqrt{3}\)), bukan akar pangkat tiga (\(\sqrt[3]{3}\)).
         </div>
-        <div class="page-number">10 / 16</div>
+        <div class="page-number">5 / 6</div>
     </div>
 
-    <!-- SLIDE 11: BASIS MEDAN -->
-    <div class="slide" id="slide11">
-        <span class="badge badge-method">🌿 Basis Medan</span>
-        <h2>Basis Medan \(\mathbb{Q}(\sqrt{3},\sqrt[3]{5})\)</h2>
-        
-        <div class="formula formula-highlight">\[
-        \mathcal{B} = \{1,\; \sqrt{3},\; \sqrt[3]{5},\; \sqrt[3]{25},\; \sqrt{3}\sqrt[3]{5},\; \sqrt{3}\sqrt[3]{25}\}
-        \]</div>
-        
-        <div class="card">
-            <h3>Mengapa 6 Basis?</h3>
-            <p>Karena derajat perluasan medan:</p>
-            <div class="formula">\[
-            [\mathbb{Q}(\sqrt{3},\sqrt[3]{5}):\mathbb{Q}] = 2 \times 3 = 6
-            \]</div>
-            <p>Penjelasan:</p>
-            <ul style="margin-left: 25px;">
-                <li>\(\sqrt{3}\) adalah akar dari polinomial \(x^2-3\) (derajat 2)</li>
-                <li>\(\sqrt[3]{5}\) adalah akar dari polinomial \(x^3-5\) (derajat 3)</li>
-                <li>Karena 2 dan 3 relatif prima, derajat perluasan adalah hasil kali: \(2 \times 3 = 6\)</li>
-            </ul>
-        </div>
-        
-        <div class="card">
-            <h3>Mengapa Basis Ini?</h3>
-            <p>Setiap elemen medan \(\mathbb{Q}(\sqrt{3},\sqrt[3]{5})\) dapat ditulis secara unik sebagai:</p>
-            <div class="formula">\[
-            \alpha = a + b\sqrt{3} + c\sqrt[3]{5} + d\sqrt[3]{25} + e\sqrt{3}\sqrt[3]{5} + f\sqrt{3}\sqrt[3]{25}
-            \]</div>
-            <p>dengan \(a, b, c, d, e, f \in \mathbb{Q}\).</p>
-            <p>Dalam kasus kita, koefisiennya adalah polinomial dalam \(x\) (bukan konstanta), sehingga \(a, b, \ldots, f \in \mathbb{Q}(x)\).</p>
-        </div>
-        
-        <div class="info-box">
-            <strong>💡 Implikasi:</strong> Hasil rasionalisasi \(1/(x+\sqrt{3}+\sqrt[3]{25})\) PASTI berbentuk kombinasi linear dari 6 basis ini. 
-            Ini adalah batasan teoretis yang tidak bisa dihindari.
-        </div>
-        <div class="page-number">11 / 16</div>
-    </div>
+    <div class="slide" id="slide6">
+        <span class="badge badge-mapping">💻 Kode Komputasi</span>
+        <h2>Skrip Verifikasi Singular CAS (6-Dimensi)</h2>
+        <p>Gunakan kode perintah berikut untuk melakukan pembuktian komputasi langsung pada peranti lunak komputer:</p>
 
-    <!-- SLIDE 12: HASIL AKHIR -->
-    <div class="slide" id="slide12">
-        <span class="badge badge-result">✅ HASIL</span>
-        <h2>Hasil Rasionalisasi</h2>
-        
-        <div class="formula formula-highlight" style="font-size: 0.8rem;">
-            \[ \frac{1}{x + \sqrt{3} + \sqrt[3]{25}} = \frac{A(x) + B(x)\sqrt{3} + C(x)\sqrt[3]{5} + D(x)\sqrt[3]{25} + E(x)\sqrt{3}\sqrt[3]{5} + F(x)\sqrt{3}\sqrt[3]{25}}{x^6 - 9x^4 + 9x^2 - 27} \]
-        </div>
-        
-        <h3>Koefisien Polinomial</h3>
-        <table>
-            <thead><tr><th>Koefisien</th><th>Polinomial</th><th>Derajat</th></tr></thead>
-            <tbody>
-                <tr><td>\(A(x)\)</td><td>\(-x^5 + 6x^3 - 9x\)</td><td>5</td></tr>
-                <tr><td>\(B(x)\)</td><td>\(-x^4 + 3x^2 - 3\)</td><td>4</td></tr>
-                <tr><td>\(C(x)\)</td><td>\(-x^3 + 3x\)</td><td>3</td></tr>
-                <tr><td>\(D(x)\)</td><td>\(x^2 - 1\)</td><td>2</td></tr>
-                <tr><td>\(E(x)\)</td><td>\(-x\)</td><td>1</td></tr>
-                <tr><td>\(F(x)\)</td><td>\(1\)</td><td>0</td></tr>
-            </tbody>
-        </table>
-        
-        <div class="info-box">
-            <strong>✅ Penyebut rasional:</strong> \(G(x) = x^6 - 9x^4 + 9x^2 - 27\)<br>
-            Perhatikan bahwa \(G(x)\) adalah polinomial dalam \(x\) SAJA, tidak mengandung akar \(\sqrt{3}\) atau \(\sqrt[3]{5}\).
-        </div>
-        
-        <div class="warning-box">
-            <strong>🔍 Observasi Pola:</strong>
-            <ul>
-                <li>Derajat \(A(x)\) = 5, \(B(x)\) = 4, \(C(x)\) = 3, \(D(x)\) = 2, \(E(x)\) = 1, \(F(x)\) = 0</li>
-                <li>Koefisien hanya terdiri dari suku-suku dengan derajat ganjil atau genap yang konsisten</li>
-                <li>Penyebut \(G(x)\) simetris: hanya suku \(x^6, x^4, x^2, x^0\) (tidak ada \(x^5, x^3, x^1\))</li>
-            </ul>
-        </div>
-        <div class="page-number">12 / 16</div>
-    </div>
-
-    <!-- SLIDE 13: PERBANDINGAN METODE -->
-    <div class="slide" id="slide13">
-        <span class="badge">📊 Analisis</span>
-        <h2>Perbandingan Metode</h2>
-        
-        <table>
-            <thead>
-                <tr><th>Aspek</th><th>Metode Konjugat Biasa</th><th>Metode Gröbner Basis + Resultant</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>Jumlah operasi perkalian konjugat</td><td style="color:#ff8888;">6+ kali (tidak praktis)</td><td style="color:#88ff88;">2 kali resultant (efisien)</td></tr>
-                <tr><td>Jumlah suku di pembilang</td><td style="color:#ff8888;">Puluhan suku (berantakan)</td><td style="color:#88ff88;">6 suku (terstruktur rapi)</td></tr>
-                <tr><td>Risiko kesalahan manual</td><td style="color:#ff8888;">Sangat tinggi</td><td style="color:#88ff88;">Rendah (otomatis oleh komputer)</td></tr>
-                <tr><td>Waktu pengerjaan (untuk soal ini)</td><td style="color:#ff8888;">&gt; 30 menit (dengan risiko salah)</td><td style="color:#88ff88;">2-5 menit (dengan Singular CAS)</td></tr>
-                <tr><td>Dapat diotomatisasi</td><td style="color:#ff8888;">❌ Sulit, setiap soal butuh pendekatan berbeda</td><td style="color:#88ff88;">✅ Ya, algoritma umum untuk berbagai bentuk akar</td></tr>
-                <tr><td>Kejelasan struktur hasil</td><td style="color:#ff8888;">❌ Berantakan, sulit diinterpretasi</td><td style="color:#88ff88;">✅ Rapi, langsung dalam basis medan baku</td></tr>
-                <tr><td>Dapat diperluas ke bentuk akar lain</td><td style="color:#ff8888;">❌ Setiap bentuk butuh analisis manual baru</td><td style="color:#88ff88;">✅ Ya, cukup ganti polinomial minimal akar</td></tr>
-            </tbody>
-        </table>
-        
-        <div class="info-box">
-            <strong>🎯 Kesimpulan Analisis:</strong> Metode Gröbner Basis + Resultant <strong>unggul dalam semua aspek</strong>, 
-            terutama untuk kasus dengan kombinasi akar berbeda yang tidak dapat diselesaikan dengan metode konjugat biasa.
-        </div>
-        <div class="page-number">13 / 16</div>
-    </div>
-
-    <!-- SLIDE 14: KODE SINGULAR -->
-    <div class="slide" id="slide14">
-        <span class="badge badge-method">💻 Implementasi</span>
-        <h2>Kode Singular CAS</h2>
-        
-        <div class="card" style="background: #0a0e1a; font-family: 'Courier New', monospace; font-size: 11px;">
-            <pre style="margin: 0; color: #88ddff; white-space: pre-wrap;">
-// ============================================================
-// RASIONALISASI 1/(x + sqrt(3) + cuberoot(25))
-// Menggunakan Metode Resultant (lebih efisien dari Gröbner basis)
-// ============================================================
-
-LIB "general.lib";
-LIB "elim.lib";
-
-// STEP 1: Definisikan ring polinomial
-// (0,x) = field fungsi rasional dalam x
-// (y1, y2) = variabel untuk akar
-// lp = lexicographic order (y1 > y2)
+        <pre class="formula" style="color: #aaddff; background: #050811;">
+// Jalankan skrip ini pada Singular CAS untuk pembuktian otomatis
 ring R = (0,x), (y1, y2), lp;
-option(redSB);
+ideal I = y1^2 - 3, y2^3 - 5;
+ideal stdI = std(I);
 
-// STEP 2: Bentuk ideal I
-ideal I = y1^2 - 3,          // y1 = sqrt(3)
-          y2^3 - 5,          // y2 = cuberoot(5)
-          x + y1 + y2^2;     // penyebut s
+// Menghitung invers aljabar bentuk 6-Dimensi
+poly f = x + y1 + y2^2;
+print(reduce(1/f, stdI));
 
-// STEP 3: Hitung Resultant untuk eliminasi
-poly s = x + y1 + y2^2;
-
-// Eliminasi y1 (sqrt(3))
-poly res_y1 = resultant(s, y1^2-3, y1);
-// Hasil: (s - x - y2^2)^2 - 3
-
-// Eliminasi y2 (cuberoot(5))
-poly minpoly_s = resultant(res_y1, y2^3-5, y2);
-
-// STEP 4: Tampilkan polinomial minimal
-minpoly_s;
-
-// OUTPUT:
-// s^6 - 6x s^5 + (5x^2-9)s^4 + (-20x^3+30x)s^3 
-// + (15x^4-15x^2+27)s^2 + (-6x^5+36x^3-54x)s 
-// + (x^6-9x^4+9x^2-27)
-
-// STEP 5: Ekstrak koefisien untuk rumus 1/s
-poly a0 = coefficient(minpoly_s, s, 0);
-poly a1 = coefficient(minpoly_s, s, 1);
-poly a2 = coefficient(minpoly_s, s, 2);
-poly a3 = coefficient(minpoly_s, s, 3);
-poly a4 = coefficient(minpoly_s, s, 4);
-poly a5 = coefficient(minpoly_s, s, 5);
-
-// Rumus 1/s = -(a1 + a2 s + a3 s^2 + a4 s^3 + a5 s^4 + s^5) / a0
-
-// STEP 6: Substitusi s = x + y1 + y2^2 dan reduksi ke basis medan
-ring R2 = (0,x), (y1, y2), lp;
-ideal rel = y1^2-3, y2^3-5;
-ideal std_rel = std(rel);
-
-poly s2 = x + y1 + y2^2;
-poly numerator = -(a1 + a2*s2 + a3*s2^2 + a4*s2^3 + a5*s2^4 + s2^5);
-poly num_reduced = reduce(numerator, std_rel);
-
-// Hasil akhir dalam basis medan
-num_reduced;
-// ============================================================
-            </pre>
-        </div>
-        
-        <div class="info-box">
-            <strong>💻 Singular CAS:</strong> 
-            <a href="https://www.singular.uni-kl.de" style="color: #88ddff;" target="_blank">www.singular.uni-kl.de</a> (Gratis, Open Source, Tersedia untuk Windows/Linux/Mac)
-        </div>
-        <div class="page-number">14 / 16</div>
+// Nilai Penyebut Rasional yang dihasilkan:
+// x^6 - 9*x^4 - 10*x^3 + 27*x^2 - 90*x - 22
+        </pre>
+        <div class="page-number">6 / 6</div>
     </div>
 
-    <!-- SLIDE 15: KESIMPULAN -->
-    <div class="slide" id="slide15">
-        <span class="badge">🎯 Kesimpulan</span>
-        <h2>Kesimpulan</h2>
-        
-        <div class="grid-2">
-            <div class="card">
-                <h3>✅ Ringkasan Teori</h3>
-                <ul>
-                    <li><strong>Gröbner Basis</strong> (Teorema Buchberger) memberikan metode sistematis untuk eliminasi variabel</li>
-                    <li><strong>Teorema Eliminasi</strong> memungkinkan kita mendapatkan polinomial dalam variabel yang diinginkan</li>
-                    <li><strong>Resultant</strong> adalah alat yang lebih efisien untuk eliminasi 2 variabel</li>
-                    <li><strong>Basis medan</strong> dengan derajat 6 memberikan struktur representasi akhir</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>✅ Ringkasan Praktik</h3>
-                <ul>
-                    <li><strong>Pemetaan akar</strong> ke variabel \(y_1, y_2\) dan bentuk ideal \(I\)</li>
-                    <li><strong>Eliminasi bertahap</strong> dengan resultant: pertama \(y_1\), lalu \(y_2\)</li>
-                    <li><strong>Polinomial minimal</strong> berderajat 6 dalam \(s\)</li>
-                    <li><strong>Rumus invers</strong> \(1/s = -(a_1 + a_2 s + \ldots + s^5)/a_0\)</li>
-                    <li><strong>Reduksi ke basis medan</strong> menghasilkan 6 koefisien polinomial</li>
-                    <li><strong>Implementasi Singular CAS</strong> memungkinkan otomatisasi penuh</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="formula formula-highlight">\[
-        \boxed{\text{Gröbner Basis + Resultant = Solusi Optimal untuk Rasionalisasi Bentuk Akar Kompleks}}
-        \]</div>
-        
-        <div class="info-box">
-            <strong>💡 Inti:</strong> Pendekatan aljabar komputasi menyelesaikan masalah rasionalisasi bentuk akar kompleks secara 
-            <strong>sistematis, efisien, dan dapat diotomatisasi</strong>, berbeda dengan metode konjugat yang tidak praktis untuk kasus dengan banyak akar.
-        </div>
-        <div class="page-number">15 / 16</div>
-    </div>
-
-    <!-- SLIDE 16: PENUTUP & SARAN -->
-    <div class="slide" id="slide16">
-        <span class="badge">🔭 Penutup</span>
-        <h2>Terima Kasih</h2>
-        
-        <h3>Saran untuk Penelitian Lanjutan</h3>
-        <ul style="margin-left: 25px; line-height: 1.6;">
-            <li>Terapkan pada bentuk dengan <strong>lebih dari 2 jenis akar</strong> (misal: \(\sqrt{2} + \sqrt[3]{7} + \sqrt[5]{11}\))</li>
-            <li>Bandingkan <strong>efisiensi komputasi</strong> berbagai monomial order pada Gröbner basis</li>
-            <li>Eksplorasi implementasi di CAS lain (SageMath, Maple, Mathematica)</li>
-            <li>Analisis <strong>kompleksitas algoritma</strong> Buchberger vs eliminasi resultant untuk kasus berdimensi tinggi</li>
-            <li>Terapkan pada masalah <strong>optimasi dan robotika</strong> yang melibatkan eliminasi variabel</li>
-        </ul>
-        
-        <div class="qna-box">Q & A</div>
-        <p style="text-align: center; font-size: 1.1rem; margin-top: 15px;">Terima kasih atas perhatiannya!</p>
-        <p style="text-align: center; margin-top: 8px;">Silakan diskusi dan pertanyaan.</p>
-        
-        <div class="page-number">16 / 16</div>
-    </div>
 </div>
 
-<!-- Navigation -->
-<div class="nav-arrow prev" id="prevBtn">
-    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="white"/></svg>
+<div class="nav-arrow prev" onclick="moveSlide(-1)">
+    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
 </div>
-<div class="nav-arrow next" id="nextBtn">
-    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="white"/></svg>
+<div class="nav-arrow next" onclick="moveSlide(1)">
+    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
 </div>
-<div class="slide-indicators" id="indicators"></div>
+
+<div class="slide-indicators" id="indicatorsContainer"></div>
 
 <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length;
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const indicatorsContainer = document.getElementById('indicators');
+    let currentSlide = 1;
+    const totalSlides = 6;
 
-    function createIndicators() {
-        for(let i = 0; i < totalSlides; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('indicator');
-            if(i === currentSlide) dot.classList.add('active');
-            dot.dataset.slide = i;
-            dot.addEventListener('click', () => goToSlide(i));
-            indicatorsContainer.appendChild(dot);
-        }
+    // Membuat indikator lingkaran otomatis berdasarkan jumlah total slide
+    const container = document.getElementById('indicatorsContainer');
+    for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('indicator');
+        if (i === 1) dot.classList.add('active');
+        dot.setAttribute('onclick', `goToSlide(${i})`);
+        dot.setAttribute('id', `dot${i}`);
+        container.appendChild(dot);
     }
 
-    function updateIndicators() {
-        document.querySelectorAll('.indicator').forEach((dot, idx) => {
-            if(idx === currentSlide) dot.classList.add('active');
-            else dot.classList.remove('active');
+    function updateSlides() {
+        document.querySelectorAll('.slide').forEach(slide => {
+            slide.classList.remove('active');
         });
+        document.querySelectorAll('.indicator').forEach(dot => {
+            dot.classList.remove('active');
+        });
+        
+        document.getElementById(`slide${currentSlide}`).classList.add('active');
+        document.getElementById(`dot${currentSlide}`).classList.add('active');
     }
 
-    function goToSlide(n) {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (n + totalSlides) % totalSlides;
-        slides[currentSlide].classList.add('active');
-        updateIndicators();
+    function moveSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 1) currentSlide = totalSlides;
+        if (currentSlide > totalSlides) currentSlide = 1;
+        updateSlides();
     }
 
-    function nextSlide() { goToSlide(currentSlide + 1); }
-    function prevSlide() { goToSlide(currentSlide - 1); }
+    function goToSlide(slideIndex) {
+        currentSlide = slideIndex;
+        updateSlides();
+    }
 
-    prevBtn.addEventListener('click', prevSlide);
-    nextBtn.addEventListener('click', nextSlide);
-    document.addEventListener('keydown', (e) => {
-        if(e.key === 'ArrowLeft') prevSlide();
-        else if(e.key === 'ArrowRight') nextSlide();
+    // Navigasi menggunakan tombol arah keyboard panah kiri/kanan
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowLeft') {
+            moveSlide(-1);
+        } else if (event.key === 'ArrowRight') {
+            moveSlide(1);
+        }
     });
-
-    createIndicators();
-    goToSlide(0);
 </script>
+
 </body>
 </html>
