@@ -649,37 +649,25 @@
                 <div class="code-block-wrapper">
                     <button class="copy-btn" onclick="copySingularCode()">📋 Salin</button>
                     <pre class="code-block-pre" id="singularCode">
-// ============================================================
-// Kode Singular untuk Soal 2.1.7
-// Merasionalkan 1/(x + sqrt(3) + cbrt(25))
-// ============================================================
+// ============================
+//        Kode Singular       
+// ============================
 
-// Langkah 1: Definisikan ring polinomial atas Q(x) dengan variabel:
-//   y1 = sqrt(3),   y2 = cbrt(5)   (maka cbrt(25) = y2^2)
+// Muat library matriks untuk fungsi inverse() dan det()
+LIB "matrix.lib";
+
+// Langkah 1: Definisikan ring polinomial atas Q(x) dengan variabel y1, y2
 ring R = (0,x), (y1, y2), lp;
 
-// Langkah 2: Definisikan ideal I dengan relasi:
-ideal I = y1^2 - 3,      // y1 = sqrt(3)
-          y2^3 - 5;      // y2 = cbrt(5)
+// Langkah 2: Definisikan ideal I untuk relasi: y1^2 = 3, y2^3 = 5
+ideal I = y1^2 - 3, y2^3 - 5;
 
-// Langkah 3: Penyebut f = x + y1 + y2^2
+// Langkah 3: Definisikan polinomial penyebut f
 poly f = x + y1 + y2^2;
 
-// Langkah 4: Hitung bentuk normal f * g = 1
-// Kita cari g sebagai kombinasi linear dari basis:
-//   1, y2, y2^2, y1, y1*y2, y1*y2^2
-poly g = c1 + c2*y2 + c3*y2^2 + c4*y1 + c5*y1*y2 + c6*y1*y2^2;
+"--- Langkah 6: Penyelesaian Sistem Linear ---";
 
-// Kalikan dan reduksi modulo I
-poly prod = reduce(f * g, I);
-
-// Langkah 5: Samakan koefisien – kita set prod = 1 (suku konstanta 1, semua koefisien basis lain 0)
-// Sistem linear yang dihasilkan persis dengan matriks A pada Langkah 6.
-
-// Langkah 6: Matriks A dan vektor b sesuai solusi
-// Kita selesaikan dengan aljabar linear di Singular:
-
-// Buat matriks koefisien dari sistem
+// Definisikan Matriks A (didapat dari menyamakan koefisien f * elemen basis)
 matrix A[6][6] = 
   x, 5, 0, 3, 0, 0,
   0, x, 5, 0, 3, 0,
@@ -688,27 +676,26 @@ matrix A[6][6] =
   0, 1, 0, 0, x, 5,
   0, 0, 1, 1, 0, x;
 
-// Vektor sisi kanan
+// Vektor sisi kanan b
 matrix b[6][1] = 1, 0, 0, 0, 0, 0;
 
-// Selesaikan c = A^{-1} * b
-matrix c = (inverse(A) * b);
+// Hitung matriks koefisien c = A^(-1) * b
+matrix c = inverse(A) * b;
 
-// Tampilkan koefisien (cocok dengan rumus di Langkah 7)
-c;   // menunjukkan c1..c6 sebagai fungsi rasional dalam x
+"Vektor c (Koefisien c1 sampai c6):";
+print(c);
 
-// Langkah 7: Determinan (penyebut rasional)
+"--- Langkah 7: Perhitungan Determinan ---";
 poly D = det(A);
-"D(x) ="; D;   // = x^6 - 9x^4 + 50x^3 + 27x^2 + 450x + 598
+"D(x) =", D;
 
-// Langkah 8: Bentuk akhir ekspresi rasional
-// Substitusi balik: y1 -> sqrt(3), y2 -> cbrt(5), y2^2 -> cbrt(25)
-// Pembilang N = c1 + c2*y2 + c3*y2^2 + c4*y1 + c5*y1*y2 + c6*y1*y2^2
+"--- Langkah 8: Rekonstruksi dan Verifikasi ---";
+// Menyusun pembilang N menggunakan elemen yang dihitung dari matriks c
 poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1*y2^2;
-// Hasilnya 1/f = N / D
-// Verifikasi: reduce(f * N - D, I) harus 0.
-"Verifikasi (harus 0):"; reduce(f * N - D, I);
-// ============================================================
+
+// Verifikasi: (f * N) modulo I harus sama dengan D
+poly check = reduce(f * N - D, I);
+"Ekspresi Verifikasi (f * N - D) mod I (Harus 0):", check;
                     </pre>
                 </div>
             </div>
