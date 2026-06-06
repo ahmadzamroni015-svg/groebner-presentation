@@ -1,12 +1,15 @@
+Berikut adalah kode HTML yang telah diterjemahkan ke dalam Bahasa Indonesia. Semua teks (judul, deskripsi, label, penjelasan) sudah diubah, sementara rumus MathJax dan struktur kode Singular (komentar juga diterjemahkan) tetap dipertahankan.
+
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Kelompok 4</title>
+    <title>Kelompok 4 - Rasionalisasi Penyebut</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
-        /* === Complete CSS (black/blue/orange neon theme) === */
+        /* === CSS lengkap (tema neon hitam/biru/oranye) === */
         * {
             margin: 0;
             padding: 0;
@@ -22,7 +25,7 @@
             font-weight: 400;
         }
 
-        /* Background Effects */
+        /* Efek Latar Belakang */
         .grid-bg {
             position: fixed;
             top: 0;
@@ -77,7 +80,7 @@
             100% { transform: translateY(10px); }
         }
 
-        /* Floating Particles */
+        /* Partikel Mengambang */
         .particle {
             position: fixed;
             pointer-events: none;
@@ -102,7 +105,7 @@
             100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
         }
 
-        /* Slides Container */
+        /* Kontainer Slide */
         .slides-container {
             width: 100vw;
             height: 100vh;
@@ -136,7 +139,7 @@
         .slide::-webkit-scrollbar-track { background: rgba(255, 94, 0, 0.1); }
         .slide::-webkit-scrollbar-thumb { background: #FF5E00; border-radius: 5px; }
 
-        /* Content Animation */
+        /* Animasi Konten */
         .slide.active .animate-item {
             animation: slideUpFade 0.5s ease forwards;
             opacity: 0;
@@ -157,7 +160,7 @@
         .slide.active .animate-item:nth-child(8) { animation-delay: 0.8s; }
         .slide.active .animate-item:nth-child(9) { animation-delay: 0.9s; }
 
-        /* Navigation Arrows */
+        /* Tombol Navigasi */
         .nav-arrow {
             position: fixed;
             bottom: 30px;
@@ -183,7 +186,7 @@
         .nav-arrow.next { right: 30px; }
         .nav-arrow svg { width: 24px; height: 24px; fill: #FF5E00; }
 
-        /* Slide Indicators */
+        /* Indikator Slide */
         .slide-indicators {
             position: fixed;
             bottom: 30px;
@@ -219,7 +222,7 @@
         .indicator.active { background: rgba(255, 94, 0, 0.3); width: 60px; }
         .indicator:hover { background: rgba(255, 94, 0, 0.5); }
 
-        /* Typography */
+        /* Tipografi */
         h1 {
             font-family: 'Orbitron', monospace;
             font-size: clamp(28px, 5vw, 64px);
@@ -250,7 +253,7 @@
             color: #00B2FF;
             margin-bottom: 15px;
         }
-        /* Formula */
+        /* Rumus */
         .formula {
             background: rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 94, 0, 0.3);
@@ -276,7 +279,7 @@
             50% { box-shadow: 0 0 30px rgba(255, 94, 0, 0.6); }
         }
 
-        /* Cards */
+        /* Kartu */
         .card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 94, 0, 0.2);
@@ -304,7 +307,7 @@
         }
         .card:hover::before { left: 100%; }
 
-        /* Badges */
+        /* Lencana */
         .badge {
             display: inline-block;
             padding: 4px 12px;
@@ -321,7 +324,7 @@
             to { transform: scale(1); opacity: 1; }
         }
 
-        /* Final Box */
+        /* Kotak Akhir */
         .final-box {
             background: rgba(0, 178, 255, 0.1);
             border: 1px solid #00B2FF;
@@ -330,7 +333,7 @@
             margin: 2rem 0;
         }
 
-        /* Code Block */
+        /* Blok Kode */
         .code-block-wrapper {
             position: relative;
             background: #0a0f1e;
@@ -367,7 +370,7 @@
             font-size: 13px;
         }
 
-        /* Info Box */
+        /* Kotak Info */
         .info-box {
             background: rgba(0, 178, 255, 0.1);
             border-left: 4px solid #00B2FF;
@@ -377,7 +380,7 @@
             font-size: 0.85rem;
         }
 
-        /* Flowchart */
+        /* Diagram Alir */
         .flowchart {
             display: flex;
             flex-direction: column;
@@ -416,7 +419,7 @@
             50% { transform: translateY(5px); }
         }
 
-        /* Page Number */
+        /* Nomor Halaman */
         .page-number {
             position: absolute;
             bottom: 20px;
@@ -425,7 +428,7 @@
             font-size: 12px;
         }
 
-        /* Responsive */
+        /* Responsif */
         @media (max-width: 768px) {
             .slide { padding: 70px 20px 60px; }
             .nav-arrow { width: 40px; height: 40px; bottom: 20px; }
@@ -472,85 +475,85 @@
     <div id="particles"></div>
 
     <div class="slides-container">
-        <!-- SLIDE 1: TITLE -->
+        <!-- SLIDE 1: JUDUL -->
         <div class="slide active" id="slide1">
             <div class="animate-item" style="margin-top: 20vh;">
-                <h1>Rationalizing the Denominator</h1>
-                <h1 style="font-size: clamp(24px,4vw,36px);">Exercise 2.1.7</h1>
+                <h1>Rasionalisasi Penyebut</h1>
+                <h1 style="font-size: clamp(24px,4vw,36px);">Soal 2.1.7</h1>
                 <div class="formula formula-neon" style="margin: 40px 0;">
                     \[
                     \frac{1}{x+\sqrt3+\sqrt[3]{25}}
                     \]
                 </div>
-                <p class="animate-item" style="color:#aaa;">Complete solution using the quotient ring & matrix method</p>
-                <p class="animate-item" style="margin-top: 20px; font-size: 0.9rem;">▼ Use arrow keys or buttons to navigate ▼</p>
+                <p class="animate-item" style="color:#aaa;">Solusi lengkap menggunakan ring kuosien & metode matriks</p>
+                <p class="animate-item" style="margin-top: 20px; font-size: 0.9rem;">▼ Gunakan tombol panah atau keyboard untuk navigasi ▼</p>
             </div>
             <div class="page-number">1 / 11</div>
         </div>
 
-        <!-- SLIDE 2: FLOWCHART -->
+        <!-- SLIDE 2: DIAGRAM ALIR -->
         <div class="slide" id="slide2">
-            <span class="badge animate-item">Solution Flowchart</span>
-            <h2 class="animate-item">Step‑by‑step process</h2>
+            <span class="badge animate-item">Diagram Alir Solusi</span>
+            <h2 class="animate-item">Proses langkah demi langkah</h2>
             <div class="animate-item flowchart">
-                <div class="flow-item start">📥 Problem: \(\frac{1}{x+\sqrt3+\sqrt[3]{25}}\)</div>
+                <div class="flow-item start">📥 Masalah: \(\frac{1}{x+\sqrt3+\sqrt[3]{25}}\)</div>
                 <div class="arrow-bounce">▼</div>
-                <div class="flow-item">Step 1: Construct quotient ring \(\mathbb{Q}(x)[y_1,y_2]/I\)</div>
+                <div class="flow-item">Langkah 1: Bangun ring kuosien \(\mathbb{Q}(x)[y_1,y_2]/I\)</div>
                 <div class="arrow-bounce">▼</div>
-                <div class="flow-item">Step 2: Determine basis \(\mathcal{B}\) (dimension 6)</div>
+                <div class="flow-item">Langkah 2: Tentukan basis \(\mathcal{B}\) (dimensi 6)</div>
                 <div class="arrow-bounce">▼</div>
-                <div class="flow-item">Step 3: Assume inverse \(g\) in the basis</div>
+                <div class="flow-item">Langkah 3: Asumsikan invers \(g\) dalam basis</div>
                 <div class="arrow-bounce">▼</div>
-                <div class="flow-item">Step 4: Expand \(g\cdot f\) and reduce modulo \(I\)</div>
+                <div class="flow-item">Langkah 4: Ekspansi \(g\cdot f\) dan reduksi modulo \(I\)</div>
                 <div class="arrow-bounce">▼</div>
-                <div class="flow-item">Step 5: Compare coefficients → linear system</div>
+                <div class="flow-item">Langkah 5: Samakan koefisien → sistem linear</div>
                 <div class="arrow-bounce">▼</div>
-                <div class="flow-item">Step 6: Matrix form \(A\mathbf{c}=\mathbf{b}\)</div>
+                <div class="flow-item">Langkah 6: Bentuk matriks \(A\mathbf{c}=\mathbf{b}\)</div>
                 <div class="arrow-bounce">▼</div>
-                <div class="flow-item">Step 7: Solve via Cramer’s rule (determinant \(D(x)\))</div>
+                <div class="flow-item">Langkah 7: Selesaikan dengan aturan Cramer (determinan \(D(x)\))</div>
                 <div class="arrow-bounce">▼</div>
-                <div class="flow-item">Step 8: Substitute back \(y_1=\sqrt3,\; y_2=\sqrt[3]{5}\)</div>
+                <div class="flow-item">Langkah 8: Substitusi balik \(y_1=\sqrt3,\; y_2=\sqrt[3]{5}\)</div>
                 <div class="arrow-bounce">▼</div>
-                <div class="flow-item end">✅ Rationalized form: \(\frac{\text{numerator}(x,\sqrt3,\sqrt[3]{5})}{D(x)}\)</div>
+                <div class="flow-item end">✅ Bentuk rasional: \(\frac{\text{pembilang}(x,\sqrt3,\sqrt[3]{5})}{D(x)}\)</div>
             </div>
-            <div class="info-box">The matrix method reduces the problem to solving a \(6\times6\) linear system over \(\mathbb{Q}(x)\).</div>
+            <div class="info-box">Metode matriks mereduksi masalah menjadi menyelesaikan sistem linear \(6\times6\) atas \(\mathbb{Q}(x)\).</div>
             <div class="page-number">2 / 11</div>
         </div>
 
-        <!-- SLIDE 3: Step 1 -->
+        <!-- SLIDE 3: Langkah 1 -->
         <div class="slide" id="slide3">
-            <span class="badge animate-item">Step 1</span>
-            <h2 class="animate-item">Construct the quotient ring</h2>
+            <span class="badge animate-item">Langkah 1</span>
+            <h2 class="animate-item">Bangun ring kuosien</h2>
             <div class="animate-item">
-                <p>Let \(y_1 = \sqrt{3}\) and \(y_2 = \sqrt[3]{5}\). Then</p>
+                <p>Misalkan \(y_1 = \sqrt{3}\) dan \(y_2 = \sqrt[3]{5}\). Maka</p>
                 <div class="formula">\[ y_1^2 = 3,\qquad y_2^3 = 5. \]</div>
-                <p>Define the ideal</p>
+                <p>Definisikan ideal</p>
                 <div class="formula">\[ I = \langle y_1^2-3,\; y_2^3-5\rangle \;\subset\; \mathbb{Q}(x)[y_1,y_2]. \]</div>
-                <p>The denominator becomes</p>
+                <p>Penyebut menjadi</p>
                 <div class="formula">\[ f = x + y_1 + y_2^2. \]</div>
             </div>
             <div class="page-number">3 / 11</div>
         </div>
 
-        <!-- SLIDE 4: Step 2 -->
+        <!-- SLIDE 4: Langkah 2 -->
         <div class="slide" id="slide4">
-            <span class="badge animate-item">Step 2</span>
-            <h2 class="animate-item">Determine a basis</h2>
+            <span class="badge animate-item">Langkah 2</span>
+            <h2 class="animate-item">Tentukan basis</h2>
             <div class="animate-item">
-                <p>Every polynomial reduces to a linear combination of</p>
+                <p>Setiap polinomial tereduksi menjadi kombinasi linear dari</p>
                 <div class="formula">\[ \mathcal{B} = \{1,\; y_2,\; y_2^2,\; y_1,\; y_1y_2,\; y_1y_2^2\}. \]</div>
-                <p>Hence the quotient space has dimension \(2\times 3 = 6\) over \(\mathbb{Q}(x)\).</p>
+                <p>Dengan demikian ruang kuosien berdimensi \(2\times 3 = 6\) atas \(\mathbb{Q}(x)\).</p>
             </div>
             <div class="page-number">4 / 11</div>
         </div>
 
-        <!-- SLIDE 5: Step 3 & 4 combined -->
+        <!-- SLIDE 5: Langkah 3 & 4 digabung -->
         <div class="slide" id="slide5">
-            <span class="badge animate-item">Step 3 &amp; 4</span>
-            <h2 class="animate-item">Assume an inverse & expand</h2>
+            <span class="badge animate-item">Langkah 3 &amp; 4</span>
+            <h2 class="animate-item">Asumsikan invers & ekspansi</h2>
             <div class="animate-item">
-                <p>Let \(g = c_1 + c_2y_2 + c_3y_2^2 + c_4y_1 + c_5y_1y_2 + c_6y_1y_2^2\).</p>
-                <p>Compute \(g\cdot f\) modulo \(I\) (using \(y_1^2\to3,\; y_2^3\to5\)):</p>
+                <p>Misalkan \(g = c_1 + c_2y_2 + c_3y_2^2 + c_4y_1 + c_5y_1y_2 + c_6y_1y_2^2\).</p>
+                <p>Hitung \(g\cdot f\) modulo \(I\) (menggunakan \(y_1^2\to3,\; y_2^3\to5\)):</p>
                 <div class="formula">
                     \[
                     \begin{aligned}
@@ -567,12 +570,12 @@
             <div class="page-number">5 / 11</div>
         </div>
 
-        <!-- SLIDE 6: Step 5 -->
+        <!-- SLIDE 6: Langkah 5 -->
         <div class="slide" id="slide6">
-            <span class="badge animate-item">Step 5</span>
-            <h2 class="animate-item">Compare coefficients</h2>
+            <span class="badge animate-item">Langkah 5</span>
+            <h2 class="animate-item">Samakan koefisien</h2>
             <div class="animate-item">
-                <p>Matching coefficients of the basis \(\mathcal{B}\) gives the linear system:</p>
+                <p>Menyamakan koefisien basis \(\mathcal{B}\) menghasilkan sistem linear:</p>
                 <div class="formula">
                     \[
                     \begin{cases}
@@ -589,10 +592,10 @@
             <div class="page-number">6 / 11</div>
         </div>
 
-        <!-- SLIDE 7: Step 6 -->
+        <!-- SLIDE 7: Langkah 6 -->
         <div class="slide" id="slide7">
-            <span class="badge animate-item">Step 6</span>
-            <h2 class="animate-item">Matrix form \(A\mathbf{c}=\mathbf{b}\)</h2>
+            <span class="badge animate-item">Langkah 6</span>
+            <h2 class="animate-item">Bentuk matriks \(A\mathbf{c}=\mathbf{b}\)</h2>
             <div class="animate-item">
                 <div class="formula">
                     \[
@@ -612,14 +615,14 @@
             <div class="page-number">7 / 11</div>
         </div>
 
-        <!-- SLIDE 8: Step 7 -->
+        <!-- SLIDE 8: Langkah 7 -->
         <div class="slide" id="slide8">
-            <span class="badge animate-item">Step 7</span>
-            <h2 class="animate-item">Solve the linear system</h2>
+            <span class="badge animate-item">Langkah 7</span>
+            <h2 class="animate-item">Selesaikan sistem linear</h2>
             <div class="animate-item">
-                <p>The determinant is</p>
+                <p>Determinannya adalah</p>
                 <div class="formula">\[ D(x)=\det(A)=x^6-9x^4+50x^3+27x^2+450x+598. \]</div>
-                <p>Solving yields the coefficients:</p>
+                <p>Penyelesaian menghasilkan koefisien:</p>
                 <div class="formula">
                     \[
                     \begin{aligned}
@@ -636,12 +639,12 @@
             <div class="page-number">8 / 11</div>
         </div>
 
-        <!-- SLIDE 9: Step 8 – Final rationalised form -->
+        <!-- SLIDE 9: Langkah 8 – Bentuk rasional akhir -->
         <div class="slide" id="slide9">
-            <span class="badge animate-item">Step 8</span>
-            <h2 class="animate-item">Final rationalised form</h2>
+            <span class="badge animate-item">Langkah 8</span>
+            <h2 class="animate-item">Bentuk rasional akhir</h2>
             <div class="animate-item">
-                <p>Substitute \(y_1=\sqrt3,\; y_2=\sqrt[3]{5}\) (so \(y_2^2=\sqrt[3]{25}\)):</p>
+                <p>Substitusi balik \(y_1=\sqrt3,\; y_2=\sqrt[3]{5}\) (sehingga \(y_2^2=\sqrt[3]{25}\)):</p>
                 <div class="final-box">
                     \[
                     \boxed{
@@ -661,51 +664,51 @@
                     }
                     \]
                 </div>
-                <p>The denominator \(D(x)\) is the rationalised denominator (a polynomial in \(x\) alone).</p>
+                <p>Penyebut \(D(x)\) adalah penyebut rasional (polinomial dalam \(x\) saja).</p>
             </div>
             <div class="page-number">9 / 11</div>
         </div>
 
-        <!-- SLIDE 10: Singular CAS verification code -->
+        <!-- SLIDE 10: Kode verifikasi Singular CAS -->
         <div class="slide" id="slide10">
             <span class="badge animate-item">Singular CAS</span>
-            <h2 class="animate-item">Verification code (from question to solution)</h2>
+            <h2 class="animate-item">Kode verifikasi (dari soal ke solusi)</h2>
             <div class="animate-item">
-                <p>The following <strong>Singular</strong> code follows the exact steps above and outputs the rationalised form.</p>
+                <p>Kode <strong>Singular</strong> berikut mengikuti langkah‑langkah di atas dan menghasilkan bentuk rasional.</p>
                 <div class="code-block-wrapper">
-                    <button class="copy-btn" onclick="copySingularCode()">📋 Copy</button>
+                    <button class="copy-btn" onclick="copySingularCode()">📋 Salin</button>
                     <pre class="code-block-pre" id="singularCode">
 // ============================================================
-// Singular code for Exercise 2.1.7
-// Rationalize 1/(x + sqrt(3) + cbrt(25))
+// Kode Singular untuk Soal 2.1.7
+// Merasionalkan 1/(x + sqrt(3) + cbrt(25))
 // ============================================================
 
-// Step 1: Define the polynomial ring over Q(x) with variables:
-//   y1 = sqrt(3),   y2 = cbrt(5)   (so cbrt(25) = y2^2)
+// Langkah 1: Definisikan ring polinomial atas Q(x) dengan variabel:
+//   y1 = sqrt(3),   y2 = cbrt(5)   (maka cbrt(25) = y2^2)
 ring R = (0,x), (y1, y2), lp;
 
-// Step 2: Define the ideal I with the relations:
+// Langkah 2: Definisikan ideal I dengan relasi:
 ideal I = y1^2 - 3,      // y1 = sqrt(3)
           y2^3 - 5;      // y2 = cbrt(5)
 
-// Step 3: The denominator f = x + y1 + y2^2
+// Langkah 3: Penyebut f = x + y1 + y2^2
 poly f = x + y1 + y2^2;
 
-// Step 4: Compute the normal form of f * g = 1
-// We look for g as a linear combination of the basis:
+// Langkah 4: Hitung bentuk normal f * g = 1
+// Kita cari g sebagai kombinasi linear dari basis:
 //   1, y2, y2^2, y1, y1*y2, y1*y2^2
 poly g = c1 + c2*y2 + c3*y2^2 + c4*y1 + c5*y1*y2 + c6*y1*y2^2;
 
-// Multiply and reduce modulo I
+// Kalikan dan reduksi modulo I
 poly prod = reduce(f * g, I);
 
-// Step 5: Compare coefficients – we set prod = 1 (constant term 1, all other coeffs 0)
-// The resulting linear system is exactly the matrix A in Step 6.
+// Langkah 5: Samakan koefisien – kita set prod = 1 (suku konstanta 1, semua koefisien basis lain 0)
+// Sistem linear yang dihasilkan persis dengan matriks A pada Langkah 6.
 
-// Step 6: Matrix A and vector b as in the solution
-// We can solve using linear algebra in Singular:
+// Langkah 6: Matriks A dan vektor b sesuai solusi
+// Kita selesaikan dengan aljabar linear di Singular:
 
-// Create a matrix of coefficients from the system
+// Buat matriks koefisien dari sistem
 matrix A[6][6] = 
   x, 5, 0, 3, 0, 0,
   0, x, 5, 0, 3, 0,
@@ -714,59 +717,59 @@ matrix A[6][6] =
   0, 1, 0, 0, x, 5,
   0, 0, 1, 1, 0, x;
 
-// Right-hand side vector
+// Vektor sisi kanan
 matrix b[6][1] = 1, 0, 0, 0, 0, 0;
 
-// Solve for c = A^{-1} * b
+// Selesaikan c = A^{-1} * b
 matrix c = (inverse(A) * b);
 
-// Output the coefficients (they match the formulas in Step 7)
-c;   // shows c1..c6 as rational functions in x
+// Tampilkan koefisien (cocok dengan rumus di Langkah 7)
+c;   // menunjukkan c1..c6 sebagai fungsi rasional dalam x
 
-// Step 7: Determinant (the rationalised denominator)
+// Langkah 7: Determinan (penyebut rasional)
 poly D = det(A);
 "D(x) ="; D;   // = x^6 - 9x^4 + 50x^3 + 27x^2 + 450x + 598
 
-// Step 8: Construct the final rationalised expression
-// Substitute back: y1 -> sqrt(3), y2 -> cbrt(5), y2^2 -> cbrt(25)
-// The numerator N = c1 + c2*y2 + c3*y2^2 + c4*y1 + c5*y1*y2 + c6*y1*y2^2
+// Langkah 8: Bentuk akhir ekspresi rasional
+// Substitusi balik: y1 -> sqrt(3), y2 -> cbrt(5), y2^2 -> cbrt(25)
+// Pembilang N = c1 + c2*y2 + c3*y2^2 + c4*y1 + c5*y1*y2 + c6*y1*y2^2
 poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1*y2^2;
-// The result is 1/f = N / D
-// Verify: reduce(f * N - D, I) should be 0.
-"Verification (should be 0):"; reduce(f * N - D, I);
+// Hasilnya 1/f = N / D
+// Verifikasi: reduce(f * N - D, I) harus 0.
+"Verifikasi (harus 0):"; reduce(f * N - D, I);
 // ============================================================
                     </pre>
                 </div>
                 <div class="info-box">
-                    <strong>💡 Explanation:</strong><br>
-                    • <strong>Ring definition</strong>: \(\mathbb{Q}(x)[y_1,y_2]\) with lex order.<br>
-                    • <strong>Ideal I</strong>: encodes \(y_1^2=3,\; y_2^3=5\).<br>
-                    • <strong>f</strong> = denominator \(x + y_1 + y_2^2\).<br>
-                    • <strong>g</strong> = unknown linear combination of the 6 basis monomials.<br>
-                    • <strong>Matrix A</strong> is the multiplication matrix of \(f\) in that basis.<br>
-                    • <strong>Determinant D(x)</strong> is the rationalised denominator.<br>
-                    • <strong>Solution c</strong> gives the coefficients of the inverse.<br>
-                    • The final expression matches the boxed result in Step 8.
+                    <strong>💡 Penjelasan:</strong><br>
+                    • <strong>Definisi ring</strong>: \(\mathbb{Q}(x)[y_1,y_2]\) dengan urutan leksikografik.<br>
+                    • <strong>Ideal I</strong>: menyandikan \(y_1^2=3,\; y_2^3=5\).<br>
+                    • <strong>f</strong> = penyebut \(x + y_1 + y_2^2\).<br>
+                    • <strong>g</strong> = kombinasi linear tak diketahui dari 6 monomial basis.<br>
+                    • <strong>Matriks A</strong> adalah matriks perkalian dari \(f\) dalam basis tersebut.<br>
+                    • <strong>Determinan D(x)</strong> adalah penyebut rasional.<br>
+                    • <strong>Solusi c</strong> memberikan koefisien dari invers.<br>
+                    • Ekspresi akhir cocok dengan hasil kotak di Langkah 8.
                 </div>
             </div>
             <div class="page-number">10 / 11</div>
         </div>
 
-        <!-- SLIDE 11: Thank you / End slide -->
+        <!-- SLIDE 11: Penutup / Terima kasih -->
         <div class="slide" id="slide11">
             <div style="display: flex; flex-direction: column; justify-content: center; min-height: 70%; text-align: center;">
                 <div class="qna-box" style="font-size: clamp(28px, 5vw, 40px); display: inline-block; padding: 20px 40px; border: 1px solid #FF5E00; border-radius: 12px; margin: 30px auto;">
-                    ✓ Thank You
+                    ✓ Terima Kasih
                 </div>
-                <p style="color:#00B2FF; font-size: 1.2rem;">Full solution complete – rationalization verified.</p>
-                <p style="margin-top: 20px; color: #aaa;">Matrix method + Flowchart + Singular CAS verification.</p>
-                <p style="margin-top: 40px; font-size: 0.9rem;">End of presentation. Use arrow keys to review.</p>
+                <p style="color:#00B2FF; font-size: 1.2rem;">Solusi lengkap – rasionalisasi terverifikasi.</p>
+                <p style="margin-top: 20px; color: #aaa;">Metode matriks + Diagram alir + Verifikasi Singular CAS.</p>
+                <p style="margin-top: 40px; font-size: 0.9rem;">Akhir presentasi. Gunakan tombol panah untuk meninjau kembali.</p>
             </div>
             <div class="page-number">11 / 11</div>
         </div>
     </div>
 
-    <!-- Navigation Arrows -->
+    <!-- Tombol Navigasi -->
     <div class="nav-arrow prev" id="prevBtn">
         <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
     </div>
@@ -777,7 +780,7 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
     <div class="slide-indicators" id="indicatorsContainer"></div>
 
     <script>
-        // Floating particles
+        // Partikel mengambang
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             if (!particlesContainer) return;
@@ -792,7 +795,7 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
             }
         }
 
-        // Slide Navigation
+        // Navigasi Slide
         const slides = document.querySelectorAll('.slide');
         const indicatorsContainer = document.getElementById('indicatorsContainer');
         const prevBtn = document.getElementById('prevBtn');
@@ -800,7 +803,7 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
         let currentSlide = 0;
         const totalSlides = slides.length;  // = 11
 
-        // Create indicators dynamically
+        // Buat indikator secara dinamis
         for (let i = 0; i < totalSlides; i++) {
             const indicator = document.createElement('div');
             indicator.classList.add('indicator');
@@ -838,7 +841,7 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
             updateSlides();
         }
 
-        // Event listeners
+        // Event listener
         if (nextBtn) nextBtn.addEventListener('click', nextSlide);
         if (prevBtn) prevBtn.addEventListener('click', prevSlide);
         document.addEventListener('keydown', (e) => {
@@ -846,7 +849,7 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
             if (e.key === 'ArrowLeft') prevSlide();
         });
 
-        // Smooth scroll handling
+        // Penanganan scroll halus
         slides.forEach(slide => {
             slide.addEventListener('wheel', (e) => {
                 const isScrollable = slide.scrollHeight > slide.clientHeight;
@@ -854,7 +857,7 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
             });
         });
 
-        // Copy function for Singular code
+        // Fungsi salin kode Singular
         function copySingularCode() {
             const codeElement = document.getElementById('singularCode');
             if (!codeElement) return;
@@ -863,7 +866,7 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
                 const btn = document.querySelector('.copy-btn');
                 if (btn) {
                     const original = btn.innerHTML;
-                    btn.innerHTML = '✅ Copied!';
+                    btn.innerHTML = '✅ Tersalin!';
                     btn.style.background = '#00ff88';
                     btn.style.color = '#0a0f1e';
                     setTimeout(() => {
@@ -872,14 +875,15 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
                         btn.style.color = 'white';
                     }, 2000);
                 }
-            }).catch(err => console.error('Copy failed:', err));
+            }).catch(err => console.error('Gagal menyalin:', err));
         }
 
-        // Expose copy function globally
+        // Ekspos fungsi secara global
         window.copySingularCode = copySingularCode;
 
-        // Initialize
+        // Inisialisasi
         createParticles();
     </script>
 </body>
 </html>
+```
