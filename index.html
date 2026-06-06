@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Kelompok 4 - Alkom S6</title>
+    <title>Kelompok 4 - Rasionalisasi Penyebut</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
+        /* === CSS lengkap (tema neon hitam/biru/oranye) – SAMA SEPERTI SEBELUMNYA === */
         * {
             margin: 0;
             padding: 0;
@@ -21,6 +22,7 @@
             font-weight: 400;
         }
 
+        /* Efek Latar Belakang */
         .grid-bg {
             position: fixed;
             top: 0;
@@ -388,6 +390,33 @@
             border: 2px solid #FF5E00;
             box-shadow: 0 0 20px rgba(255,94,0,0.3);
         }
+        /* Gaya untuk slide judul besar */
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 80%;
+            text-align: center;
+        }
+        .main-title {
+            font-size: clamp(32px, 6vw, 72px);
+            font-weight: 900;
+            background: linear-gradient(135deg, #FF5E00, #00B2FF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 40px;
+            line-height: 1.2;
+        }
+        .group-list {
+            font-size: clamp(18px, 2.5vw, 28px);
+            color: #dddddd;
+            margin-top: 20px;
+        }
+        .group-list p {
+            margin: 8px 0;
+        }
         @media (max-width: 768px) {
             .slide { padding: 70px 20px 60px; }
             .nav-arrow { width: 40px; height: 40px; bottom: 20px; }
@@ -437,55 +466,55 @@
     <div id="particles"></div>
 
     <div class="slides-container">
-        <!-- SLIDE 1: ORIGINAL QUESTION -->
+        <!-- SLIDE 1: JUDUL BESAR + KELOMPOK -->
         <div class="slide active" id="slide1">
+            <div class="animate-item title-slide">
+                <div class="main-title">Rasionalisasi Penyebut<br>dengan Metode<br>Invers Modulo Ideal</div>
+                <div class="group-list">
+                    <p>Kelompok 4:</p>
+                    <p>1. Ahmad Fauzi</p>
+                    <p>2. Siti Nurhaliza</p>
+                    <p>3. Bagas Prasetyo</p>
+                    <p>4. Dewi Anggraini</p>
+                </div>
+            </div>
+            <div class="page-number">1 / 13</div>
+        </div>
+
+        <!-- SLIDE 2: ORIGINAL QUESTION -->
+        <div class="slide" id="slide2">
             <span class="badge animate-item">Soal Asli</span>
-            <h2 class="animate-item">2.1.7 – Soal</h2>
+            <h2 class="animate-item">2.1.7 – Rasionalkan penyebut</h2>
             <div class="question-image animate-item">
                 <img src="2.1.7 Question.png" alt="Soal 2.1.7">
             </div>
+            <div class="info-box animate-item" style="margin-top: 20px;">
+                <strong>Petunjuk:</strong> Gunakan ideal \(I = \langle y_1^2 - 3,\; y_2^3 - 5 \rangle\) dan teknik Contoh 2.1.10.
+            </div>
         </div>
 
-        <!-- SLIDE 2: MEMECAH BENTUK AKAR DAN MENGHUBUNGKAN KE CONTOH 2.1.10 -->
-        <div class="slide" id="slide2">
-            <span class="badge animate-item">Penyederhanaan</span>
-            <h2 class="animate-item">Yang Ditanyakan?</h2>
+        <!-- SLIDE 3: TRANSFORMASI NOTASI -->
+        <div class="slide" id="slide3">
+            <span class="badge animate-item">Transformasi Notasi</span>
+            <h2 class="animate-item">Memindahkan ke ring polinomial</h2>
             <div class="animate-item">
-                <p>Perhatikan setiap komponen penyebut:</p>
                 <div class="formula">
-                    \[
-                    \sqrt{3} \quad\text{dan}\quad \sqrt[3]{25} = \sqrt[3]{5^2} = (\sqrt[3]{5})^2.
-                    \]
+                    y_1 = \sqrt{3},\qquad y_2 = \sqrt[3]{5}
                 </div>
-                <p>Kita definisikan variabel baru untuk menyederhanakan notasi:</p>
                 <div class="formula">
-                    \[
-                    y_1 = \sqrt{3}, \qquad y_2 = \sqrt[3]{5}.
-                    \]
+                    \sqrt[3]{25} = y_2^2
                 </div>
-                <p>Dengan demikian:</p>
                 <div class="formula">
-                    \[
-                    y_1^2 = 3,\qquad y_2^3 = 5,\qquad \sqrt[3]{25} = y_2^2.
-                    \]
+                    f = x + y_1 + y_2^2
                 </div>
-                <p>Penyebut menjadi:</p>
+                <div class="formula">
+                    I = \langle y_1^2-3,\; y_2^3-5 \rangle \subseteq \mathbb{Q}(x)[y_1,y_2]
+                </div>
+                <p style="margin-top: 20px;">
+                    <strong>Mengikuti metode Contoh 2.1.10, kita mencari \(g\) sehingga</strong>
+                </p>
                 <div class="formula formula-neon">
-                    \[
-                    f = x + y_1 + y_2^2.
-                    \]
-                </div>
-                <p>Ideal yang merepresentasikan relasi aljabar:</p>
-                <div class="formula">
-                    \[
-                    I = \langle y_1^2 - 3,\; y_2^3 - 5 \rangle \subset \mathbb{Q}(x)[y_1,y_2].
-                    \]
-                </div>
-                <p>Mengikuti metode Contoh 2.1.10, kita mencari invers dari \(f\) modulo \(I\), yaitu menentukan \(g\) sehingga</p>
-                <div class="formula formula-neon">
-                    \[
                     f \cdot g \equiv 1 \pmod I.
-                    \]
                 </div>
                 <p class="info-box" style="margin-top: 20px;">
                     Dengan kata lain: kita akan mencari invers dari \(f\) di dalam ring kuosien \(\mathbb{Q}(x)[y_1,y_2]/I\).
@@ -493,8 +522,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 3: FLOWCHART (gambar) -->
-        <div class="slide" id="slide3">
+        <!-- SLIDE 4: FLOWCHART (gambar) -->
+        <div class="slide" id="slide4">
             <span class="badge animate-item">Flowchart</span>
             <h2 class="animate-item">Proses dalam Flowchart</h2>
             <div style="text-align: center; margin-top: 20px;">
@@ -502,8 +531,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 4: Langkah 1 -->
-        <div class="slide" id="slide4">
+        <!-- SLIDE 5: Langkah 1 -->
+        <div class="slide" id="slide5">
             <span class="badge animate-item">Langkah 1</span>
             <h2 class="animate-item">Bangun ring kuosien</h2>
             <div class="animate-item">
@@ -516,8 +545,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 5: Langkah 2 -->
-        <div class="slide" id="slide5">
+        <!-- SLIDE 6: Langkah 2 -->
+        <div class="slide" id="slide6">
             <span class="badge animate-item">Langkah 2</span>
             <h2 class="animate-item">Tentukan basis</h2>
             <div class="animate-item">
@@ -527,8 +556,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 6: Langkah 3 & 4 -->
-        <div class="slide" id="slide6">
+        <!-- SLIDE 7: Langkah 3 & 4 -->
+        <div class="slide" id="slide7">
             <span class="badge animate-item">Langkah 3 &amp; 4</span>
             <h2 class="animate-item">Asumsikan invers & ekspansi</h2>
             <div class="animate-item">
@@ -549,8 +578,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 7: Langkah 5 -->
-        <div class="slide" id="slide7">
+        <!-- SLIDE 8: Langkah 5 -->
+        <div class="slide" id="slide8">
             <span class="badge animate-item">Langkah 5</span>
             <h2 class="animate-item">Samakan koefisien</h2>
             <div class="animate-item">
@@ -570,8 +599,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 8: Langkah 6 -->
-        <div class="slide" id="slide8">
+        <!-- SLIDE 9: Langkah 6 -->
+        <div class="slide" id="slide9">
             <span class="badge animate-item">Langkah 6</span>
             <h2 class="animate-item">Bentuk matriks \(A\mathbf{c}=\mathbf{b}\)</h2>
             <div class="animate-item">
@@ -592,8 +621,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 9: Langkah 7 -->
-        <div class="slide" id="slide9">
+        <!-- SLIDE 10: Langkah 7 -->
+        <div class="slide" id="slide10">
             <span class="badge animate-item">Langkah 7</span>
             <h2 class="animate-item">Selesaikan sistem linear</h2>
             <div class="animate-item">
@@ -615,8 +644,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 10: Langkah 8 – Bentuk rasional akhir -->
-        <div class="slide" id="slide10">
+        <!-- SLIDE 11: Langkah 8 – Bentuk rasional akhir -->
+        <div class="slide" id="slide11">
             <span class="badge animate-item">Langkah 8</span>
             <h2 class="animate-item">Bentuk rasional akhir</h2>
             <div class="animate-item">
@@ -634,8 +663,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 11: Kode Singular CAS -->
-        <div class="slide" id="slide11">
+        <!-- SLIDE 12: Kode Singular CAS -->
+        <div class="slide" id="slide12">
             <span class="badge animate-item">Singular CAS</span>
             <h2 class="animate-item">Implementasi ke dalam Singular CAS</h2>
             <div class="animate-item">
@@ -682,8 +711,8 @@ D;
             </div>
         </div>
 
-        <!-- SLIDE 12: Penutup -->
-        <div class="slide" id="slide12">
+        <!-- SLIDE 13: Penutup -->
+        <div class="slide" id="slide13">
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 70%; text-align: center;">
                 <div style="font-size: clamp(48px, 8vw, 96px); font-weight: bold; background: linear-gradient(135deg, #FF5E00, #00B2FF); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 20px rgba(255,94,0,0.5);">
                     Terima Kasih!!
@@ -701,7 +730,7 @@ D;
     </div>
 
     <div class="slide-indicators" id="indicatorsContainer"></div>
-    <div class="page-number-pill" id="pageNumberPill">1 / 12</div>
+    <div class="page-number-pill" id="pageNumberPill">1 / 13</div>
 
     <script>
         function createParticles() {
@@ -724,7 +753,7 @@ D;
         const nextBtn = document.getElementById('nextBtn');
         const pageNumberPill = document.getElementById('pageNumberPill');
         let currentSlide = 0;
-        const totalSlides = slides.length; // = 12
+        const totalSlides = slides.length; // = 13
 
         for (let i = 0; i < totalSlides; i++) {
             const indicator = document.createElement('div');
