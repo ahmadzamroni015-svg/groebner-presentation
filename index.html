@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Presentasi - Rasionalisasi Penyebut dengan Gröbner Basis (Lengkap)</title>
+    <title>Correct Solution | Rationalizing 1/(x+√3+∛25) – Matrix Method</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
+        /* === Provided CSS (unchanged) === */
         * {
             margin: 0;
             padding: 0;
@@ -13,19 +14,100 @@
         }
 
         body {
-            font-family: 'Segoe UI', 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0e1a 0%, #0f1422 100%);
-            color: #e0e0e0;
+            font-family: 'Rajdhani', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
             overflow: hidden;
-            height: 100vh;
+            position: relative;
+            font-weight: 400;
         }
 
-        .slides-container {
-            position: relative;
+        /* Background Effects */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, transparent 2%, rgba(255, 94, 0, 0.03) 2%, rgba(255, 94, 0, 0.03) 3%, transparent 3%),
+                radial-gradient(circle at 75% 75%, transparent 2%, rgba(0, 178, 255, 0.03) 2%, rgba(0, 178, 255, 0.03) 3%, transparent 3%);
+            background-size: 80px 80px;
+            animation: grid-move 30s linear infinite;
+            z-index: -2;
+        }
+
+        .gradient-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 94, 0, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(0, 178, 255, 0.15) 0%, transparent 50%);
+            z-index: -1;
+            animation: gradientPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes gradientPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(transparent 50%, rgba(255, 94, 0, 0.02) 50%);
+            background-size: 100% 4px;
+            animation: scanlines 8s linear infinite;
+            z-index: 2;
+        }
+
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(80px, 80px); }
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+        }
+
+        .particle::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #FF5E00;
+            box-shadow: 0 0 10px #FF5E00, 0 0 20px #FF5E00;
+            animation: floatUp 15s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Slides Container */
+        .slides-container {
+            width: 100vw;
             height: 100vh;
             overflow: hidden;
-            z-index: 5;
+            position: relative;
         }
 
         .slide {
@@ -34,671 +116,552 @@
             left: 0;
             width: 100%;
             height: 100%;
-            padding: 25px 40px;
-            overflow-y: auto;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s;
-            background: rgba(10, 14, 26, 0.97);
-            backdrop-filter: blur(2px);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            padding: 80px 60px 40px;
+            scrollbar-width: thin;
         }
 
         .slide.active {
             opacity: 1;
             visibility: visible;
-            z-index: 2;
+            z-index: 10;
         }
 
-        /* Scrollbar */
         .slide::-webkit-scrollbar {
-            width: 8px;
+            width: 5px;
         }
-        .slide::-webkit-scrollbar-track {
-            background: #1a1a2e;
-            border-radius: 4px;
-        }
-        .slide::-webkit-scrollbar-thumb {
-            background: #ff6b35;
-            border-radius: 4px;
+        .slide::-webkit-scrollbar-track { background: rgba(255, 94, 0, 0.1); }
+        .slide::-webkit-scrollbar-thumb { background: #FF5E00; border-radius: 5px; }
+
+        /* Content Animation */
+        .slide.active .animate-item {
+            animation: slideUpFade 0.5s ease forwards;
+            opacity: 0;
         }
 
-        h1 {
-            font-size: clamp(32px, 5vw, 52px);
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ff6b35, #00aaff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        h2 {
-            font-size: clamp(24px, 3.5vw, 34px);
-            margin-bottom: 15px;
-            padding-bottom: 6px;
-            border-bottom: 3px solid #ff6b35;
-            display: inline-block;
-        }
+        .slide.active .animate-item:nth-child(1) { animation-delay: 0.1s; }
+        .slide.active .animate-item:nth-child(2) { animation-delay: 0.2s; }
+        .slide.active .animate-item:nth-child(3) { animation-delay: 0.3s; }
+        .slide.active .animate-item:nth-child(4) { animation-delay: 0.4s; }
+        .slide.active .animate-item:nth-child(5) { animation-delay: 0.5s; }
+        .slide.active .animate-item:nth-child(6) { animation-delay: 0.6s; }
+        .slide.active .animate-item:nth-child(7) { animation-delay: 0.7s; }
+        .slide.active .animate-item:nth-child(8) { animation-delay: 0.8s; }
+        .slide.active .animate-item:nth-child(9) { animation-delay: 0.9s; }
 
-        h3 {
-            font-size: clamp(18px, 2.5vw, 24px);
-            margin: 12px 0 10px 0;
-            color: #ffaa44;
-        }
-
-        h4 {
-            font-size: clamp(16px, 2vw, 20px);
-            margin: 10px 0 8px 0;
-            color: #88ddff;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            margin-right: 8px;
-            margin-bottom: 10px;
-        }
-        .badge-theory { background: #1a3a5c; color: #88ddff; border: 1px solid #00aaff; }
-        .badge-method { background: #3a2a1a; color: #ffaa66; border: 1px solid #ffaa44; }
-        .badge-result { background: #1a4a2a; color: #88ff88; border: 1px solid #44ff88; }
-        .badge-problem { background: #4a1a2a; color: #ff8888; border: 1px solid #ff4444; }
-        .badge-mapping { background: #2a4a6a; color: #aaddff; border: 1px solid #44aaff; }
-
-        .card {
-            background: rgba(25, 30, 45, 0.7);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 10px 0;
-            border-left: 4px solid #ff6b35;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            margin: 12px 0;
-        }
-
-        .formula {
-            background: #0a0e1a;
-            padding: 12px;
-            border-radius: 10px;
-            overflow-x: auto;
-            margin: 10px 0;
-            font-family: 'Courier New', monospace;
-            border-left: 4px solid #00aaff;
-            font-size: 0.9rem;
-        }
-        .formula-highlight {
-            border-left: 4px solid #ff6b35;
-            background: linear-gradient(135deg, #0d1222, #0a0e1a);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 12px 0;
-            border-radius: 8px;
-            overflow: hidden;
-            font-size: 0.8rem;
-        }
-        th, td {
-            border: 1px solid #333;
-            padding: 8px 10px;
-            text-align: left;
-            vertical-align: top;
-        }
-        th {
-            background: linear-gradient(135deg, #ff6b35, #e05520);
-            color: #fff;
-            font-weight: bold;
-        }
-        tr:nth-child(even) {
-            background: rgba(255,255,255,0.03);
-        }
-        tr:hover {
-            background: rgba(255, 107, 53, 0.1);
-        }
-
-        .info-box {
-            background: linear-gradient(135deg, rgba(0, 170, 255, 0.1), rgba(0, 170, 255, 0.05));
-            border-left: 4px solid #00aaff;
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin: 12px 0;
-            font-size: 0.85rem;
-        }
-
-        .warning-box {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 107, 53, 0.05));
-            border-left: 4px solid #ff6b35;
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin: 12px 0;
-            font-size: 0.85rem;
-        }
-
-        .page-number {
-            position: absolute;
-            bottom: 10px;
-            right: 18px;
-            font-size: 10px;
-            color: #666;
-        }
-
+        /* Navigation Arrows */
         .nav-arrow {
             position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background: rgba(0,0,0,0.5);
+            bottom: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 94, 0, 0.2);
+            border: 1px solid rgba(255, 94, 0, 0.5);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 30;
-            transition: all 0.3s;
-            backdrop-filter: blur(5px);
+            z-index: 100;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
         .nav-arrow:hover {
-            background: #ff6b35;
-            transform: translateY(-50%) scale(1.05);
+            background: rgba(255, 94, 0, 0.4);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 94, 0, 0.5);
         }
-        .nav-arrow.prev { left: 12px; }
-        .nav-arrow.next { right: 12px; }
-        .nav-arrow svg { width: 24px; fill: white; }
+        .nav-arrow.prev { left: 30px; }
+        .nav-arrow.next { right: 30px; }
+        .nav-arrow svg { width: 24px; height: 24px; fill: #FF5E00; }
 
+        /* Slide Indicators */
         .slide-indicators {
             position: fixed;
-            bottom: 12px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 8px;
-            z-index: 30;
+            gap: 15px;
+            z-index: 100;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0 10px;
         }
         .indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #555;
+            width: 40px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .indicator.active {
-            background: #ff6b35;
-            width: 22px;
-            border-radius: 10px;
+        .indicator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #FF5E00;
+            transition: left 0.3s ease;
         }
+        .indicator.active::before { left: 0; }
+        .indicator.active { background: rgba(255, 94, 0, 0.3); width: 60px; }
+        .indicator:hover { background: rgba(255, 94, 0, 0.5); }
 
-        .qna-box {
-            font-size: 44px;
-            text-align: center;
-            margin: 25px 0;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ff6b35, #00aaff);
+        /* Typography */
+        h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(28px, 5vw, 64px);
+            font-weight: 900;
+            background: linear-gradient(45deg, #FF5E00, #00B2FF);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(24px, 4vw, 40px);
+            color: #FF5E00;
+            margin-bottom: 30px;
+            border-left: 4px solid #FF5E00;
+            padding-left: 20px;
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 5px rgba(255, 94, 0, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(255, 94, 0, 0.6); }
+        }
+        h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(18px, 3vw, 24px);
+            color: #00B2FF;
+            margin-bottom: 15px;
+        }
+        /* Formula */
+        .formula {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 94, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            overflow-x: auto;
+            transition: all 0.3s ease;
+            font-size: clamp(12px, 2vw, 20px);
+        }
+        .formula:hover {
+            border-color: #FF5E00;
+            box-shadow: 0 0 30px rgba(255, 94, 0, 0.2);
+            transform: scale(1.01);
+        }
+        .formula-neon {
+            border: 1px solid #FF5E00;
+            animation: borderPulse 2s ease-in-out infinite;
+        }
+        @keyframes borderPulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 94, 0, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 94, 0, 0.6); }
         }
 
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 94, 0, 0.2);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            border-color: #FF5E00;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 94, 0, 0.2);
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 94, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        .card:hover::before { left: 100%; }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            animation: badgePop 0.5s ease-out;
+            background: rgba(255, 94, 0, 0.2);
+            border: 1px solid #FF5E00;
+            color: #FF5E00;
+        }
+        @keyframes badgePop {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Final Box */
+        .final-box {
+            background: rgba(0, 178, 255, 0.1);
+            border: 1px solid #00B2FF;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        /* Page Number */
+        .page-number {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            color: rgba(255, 94, 0, 0.5);
+            font-size: 12px;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .slide { padding: 15px 20px; }
-            h2 { font-size: 18px; }
-            table { font-size: 0.65rem; }
-            th, td { padding: 5px 6px; }
-            .formula { font-size: 0.7rem; }
+            .slide { padding: 70px 20px 60px; }
+            .nav-arrow { width: 40px; height: 40px; bottom: 20px; }
+            .nav-arrow.prev { left: 15px; }
+            .nav-arrow.next { right: 15px; }
+            .slide-indicators { bottom: 20px; gap: 8px; }
+            .indicator { width: 25px; }
+            .indicator.active { width: 40px; }
+        }
+        @media (max-width: 480px) {
+            .slide { padding: 60px 15px 70px; }
+            .formula { padding: 12px; }
+        }
+        @media print {
+            .slide {
+                page-break-after: always;
+                break-inside: avoid;
+                position: relative !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                display: block !important;
+                height: auto !important;
+                min-height: 0 !important;
+                overflow: visible !important;
+            }
+            .slides-container {
+                overflow: visible !important;
+                height: auto !important;
+            }
+            .nav-arrow, .slide-indicators, .scanlines, .particle {
+                display: none !important;
+            }
+            .grid-bg, .gradient-overlay {
+                display: none !important;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="grid-bg"></div>
+    <div class="gradient-overlay"></div>
+    <div class="scanlines"></div>
+    <div id="particles"></div>
 
-<div class="slides-container">
-    
-    <div class="slide active" id="slide1">
-        <div style="display: flex; flex-direction: column; justify-content: center; min-height: 85%;">
-            <h1 style="font-size: clamp(32px, 5vw, 48px);">Rasionalisasi Penyebut</h1>
-            <h1 style="font-size: clamp(28px, 4.5vw, 44px); color: #ff6b35; background: none;">Menggunakan Gröbner Basis</h1>
-            <h1 style="font-size: clamp(24px, 4vw, 38px); margin-top: 5px;">dan Resultant</h1>
-            <div style="margin-top: 40px;">
-                <p><strong>Kelompok:</strong> [Nama Kelompok]</p>
-                <p><strong>Dosen Pengampu:</strong> [Nama Dosen]</p>
-                <p><strong>Mata Kuliah:</strong> [Nama Mata Kuliah]</p>
-                <p style="margin-top: 25px; color: #aaa;">UIN Maulana Malik Ibrahim Malang</p>
-                <p style="color: #aaa;">Fakultas Sains dan Teknologi</p>
-                <p style="color: #aaa; margin-top: 10px;">Tahun Akademik 2024/2025</p>
+    <div class="slides-container">
+        <!-- SLIDE 1: TITLE -->
+        <div class="slide active" id="slide1">
+            <div class="animate-item" style="margin-top: 20vh;">
+                <h1>Rationalizing the Denominator</h1>
+                <h1 style="font-size: clamp(24px,4vw,36px);">Exercise 2.1.7</h1>
+                <div class="formula formula-neon" style="margin: 40px 0;">
+                    \[
+                    \frac{1}{x+\sqrt3+\sqrt[3]{25}}
+                    \]
+                </div>
+                <p class="animate-item" style="color:#aaa;">Complete solution using the quotient ring & matrix method</p>
+                <p class="animate-item" style="margin-top: 20px; font-size: 0.9rem;">▼ Use arrow keys or buttons to navigate ▼</p>
             </div>
-        </div>
-        <div class="page-number">1 / 16</div>
-    </div>
-
-    <div class="slide" id="slide2">
-        <span class="badge badge-problem">📌 Rumusan Masalah</span>
-        <h2>Pemaparan Soal</h2>
-        
-        <div class="formula formula-highlight" style="text-align: center; font-size: 1.1rem;">
-            \[
-            \text{Diketahui: } \frac{1}{x + \sqrt{3} + \sqrt[3]{25}} \quad \text{dengan } x \in \mathbb{Q}
-            \]
+            <div class="page-number">1 / 9</div>
         </div>
 
-        <h3>A. Analisis Setiap Komponen Penyebut</h3>
-        <table>
-            <thead>
-                <tr><th>Komponen</th><th>Jenis Akar</th><th>Nilai Numerik (aproksimasi)</th><th>Polinomial Minimal</th><th>Derajat</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>\(\sqrt{3}\)</td><td>Akar kuadrat</td><td>≈ 1.73205081</td><td>\(y_1^2 - 3 = 0\)</td><td>2</td></tr>
-                <tr><td>\(\sqrt[3]{25}\)</td><td>Akar pangkat tiga</td><td>≈ 2.92401774</td><td>\(y_2^3 - 5 = 0\) (karena \(\sqrt[3]{25}=(\sqrt[3]{5})^2\))</td><td>3</td></tr>
-                <tr><td>\(\sqrt[3]{5}\)</td><td>Akar pangkat tiga</td><td>≈ 1.70997595</td><td>\(y_2^3 - 5 = 0\)</td><td>3</td></tr>
-            </tbody>
-        </table>
-
-        <h3>B. Hubungan Antar Akar</h3>
-        <div class="formula">\[ \sqrt[3]{25} = (\sqrt[3]{5})^2 \]</div>
-        <div class="info-box">
-            <strong>💡 Mengapa ini penting?</strong> Karena ini mengurangi jumlah variabel yang perlu kita kelola. Kita hanya perlu 2 variabel (\(y_1\) dan \(y_2\)) untuk mewakili 3 bentuk akar.
-        </div>
-
-        <h3>C. Pemetaan ke Variabel Aljabar</h3>
-        <div class="formula">\[
-        \begin{aligned}
-        \sqrt{3} &\longmapsto y_1 \quad \text{dengan relasi} \quad y_1^2 - 3 = 0 \\
-        \sqrt[3]{5} &\longmapsto y_2 \quad \text{dengan relasi} \quad y_2^3 - 5 = 0 \\
-        \sqrt[3]{25} &\longmapsto y_2^2 \quad \text{(turunan dari } y_2\text{)}
-        \end{aligned}
-        \]</div>
-
-        <h3>D. Definisi Penyebut dalam Variabel Baru</h3>
-        <div class="formula formula-highlight">\[ s = x + y_1 + y_2^2 \]</div>
-
-        <h3>E. Pertanyaan Penelitian (3 Level)</h3>
-        <table>
-            <thead><tr><th>Level</th><th>Pertanyaan</th></tr></thead>
-            <tbody>
-                <tr><td><strong>Level 1 (Deskriptif)</strong></td><td>Apa bentuk eksplisit dari \(\frac{1}{x+\sqrt{3}+\sqrt[3]{25}}\)?</td></tr>
-                <tr><td><strong>Level 2 (Analitis)</strong></td><td>Bagaimana menemukan polinomial minimal dari \(s\) terhadap \(\mathbb{Q}(x)\)?</td></tr>
-                <tr><td><strong>Level 3 (Aljabar)</strong></td><td>Bagaimana menyatakan \(1/s\) dalam basis medan \(\mathbb{Q}(\sqrt{3}, \sqrt[3]{5})\)?</td></tr>
-            </tbody>
-        </table>
-
-        <h3>F. Target Output yang Diharapkan</h3>
-        <div class="formula">\[
-        \frac{1}{s} = \frac{A(x) + B(x)\sqrt{3} + C(x)\sqrt[3]{5} + D(x)\sqrt[3]{25} + E(x)\sqrt{3}\sqrt[3]{5} + F(x)\sqrt{3}\sqrt[3]{25}}{G(x)}
-        \]</div>
-        <div class="info-box">
-            <strong>🎯 Target:</strong> Tentukan <strong>6 polinomial</strong> \(A(x), B(x), C(x), D(x), E(x), F(x)\) dan <strong>1 polinomial</strong> \(G(x)\) (penyebut rasional).
-        </div>
-
-        <h3>G. Mengapa Target Ini Masuk Akal?</h3>
-        <div class="warning-box">
-            Karena \([\mathbb{Q}(\sqrt{3}, \sqrt[3]{5}) : \mathbb{Q}] = 6\), maka basis medan memiliki 6 elemen. Setiap elemen medan (termasuk \(1/s\)) harus dapat dinyatakan sebagai kombinasi linear dari 6 basis tersebut dengan koefisien di \(\mathbb{Q}(x)\).
-        </div>
-        <div class="page-number">2 / 16</div>
-    </div>
-
-    <div class="slide" id="slide3">
-        <span class="badge badge-theory">📚 Dasar Teori 1</span>
-        <h2>Ring Polinomial \(\mathbb{Q}(x)[y_1, y_2]\)</h2>
-        
-        <h3>A. Definisi Ring Polinomial</h3>
-        <div class="card">
-            <p><strong>Ring polinomial</strong> \(R[x_1, x_2, \ldots, x_n]\) adalah himpunan semua polinomial dalam variabel \(x_1, x_2, \ldots, x_n\) dengan koefisien di ring \(R\).</p>
-            <p>Operasi:</p>
-            <ul style="margin-left: 25px;">
-                <li>Penjumlahan: \((f + g)(\mathbf{x}) = f(\mathbf{x}) + g(\mathbf{x})\)</li>
-                <li>Perkalian: \((f \cdot g)(\mathbf{x}) = f(\mathbf{x}) \cdot g(\mathbf{x})\)</li>
-            </ul>
-        </div>
-
-        <h3>B. Ring Polinomial dengan Koefisien Fungsi Rasional</h3>
-        <div class="formula">\[ \mathbb{Q}(x) = \left\{ \frac{p(x)}{q(x)} \mid p(x), q(x) \in \mathbb{Q}[x], q(x) \neq 0 \right\} \]</div>
-        <div class="formula formula-highlight">\[ R = \mathbb{Q}(x)[y_1, y_2] \]</div>
-        <div class="info-box">
-            <strong>❓ Mengapa \(\mathbb{Q}(x)\)?</strong> Karena \(x\) adalah parameter (tidak diketahui) yang tetap, kita ingin koefisien hasil akhir berupa polinomial dalam \(x\). Dengan menggunakan \(\mathbb{Q}(x)\), kita bisa melakukan operasi pembagian dengan polinomial dalam \(x\).
-        </div>
-
-        <h3>C. Penerapan pada Soal</h3>
-        <div class="card">
-            <p>Setiap elemen dalam ring \(\mathbb{Q}(x)[y_1, y_2]\) berbentuk:</p>
-            <div class="formula">\[ \sum_{i=0}^{m} \sum_{j=0}^{n} a_{ij}(x) \cdot y_1^i y_2^j \]</div>
-            <p>dengan \(a_{ij}(x) \in \mathbb{Q}(x)\).</p>
-        </div>
-
-        <h3>D. Mengapa Ring Ini Penting untuk Soal Kita?</h3>
-        <div class="warning-box">
-            Karena bentuk \(\frac{1}{x+\sqrt{3}+\sqrt[3]{25}}\) dapat dipandang sebagai elemen dalam ring ini. Tujuan kita adalah <strong>menulis ulang elemen tersebut dalam bentuk standar</strong> dengan penyebut rasional.
-        </div>
-        <div class="page-number">3 / 16</div>
-    </div>
-
-    <div class="slide" id="slide4">
-        <span class="badge badge-theory">📚 Dasar Teori 2</span>
-        <h2>Ideal</h2>
-        
-        <h3>A. Definisi Ideal</h3>
-        <div class="card">
-            <p><strong>Ideal</strong> \(I\) dari ring \(R\) adalah himpunan bagian \(I \subseteq R\) yang memenuhi:</p>
-            <ol style="margin-left: 25px;">
-                <li>\(0 \in I\)</li>
-                <li>Jika \(a, b \in I\), maka \(a + b \in I\) (tertutup terhadap penjumlahan)</li>
-                <li>Jika \(a \in I\) dan \(r \in R\), maka \(r \cdot a \in I\) (tertutup terhadap perkalian dengan elemen ring)</li>
-            </ol>
-        </div>
-
-        <h3>B. Ideal yang Dibangkitkan oleh Himpunan</h3>
-        <div class="formula">\[ \langle f_1, f_2, \ldots, f_k \rangle = \left\{ \sum_{i=1}^k h_i f_i \mid h_i \in R \right\} \]</div>
-
-        <h3>C. Penerapan pada Soal</h3>
-        <div class="formula formula-highlight">\[ I = \langle y_1^2 - 3,\; y_2^3 - 5,\; x + y_1 + y_2^2 - s \rangle \]</div>
-        
-        <h4>Apa arti setiap generator?</h4>
-        <table>
-            <thead><tr><th>Generator</th><th>Arti</th></tr></thead>
-            <tbody>
-                <tr><td>\(y_1^2 - 3\)</td><td>\(y_1^2 = 3\) \(\implies\) \(y_1 = \sqrt{3}\)</td></tr>
-                <tr><td>\(y_2^3 - 5\)</td><td>\(y_2^3 = 5\) \(\implies\) \(y_2 = \sqrt[3]{5}\)</td></tr>
-                <tr><td>\(x + y_1 + y_2^2 - s\)</td><td>Menyatakan definisi variabel baru kita, yaitu nilai \(s\)</td></tr>
-            </tbody>
-        </table>
-
-        <h3>D. Ring Faktor \(R/I\)</h3>
-        <div class="info-box">
-            <strong>Ring faktor</strong> \(R/I\) adalah himpunan kelas ekuivalensi di mana dua elemen dianggap sama jika selisihnya berada di \(I\). Dua polinomial dianggap sama jika dapat saling mereduksi melalui relasi yang diberikan.
-        </div>
-        <div class="page-number">4 / 16</div>
-    </div>
-
-    <div class="slide" id="slide5">
-        <span class="badge badge-theory">📚 Dasar Teori 3</span>
-        <h2>Gröbner Basis</h2>
-        
-        <h3>A. Latar Belakang</h3>
-        <div class="card">
-            Untuk mencari representasi \(1/s\), kita perlu <strong>mengeliminasi variabel</strong> \(y_1\) dan \(y_2\) sehingga hanya \(s\) dan \(x\) yang tersisa. Gröbner basis adalah alat utama untuk melakukan eliminasi sistematis ini.
-        </div>
-
-        <h3>B. Monomial Order</h3>
-        <div class="grid-2">
-            <div class="card">
-                <h4>Lexicographic (lex)</h4>
-                <p>Bandingkan eksponen dari kiri ke kanan.</p>
-                <div class="formula">\(y_1 > y_2 > s > x\)</div>
+        <!-- SLIDE 2: Step 1 -->
+        <div class="slide" id="slide2">
+            <span class="badge animate-item">Step 1</span>
+            <h2 class="animate-item">Construct the quotient ring</h2>
+            <div class="animate-item">
+                <p>Let \(y_1 = \sqrt{3}\) and \(y_2 = \sqrt[3]{5}\). Then</p>
+                <div class="formula">\[ y_1^2 = 3,\qquad y_2^3 = 5. \]</div>
+                <p>Define the ideal</p>
+                <div class="formula">\[ I = \langle y_1^2-3,\; y_2^3-5\rangle \;\subset\; \mathbb{Q}(x)[y_1,y_2]. \]</div>
+                <p>The denominator becomes</p>
+                <div class="formula">\[ f = x + y_1 + y_2^2. \]</div>
             </div>
-            <div class="card">
-                <h4>Graded Reverse Lex (grevlex)</h4>
-                <p>Bandingkan total derajat terlebih dahulu.</p>
-                <div class="formula">Lebih efisien untuk basis komputasi standar.</div>
+            <div class="page-number">2 / 9</div>
+        </div>
+
+        <!-- SLIDE 3: Step 2 -->
+        <div class="slide" id="slide3">
+            <span class="badge animate-item">Step 2</span>
+            <h2 class="animate-item">Determine a basis</h2>
+            <div class="animate-item">
+                <p>Every polynomial reduces to a linear combination of</p>
+                <div class="formula">\[ \mathcal{B} = \{1,\; y_2,\; y_2^2,\; y_1,\; y_1y_2,\; y_1y_2^2\}. \]</div>
+                <p>Hence the quotient space has dimension \(2\times 3 = 6\) over \(\mathbb{Q}(x)\).</p>
             </div>
+            <div class="page-number">3 / 9</div>
         </div>
 
-        <h3>C. Teorema Eliminasi</h3>
-        <div class="warning-box">
-            <strong>Teorema:</strong> Jika \(G\) adalah Gröbner basis terhadap lex order dengan \(y_1 > y_2 > s\), maka \(G \cap \mathbb{Q}(x)[s]\) memberikan polinomial minimal yang mengeliminasi \(y_1\) dan \(y_2\).
-        </div>
-        <div class="page-number">5 / 16</div>
-    </div>
-
-    <div class="slide" id="slide6">
-        <span class="badge badge-theory">📚 Dasar Teori 4</span>
-        <h2>Resultant Polinomial</h2>
-        <h3>A. Definisi Resultant</h3>
-        <div class="card">
-            <p><strong>Resultant</strong> dari dua polinomial \(A(y)\) dan \(B(y)\) terhadap variabel \(y\), dinotasikan sebagai \(\operatorname{Res}(A, B, y)\), adalah determinan dari <strong>Matriks Sylvester</strong> yang terbentuk dari koefisien-koefisiennya.</p>
-        </div>
-        <h3>B. Sifat Utama Eliminasi</h3>
-        <div class="info-box">
-            Jika \(A(y) = 0\) dan \(B(y) = 0\) memiliki akar persekutuan, maka \(\operatorname{Res}(A, B, y) = 0\). Operasi ini menghasilkan polinomial baru yang **bebas** dari variabel \(y\).
-        </div>
-        <div class="page-number">6 / 16</div>
-    </div>
-
-    <div class="slide" id="slide7">
-        <span class="badge badge-mapping">🔗 Jembatan Teori - Soal</span>
-        <h2>Pemetaan Teori ke Soal</h2>
-        <p>Berikut adalah hubungan konsep teori dan penerapannya pada soal:</p>
-        
-        <div style="overflow-x: auto;">
-            <table>
-                <thead>
-                    <tr><th>Konsep Teori</th><th>Penerapan pada Soal</th><th>Hasil yang Diperoleh</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>Ring Polinomial</strong></td><td>\(\mathbb{Q}(x)[y_1, y_2, s]\)</td><td>Ruang kerja aljabar elemen variabel</td></tr>
-                    <tr><td><strong>Ideal I</strong></td><td>\(\langle y_1^2-3, y_2^3-5, x+y_1+y_2^2-s \rangle\)</td><td>Ikatan relasi nilai radikal penyebut</td></tr>
-                    <tr><td><strong>Monomial Order</strong></td><td>Lex order: \(y_1 > y_2 > s\)</td><td>Strategi eliminasi bertahap variabel penyusun</td></tr>
-                    <tr><td><strong>Resultant</strong></td><td>\(\operatorname{Res}(\dots, y_1)\) dilanjutkan \(\operatorname{Res}(\dots, y_2)\)</td><td>Eliminasi radikal penyebut tanpa Buchberger</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="page-number">7 / 16</div>
-    </div>
-
-    <div class="slide" id="slide8">
-        <span class="badge badge-method">📊 Alur Penyelesaian</span>
-        <h2>Flowchart Penyelesaian</h2>
-        
-        <div class="card" style="font-family: monospace; font-size: 0.9rem; line-height: 1.5;">
-            [MULAI] ──> Input Soal: 1 / (x + √3 + ∛25)<br>
-            &nbsp;&nbsp;&nbsp;│<br>
-            &nbsp;&nbsp;&nbsp;v<br>
-            [LANGKAH 1] Langkah Pemetaan Ideal I = ⟨y1² - 3, y2³ - 5, x + y1 + y2² - s⟩<br>
-            &nbsp;&nbsp;&nbsp;│<br>
-            &nbsp;&nbsp;&nbsp;v<br>
-            [LANGKAH 2] Eliminasi y1 via Resultant: h(y2, s, x) = Res(x + y1 + y2² - s, y1² - 3, y1)<br>
-            &nbsp;&nbsp;&nbsp;│<br>
-            &nbsp;&nbsp;&nbsp;v<br>
-            [LANGKAH 3] Eliminasi y2 via Resultant: P(s, x) = Res(h(y2, s, x), y2³ - 5, y2)<br>
-            &nbsp;&nbsp;&nbsp;│<br>
-            &nbsp;&nbsp;&nbsp;v<br>
-            [LANGKAH 4] Peroleh Polinomial Minimal P(s, x) = a6·s⁶ + a5·s⁵ + ... + a0 = 0<br>
-            &nbsp;&nbsp;&nbsp;│<br>
-            &nbsp;&nbsp;&nbsp;v<br>
-            [LANGKAH 5] Ekstraksi Rumus Invers Aljabar: 1/s = -(a6·s⁵ + a5·s⁴ + ... + a1) / a0<br>
-            &nbsp;&nbsp;&nbsp;│<br>
-            &nbsp;&nbsp;&nbsp;v<br>
-            [LANGKAH 6] Substitusi Balik s & Reduksi Modulo Ideal ──> [SELESAI: Bentuk Rasional]
-        </div>
-        <div class="page-number">8 / 16</div>
-    </div>
-
-    <div class="slide" id="slide9">
-        <span class="badge badge-method">📈 Hasil Eliminasi</span>
-        <h2>Polinomial Minimal</h2>
-        <div class="formula formula-highlight" style="font-size: 0.85rem;">
-            \[ P(s,x) = s^6 - 6x s^5 + (15x^2-9)s^4 + (-20x^3+36x-20)s^3 \]
-            \[ + (15x^4-45x^2+60x+27)s^2 + (-6x^5+30x^3-60x^2-54x+90)s \]
-            \[ + (x^6-9x^4+20x^3+27x^2-180x-218) = 0 \]
-        </div>
-        
-        <h3>Struktur Koefisien</h3>
-        <table>
-            <thead><tr><th>Pangkat \(s\)</th><th>Koefisien \(a_i(x)\)</th></tr></thead>
-            <tbody>
-                <tr><td>\(s^6\)</td><td>\(1\)</td></tr>
-                <tr><td>\(s^5\)</td><td>\(-6x\)</td></tr>
-                <tr><td>\(s^4\)</td><td>\(15x^2 - 9\)</td></tr>
-                <tr><td>\(s^3\)</td><td>\(-20x^3 + 36x - 20\)</td></tr>
-                <tr><td>\(s^2\)</td><td>\(15x^4 - 45x^2 + 60x + 27\)</td></tr>
-                <tr><td>\(s^1\)</td><td>\(-6x^5 + 30x^3 - 60x^2 - 54x + 90\)</td></tr>
-                <tr><td>\(s^0\) (Konstanta)</td><td>\(x^6 - 9x^4 + 20x^3 + 27x^2 - 180x - 218\)</td></tr>
-            </tbody>
-        </table>
-        <div class="page-number">9 / 16</div>
-    </div>
-
-    <div class="slide" id="slide10">
-        <span class="badge badge-method">⚡ Langkah 2 Detail</span>
-        <h2>Eliminasi Variabel \(y_1\) (Radikal \(\sqrt{3}\))</h2>
-        <p>Kita mulai dengan menyusun persamaan linier penentu berdasarkan komponen generator \(y_1\):</p>
-        <div class="formula">\[ f = y_1 + (x + y_2^2 - s) = 0 \quad \text{dan} \quad y_1^2 - 3 = 0 \]</div>
-        <p>Maka Resultant terhadap variabel \(y_1\) didapatkan dengan menyusun matriks bersesuaian:</p>
-        <div class="formula">\[
-        h(y_2, s, x) = \operatorname{Res}(f, y_1^2 - 3, y_1) = \det \begin{pmatrix} 1 & x+y_2^2-s & 0 \\ 0 & 1 & x+y_2^2-s \\ 1 & 0 & -3 \end{pmatrix}
-        \]</div>
-        <div class="formula formula-highlight">\[ h(y_2, s, x) = (s - x - y_2^2)^2 - 3 = 0 \]</div>
-        <div class="info-box">
-            Variabel \(y_1\) telah berhasil dieliminasi sepenuhnya dari sistem persamaan.
-        </div>
-        <div class="page-number">10 / 16</div>
-    </div>
-
-    <div class="slide" id="slide11">
-        <span class="badge badge-method">⚡ Langkah 3 Detail</span>
-        <h2>Eliminasi Variabel \(y_2\) (Radikal Kubik)</h2>
-        <p>Ekspansi dari hasil langkah kedua \(h(y_2, s, x) = 0\) menghasilkan polinomial berderajat 4 dalam variabel \(y_2\):</p>
-        <div class="formula">\[ y_2^4 - 2(s-x)y_2^2 + ((s-x)^2 - 3) = 0 \]</div>
-        <p>Lakukan eliminasi variabel \(y_2\) dengan menghitung resultant bersama polinomial minimal \(y_2^3 - 5 = 0\):</p>
-        <div class="formula">\[ P(s, x) = \operatorname{Res}(y_2^4 - 2(s-x)y_2^2 + ((s-x)^2 - 3), \; y_2^3 - 5, \; y_2) \]</div>
-        <div class="card">
-            Proses determinan matriks Sylvester berukuran \(7 \times 7\) ini membuang komponen pangkat \(y_2\) dan memunculkan jalinan aljabar murni \(P(s, x) = 0\) derajat 6 yang kita cari.
-        </div>
-        <div class="page-number">11 / 16</div>
-    </div>
-
-    <div class="slide" id="slide12">
-        <span class="badge badge-theory">📐 Langkah 5 Detail</span>
-        <h2>Formulasi Invers Aljabar</h2>
-        <p>Berdasarkan nilai identitas polinomial minimal, kita tahu bahwa:</p>
-        <div class="formula">\[ s^6 + a_5(x)s^5 + a_4(x)s^4 + a_3(x)s^3 + a_2(x)s^2 + a_1(x)s + a_0(x) = 0 \]</div>
-        <p>Pindahkan suku konstanta murni \(a_0(x)\) ke ruas kanan, kemudian faktorkan nilai \(s\):</p>
-        <div class="formula">\[ s \cdot \left( s^5 + a_5(x)s^4 + a_4(x)s^3 + a_3(x)s^2 + a_2(x)s + a_1(x) \right) = -a_0(x) \]</div>
-        <p>Maka invers perkalian aljabar dari elemen \(s\) dirumuskan sebagai berikut:</p>
-        <div class="formula formula-highlight">\[ \frac{1}{s} = -\frac{s^5 + a_5(x)s^4 + a_4(x)s^3 + a_3(x)s^2 + a_2(x)s + a_1(x)}{a_0(x)} \]</div>
-        <div class="page-number">12 / 16</div>
-    </div>
-
-    <div class="slide" id="slide13">
-        <span class="badge badge-method">🔄 Langkah 6 Detail</span>
-        <h2>Reduksi Suku Sisa Modulo Ideal</h2>
-        <p>Langkah terakhir adalah mensubstitusikan kembali nilai pembangun \(s = x + y_1 + y_2^2\) ke pembilang pembentuk invers derajat 5.</p>
-        <div class="card">
-            <p>Operasi ekspansi ini menghasilkan suku pangkat tinggi seperti \(y_1^3\), \(y_2^4\), dan seterusnya. Kita lakukan penyederhanaan menggunakan aturan ideal pembatas:</p>
-            <div class="formula">\[ y_1^2 \longrightarrow 3, \quad y_2^3 \longrightarrow 5, \quad y_2^4 \longrightarrow 5y_2 \]</div>
-        </div>
-        <div class="info-box">
-            Proses reduksi sisa pembagian polinomial (normal form) ini menjamin bahwa seluruh komponen pembilang akan luruh kembali menjadi kombinasi linear berderajat rendah yang berada tepat di dalam basis ruang vektor perluasan medan.
-        </div>
-        <div class="page-number">13 / 16</div>
-    </div>
-
-    <div class="slide" id="slide14">
-        <span class="badge badge-result">🎯 Hasil Akhir</span>
-        <h2>Penyebut Rasional G(x)</h2>
-        <p>Polinomial penyebut bebas akar murni \(G(x)\) ditentukan oleh suku konstanta polinomial minimal \(a_0(x)\):</p>
-        <div class="formula formula-highlight" style="font-size: 1.2rem; text-align: center;">
-            \[ G(x) = x^6 - 9x^4 + 20x^3 + 27x^2 - 180x - 218 \]
-        </div>
-        <h3>Analisis Eksistensi Solusi</h3>
-        <div class="warning-box">
-            Rasionalisasi penyebut ini **selalu valid** untuk setiap nilai parameter bilangan rasional \(x \in \mathbb{Q}\), asalkan nilai \(x\) tidak bersekutu dengan akar real dari persamaan kuartik murni \(G(x) = 0\).
-        </div>
-        <div class="page-number">14 / 16</div>
-    </div>
-
-    <div class="slide" id="slide15">
-        <span class="badge badge-mapping">💻 Verifikasi Komputasi</span>
-        <h2>Skrip Verifikasi Singular CAS</h2>
-        <p>Kevalidan hasil perhitungan ini dapat dibuktikan menggunakan baris instruksi bahasa aljabar komputer berikut:</p>
-        <pre class="formula" style="color: #aaddff; background: #050811;">
-ring R = (0,x), (y1,y2,s), lp;
-ideal I = y1^2 - 3, y2^3 - 5, x + y1 + y2^2 - s;
-ideal G = std(I);
-poly P = eliminate(G, y1*y2);
-print(P);
-// Output yang dihasilkan berupa Polinomial Minimal s dan x derajat 6
-        </pre>
-        <div class="page-number">15 / 16</div>
-    </div>
-
-    <div class="slide" id="slide16">
-        <span class="badge badge-theory">✨ Selesai</span>
-        <div style="display: flex; flex-direction: column; justify-content: center; min-height: 80%; text-align: center;">
-            <div class="qna-box">Sesi Diskusi & Tanya Jawab</div>
-            <p style="font-size: 1.2rem; color: #aaa; margin-bottom: 30px;">Terima kasih atas perhatian Anda dalam pemaparan aljabar komputer ini.</p>
-            <div style="max-width: 500px; margin: 0 auto; text-align: left;" class="card">
-                <p><strong>Kesimpulan Utama:</strong></p>
-                <ul style="margin-left: 20px; margin-top: 10px;">
-                    <li>Gröbner Basis memetakan relasi irasional menjadi ideal polinomial terstruktur.</li>
-                    <li>Resultant menyingkirkan variabel radikal secara deterministik.</li>
-                    <li>Dimensi perluasan medan menentukan karakteristik solusi.</li>
-                </ul>
+        <!-- SLIDE 4: Step 3 & 4 combined (short) -->
+        <div class="slide" id="slide4">
+            <span class="badge animate-item">Step 3 &amp; 4</span>
+            <h2 class="animate-item">Assume an inverse & expand</h2>
+            <div class="animate-item">
+                <p>Let \(g = c_1 + c_2y_2 + c_3y_2^2 + c_4y_1 + c_5y_1y_2 + c_6y_1y_2^2\).</p>
+                <p>Compute \(g\cdot f\) modulo \(I\) (using \(y_1^2\to3,\; y_2^3\to5\)):</p>
+                <div class="formula">
+                    \[
+                    \begin{aligned}
+                    c_1f &\to xc_1 + c_1y_1 + c_1y_2^2,\\
+                    c_2y_2f &\to 5c_2 + xc_2y_2 + c_2y_1y_2,\\
+                    c_3y_2^2f &\to 5c_3y_2 + xc_3y_2^2 + c_3y_1y_2^2,\\
+                    c_4y_1f &\to 3c_4 + xc_4y_1 + c_4y_1y_2^2,\\
+                    c_5y_1y_2f &\to 3c_5y_2 + 5c_5y_1 + xc_5y_1y_2,\\
+                    c_6y_1y_2^2f &\to 3c_6y_2^2 + 5c_6y_1y_2 + xc_6y_1y_2^2.
+                    \end{aligned}
+                    \]
+                </div>
             </div>
+            <div class="page-number">4 / 9</div>
         </div>
-        <div class="page-number">16 / 16</div>
+
+        <!-- SLIDE 5: Step 5 -->
+        <div class="slide" id="slide5">
+            <span class="badge animate-item">Step 5</span>
+            <h2 class="animate-item">Compare coefficients</h2>
+            <div class="animate-item">
+                <p>Matching coefficients of the basis \(\mathcal{B}\) gives the linear system:</p>
+                <div class="formula">
+                    \[
+                    \begin{cases}
+                    xc_1 + 5c_2 + 3c_4 = 1,\\
+                    xc_2 + 5c_3 + 3c_5 = 0,\\
+                    c_1 + xc_3 + 3c_6 = 0,\\
+                    c_1 + xc_4 + 5c_5 = 0,\\
+                    c_2 + xc_5 + 5c_6 = 0,\\
+                    c_3 + c_4 + xc_6 = 0.
+                    \end{cases}
+                    \]
+                </div>
+            </div>
+            <div class="page-number">5 / 9</div>
+        </div>
+
+        <!-- SLIDE 6: Step 6 -->
+        <div class="slide" id="slide6">
+            <span class="badge animate-item">Step 6</span>
+            <h2 class="animate-item">Matrix form \(A\mathbf{c}=\mathbf{b}\)</h2>
+            <div class="animate-item">
+                <div class="formula">
+                    \[
+                    A = \begin{pmatrix}
+                    x & 5 & 0 & 3 & 0 & 0\\
+                    0 & x & 5 & 0 & 3 & 0\\
+                    1 & 0 & x & 0 & 0 & 3\\
+                    1 & 0 & 0 & x & 5 & 0\\
+                    0 & 1 & 0 & 0 & x & 5\\
+                    0 & 0 & 1 & 1 & 0 & x
+                    \end{pmatrix},\quad
+                    \mathbf{c}=\begin{pmatrix}c_1\\c_2\\c_3\\c_4\\c_5\\c_6\end{pmatrix},\quad
+                    \mathbf{b}=\begin{pmatrix}1\\0\\0\\0\\0\\0\end{pmatrix}.
+                    \]
+                </div>
+            </div>
+            <div class="page-number">6 / 9</div>
+        </div>
+
+        <!-- SLIDE 7: Step 7 -->
+        <div class="slide" id="slide7">
+            <span class="badge animate-item">Step 7</span>
+            <h2 class="animate-item">Solve the linear system</h2>
+            <div class="animate-item">
+                <p>The determinant is</p>
+                <div class="formula">\[ D(x)=\det(A)=x^6-9x^4+50x^3+27x^2+450x+598. \]</div>
+                <p>Solving yields the coefficients:</p>
+                <div class="formula">
+                    \[
+                    \begin{aligned}
+                    c_1 &= \frac{x^5-6x^3+25x^2+9x+75}{D(x)},\\
+                    c_2 &= \frac{5(x^3+9x+25)}{D(x)},\\
+                    c_3 &= \frac{-x^4-25x+9}{D(x)},\\
+                    c_4 &= \frac{-x^4+6x^2+50x-9}{D(x)},\\
+                    c_5 &= \frac{-15(x^2+1)}{D(x)},\\
+                    c_6 &= \frac{2x^3-6x-25}{D(x)}.
+                    \end{aligned}
+                    \]
+                </div>
+            </div>
+            <div class="page-number">7 / 9</div>
+        </div>
+
+        <!-- SLIDE 8: Step 8 – Final result -->
+        <div class="slide" id="slide8">
+            <span class="badge animate-item">Step 8</span>
+            <h2 class="animate-item">Final rationalised form</h2>
+            <div class="animate-item">
+                <p>Substitute \(y_1=\sqrt3,\; y_2=\sqrt[3]{5}\) (so \(y_2^2=\sqrt[3]{25}\)):</p>
+                <div class="final-box">
+                    \[
+                    \boxed{
+                    \frac{1}{x+\sqrt3+\sqrt[3]{25}} =
+                    \frac{
+                    \begin{array}{l}
+                    \bigl(x^5-6x^3+25x^2+9x+75\bigr) \\
+                    +\;5\bigl(x^3+9x+25\bigr)\sqrt[3]{5} \\
+                    +\;\bigl(-x^4-25x+9\bigr)\sqrt[3]{25} \\
+                    +\;\bigl(-x^4+6x^2+50x-9\bigr)\sqrt3 \\
+                    -\;15(x^2+1)\,\sqrt3\,\sqrt[3]{5} \\
+                    +\;\bigl(2x^3-6x-25\bigr)\,\sqrt3\,\sqrt[3]{25}
+                    \end{array}
+                    }{
+                    x^6-9x^4+50x^3+27x^2+450x+598
+                    }.
+                    }
+                    \]
+                </div>
+                <p>The denominator \(D(x)\) is the rationalised denominator (a polynomial in \(x\) alone).</p>
+            </div>
+            <div class="page-number">8 / 9</div>
+        </div>
+
+        <!-- SLIDE 9: Closing remarks -->
+        <div class="slide" id="slide9">
+            <div style="display: flex; flex-direction: column; justify-content: center; min-height: 70%; text-align: center;">
+                <div class="qna-box" style="font-size: clamp(28px, 5vw, 40px); display: inline-block; padding: 20px 40px; border: 1px solid #FF5E00; border-radius: 12px; margin: 30px auto;">
+                    ✓ Solution Complete
+                </div>
+                <p style="color:#00B2FF;">Matrix method verified by symbolic computation.</p>
+                <p style="margin-top: 30px; font-size: 0.9rem;">The rationalisation holds for all \(x\) with \(D(x)\neq 0\).</p>
+            </div>
+            <div class="page-number">9 / 9</div>
+        </div>
     </div>
 
-</div>
+    <!-- Navigation Arrows -->
+    <div class="nav-arrow prev" id="prevBtn">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </div>
+    <div class="nav-arrow next" id="nextBtn">
+        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </div>
 
-<div class="nav-arrow prev" onclick="moveSlide(-1)">
-    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-</div>
-<div class="nav-arrow next" onclick="moveSlide(1)">
-    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-</div>
+    <div class="slide-indicators" id="indicatorsContainer"></div>
 
-<div class="slide-indicators" id="indicatorsContainer"></div>
-
-<script>
-    let currentSlide = 1;
-    const totalSlides = 16;
-
-    // Membuat indikator lingkaran secara dinamis berdasarkan total slide
-    const container = document.getElementById('indicatorsContainer');
-    for (let i = 1; i <= totalSlides; i++) {
-        const dot = document.createElement('div');
-        dot.classList.add('indicator');
-        if (i === 1) dot.classList.add('active');
-        dot.setAttribute('onclick', `goToSlide(${i})`);
-        dot.setAttribute('id', `dot${i}`);
-        container.appendChild(dot);
-    }
-
-    function updateSlides() {
-        document.querySelectorAll('.slide').forEach(slide => {
-            slide.classList.remove('active');
-        });
-        document.querySelectorAll('.indicator').forEach(dot => {
-            dot.classList.remove('active');
-        });
-        
-        document.getElementById(`slide${currentSlide}`).classList.add('active');
-        document.getElementById(`dot${currentSlide}`).classList.add('active');
-        
-        // Melakukan scroll otomatis ke bagian atas slide saat berpindah slide
-        document.getElementById(`slide${currentSlide}`).scrollTop = 0;
-    }
-
-    function moveSlide(direction) {
-        currentSlide += direction;
-        if (currentSlide < 1) currentSlide = totalSlides;
-        if (currentSlide > totalSlides) currentSlide = 1;
-        updateSlides();
-    }
-
-    function goToSlide(slideIndex) {
-        currentSlide = slideIndex;
-        updateSlides();
-    }
-
-    // Mendukung kontrol keyboard panah kiri dan kanan
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'ArrowLeft') {
-            moveSlide(-1);
-        } else if (event.key === 'ArrowRight') {
-            moveSlide(1);
+    <script>
+        // === Provided JavaScript (with small adaptions) ===
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            const particleCount = 30;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                particlesContainer.appendChild(particle);
+            }
         }
-    });
-</script>
 
+        // Slide Navigation
+        const slides = document.querySelectorAll('.slide');
+        const indicatorsContainer = document.getElementById('indicatorsContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        // Create indicators dynamically
+        for (let i = 0; i < totalSlides; i++) {
+            const indicator = document.createElement('div');
+            indicator.classList.add('indicator');
+            if (i === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => goToSlide(i));
+            indicatorsContainer.appendChild(indicator);
+        }
+        const indicators = document.querySelectorAll('.indicator');
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            indicators.forEach((ind, index) => {
+                ind.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlides();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlides();
+        }
+
+        // Event listeners
+        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Smooth scroll handling
+        slides.forEach(slide => {
+            slide.addEventListener('wheel', (e) => {
+                const isScrollable = slide.scrollHeight > slide.clientHeight;
+                if (isScrollable) e.stopPropagation();
+            });
+        });
+
+        // Initialize particles
+        createParticles();
+    </script>
 </body>
 </html>
