@@ -11,7 +11,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: 'Rajdhani', sans-serif;
             background: #0a0a0a;
@@ -20,7 +20,7 @@
             position: relative;
             font-weight: 400;
         }
-
+        
         .grid-bg {
             position: fixed;
             top: 0;
@@ -34,7 +34,7 @@
             animation: grid-move 30s linear infinite;
             z-index: -2;
         }
-
+        
         .gradient-overlay {
             position: fixed;
             top: 0;
@@ -46,12 +46,12 @@
             z-index: -1;
             animation: gradientPulse 8s ease-in-out infinite;
         }
-
+        
         @keyframes gradientPulse {
             0%, 100% { opacity: 0.5; }
             50% { opacity: 1; }
         }
-
+        
         .scanlines {
             position: fixed;
             top: 0;
@@ -64,24 +64,24 @@
             animation: scanlines 8s linear infinite;
             z-index: 2;
         }
-
+        
         @keyframes grid-move {
             0% { transform: translate(0, 0); }
             100% { transform: translate(80px, 80px); }
         }
-
+        
         @keyframes scanlines {
             0% { transform: translateY(0); }
             100% { transform: translateY(10px); }
         }
-
+        
         .particle {
             position: fixed;
             pointer-events: none;
             z-index: 1;
             opacity: 0;
         }
-
+        
         .particle::before {
             content: '';
             position: absolute;
@@ -91,21 +91,21 @@
             box-shadow: 0 0 10px #FF5E00, 0 0 20px #FF5E00;
             animation: floatUp 15s linear infinite;
         }
-
+        
         @keyframes floatUp {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
             100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
         }
-
+        
         .slides-container {
             width: 100vw;
             height: 100vh;
             overflow: hidden;
             position: relative;
         }
-
+        
         .slide {
             position: absolute;
             top: 0;
@@ -119,29 +119,29 @@
             padding: 80px 60px 40px;
             scrollbar-width: thin;
         }
-
+        
         .slide.active {
             opacity: 1;
             visibility: visible;
             z-index: 10;
         }
-
+        
         .slide::-webkit-scrollbar {
             width: 5px;
         }
         .slide::-webkit-scrollbar-track { background: rgba(255, 94, 0, 0.1); }
         .slide::-webkit-scrollbar-thumb { background: #FF5E00; border-radius: 5px; }
-
+        
         .slide.active .animate-item {
             animation: slideUpFade 0.5s ease forwards;
             opacity: 0;
         }
-
+        
         @keyframes slideUpFade {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
+        
         .slide.active .animate-item:nth-child(1) { animation-delay: 0.1s; }
         .slide.active .animate-item:nth-child(2) { animation-delay: 0.2s; }
         .slide.active .animate-item:nth-child(3) { animation-delay: 0.3s; }
@@ -151,7 +151,7 @@
         .slide.active .animate-item:nth-child(7) { animation-delay: 0.7s; }
         .slide.active .animate-item:nth-child(8) { animation-delay: 0.8s; }
         .slide.active .animate-item:nth-child(9) { animation-delay: 0.9s; }
-
+        
         .nav-arrow {
             position: fixed;
             bottom: 30px;
@@ -176,7 +176,7 @@
         .nav-arrow.prev { left: 30px; }
         .nav-arrow.next { right: 30px; }
         .nav-arrow svg { width: 24px; height: 24px; fill: #FF5E00; }
-
+        
         .slide-indicators {
             position: fixed;
             bottom: 30px;
@@ -211,7 +211,7 @@
         .indicator.active::before { left: 0; }
         .indicator.active { background: rgba(255, 94, 0, 0.3); width: 60px; }
         .indicator:hover { background: rgba(255, 94, 0, 0.5); }
-
+        
         .page-number-pill {
             position: fixed;
             bottom: 80px;
@@ -229,7 +229,7 @@
             pointer-events: none;
             white-space: nowrap;
         }
-
+        
         h1 {
             font-family: 'Orbitron', monospace;
             font-size: clamp(28px, 5vw, 64px);
@@ -265,6 +265,7 @@
             overflow-x: auto;
             transition: all 0.3s ease;
             font-size: clamp(12px, 2vw, 20px);
+            word-break: break-word;
         }
         .formula:hover {
             border-color: #FF5E00;
@@ -298,8 +299,11 @@
             background: rgba(0, 178, 255, 0.1);
             border: 1px solid #00B2FF;
             border-radius: 20px;
-            padding: 1.5rem;
+            padding: 1rem;
             margin: 2rem 0;
+            overflow-x: auto;
+            white-space: normal;
+            word-break: break-word;
         }
         .code-block-wrapper {
             position: relative;
@@ -388,7 +392,7 @@
             border: 2px solid #FF5E00;
             box-shadow: 0 0 20px rgba(255,94,0,0.3);
         }
-
+        
         /* Gaya untuk slide judul besar */
         .title-slide {
             display: flex;
@@ -419,7 +423,7 @@
         .group-list p {
             margin: 8px 0;
         }
-
+        
         @media (max-width: 768px) {
             .slide { padding: 70px 20px 60px; }
             .nav-arrow { width: 40px; height: 40px; bottom: 20px; }
@@ -432,11 +436,24 @@
             .page-number-pill { bottom: 70px; font-size: 10px; padding: 2px 12px; }
             .question-image img { max-height: 50vh; }
         }
+        
         @media (max-width: 480px) {
             .slide { padding: 60px 15px 70px; }
-            .formula { padding: 12px; }
-            h2 { margin-top: 15px; margin-bottom: 20px; }
+            .formula {
+                padding: 12px;
+                font-size: 10px;
+            }
+            .final-box {
+                padding: 0.8rem;
+                font-size: 10px;
+            }
+            h2 {
+                margin-top: 15px;
+                margin-bottom: 20px;
+                font-size: 1.4rem;
+            }
         }
+        
         @media print {
             .slide {
                 page-break-after: always;
