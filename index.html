@@ -513,76 +513,7 @@
         <div class="page-number">5 / 16</div>
     </div>
 
-    <!-- SLIDE 6: DASAR TEORI 4 - RESULTANT -->
-    <div class="slide" id="slide6">
-        <span class="badge badge-theory">📚 Dasar Teori 4</span>
-        <h2>Resultant</h2>
-        
-        <h3>A. Definisi Resultant</h3>
-        <div class="card">
-            Misalkan \(f(x) = a_m x^m + \ldots + a_0\) dan \(g(x) = b_n x^n + \ldots + b_0\) dengan \(a_m, b_n \neq 0\).
-            \[
-            \operatorname{Res}_x(f, g) = a_m^n \prod_{i=1}^m \prod_{j=1}^n (\alpha_i - \beta_j)
-            \]
-            di mana \(\alpha_i\) adalah akar-akar \(f\) dan \(\beta_j\) adalah akar-akar \(g\).
-        </div>
-
-        <h3>B. Matriks Sylvester</h3>
-        <div class="formula">\[
-        \operatorname{Res}_x(f, g) = \det(S(f, g))
-        \]</div>
-        <div class="info-box">
-            Matriks Sylvester \(S(f, g)\) berukuran \((m+n) \times (m+n)\), dengan \(n\) baris pertama dari \(f\) dan \(m\) baris terakhir dari \(g\).
-        </div>
-
-        <h3>C. Sifat Penting Resultant</h3>
-        <ol style="margin-left: 25px;">
-            <li>\(\operatorname{Res}_x(f, g) = 0 \iff f\) dan \(g\) memiliki akar bersama</li>
-            <li>\(\operatorname{Res}_x(f, g) = \operatorname{Res}_x(g, f)\)</li>
-            <li>\(\operatorname{Res}_x(f, g) = \operatorname{Res}_x(f - qg, g)\) untuk sembarang polinomial \(q\)</li>
-        </ol>
-
-        <h3>D. Eliminasi dengan Resultant</h3>
-        <div class="warning-box">
-            Untuk sistem persamaan:
-            \[
-            \begin{cases}
-            f(x, y) = 0 \\
-            g(x, y) = 0
-            \end{cases}
-            \]
-            Syarat agar sistem memiliki solusi adalah \(\operatorname{Res}_x(f, g) = 0\).<br>
-            Hasil \(\operatorname{Res}_x(f, g)\) adalah polinomial dalam \(y\) saja! Ini adalah cara mengeliminasi variabel \(x\).
-        </div>
-
-        <h3>E. Penerapan pada Soal (Eliminasi Bertahap)</h3>
-        <div class="formula">\[
-        \text{minpoly}_s(x) = \operatorname{Res}_{y_2}\left( y_2^3-5,\; \operatorname{Res}_{y_1}(x+y_1+y_2^2,\; y_1^2-3) \right)
-        \]</div>
-        
-        <h4>Tahap 1: Eliminasi \(y_1\)</h4>
-        <div class="formula">\[
-        R_1 = \operatorname{Res}_{y_1}(s, y_1^2-3) = (s - x - y_2^2)^2 - 3
-        \]</div>
-        
-        <h4>Tahap 2: Eliminasi \(y_2\)</h4>
-        <div class="formula">\[
-        P(s, x) = \operatorname{Res}_{y_2}(R_1 - s, y_2^3-5)
-        \]</div>
-
-        <h3>F. Keuntungan Resultant vs Gröbner Basis</h3>
-        <table>
-            <thead><tr><th>Aspek</th><th>Resultant</th><th>Gröbner Basis</th></tr></thead>
-            <tbody>
-                <tr><td>Kompleksitas waktu</td><td>\(O(n^3)\)</td><td>Bisa eksponensial</td></tr>
-                <tr><td>Kemudahan implementasi</td><td>Relatif sederhana</td><td>Rumit</td></tr>
-                <tr><td>Untuk 2 variabel</td><td>Pilihan terbaik</td><td>Overkill</td></tr>
-            </tbody>
-        </table>
-        <div class="info-box">Karena soal kita hanya memiliki 2 variabel yang perlu dieliminasi, <strong>resultant adalah pilihan yang lebih efisien</strong>.</div>
-        <div class="page-number">6 / 16</div>
-    </div>
-
+    
     <!-- SLIDE 7: PEMETAAN TEORI KE SOAL (TABEL LENGKAP) -->
     <div class="slide" id="slide7">
         <span class="badge badge-mapping">🔗 Jembatan Teori - Soal</span>
@@ -601,10 +532,9 @@
                     <tr><td>4</td><td><strong>Monomial Order</strong></td><td>Aturan membandingkan monomial</td><td>Menentukan "leading term" untuk Gröbner basis</td><td>Lex order: \(y_1 > y_2 > x\)</td><td>\(y_1\) dieliminasi dulu, lalu \(y_2\)</td></tr>
                     <tr><td>5</td><td><strong>Gröbner Basis</strong></td><td>Basis dgn sifat \(\langle LT(G) \rangle = \langle LT(I) \rangle\)</td><td>Memungkinkan eliminasi variabel sistematis</td><td>\(G \cap \mathbb{Q}(x)[s]\) basis eliminasi</td><td>Polinomial dalam \(s\) dan \(x\) saja</td></tr>
                     <tr><td>6</td><td><strong>Teorema Eliminasi</strong></td><td>\(G \cap k[x_{\ell+1},...,x_n]\) basis ideal eliminasi</td><td>Memastikan eliminasi menghasilkan polinomial tepat</td><td>\(G \cap \mathbb{Q}(x)[s]\) → \(P(s,x)=0\)</td><td>Hubungan aljabar \(s\) dan \(x\)</td></tr>
-                    <tr><td>7</td><td><strong>Resultant</strong></td><td>\(\operatorname{Res}_x(f,g)=0 \iff\) akar bersama</td><td>Eliminasi tanpa mencari GCD</td><td>\(\operatorname{Res}_{y_1}(s, y_1^2-3)\) lalu \(\operatorname{Res}_{y_2}(..., y_2^3-5)\)</td><td>Polinomial minimal \(P(s,x)=0\)</td></tr>
-                    <tr><td>8</td><td><strong>Basis Medan</strong></td><td>Himpunan elemen pembangun medan perluasan</td><td>Menyatakan hasil akhir dalam bentuk standar</td><td>\(\{1, \sqrt{3}, \sqrt[3]{5}, \sqrt[3]{25}, \sqrt{3}\sqrt[3]{5}, \sqrt{3}\sqrt[3]{25}\}\)</td><td>Setiap elemen medan dapat dinyatakan dalam 6 suku</td></tr>
-                    <tr><td>9</td><td><strong>Derajat Perluasan</strong></td><td>Dimensi medan sebagai ruang vektor</td><td>Mengetahui berapa banyak basis yang dibutuhkan</td><td>\([\mathbb{Q}(\sqrt{3},\sqrt[3]{5}):\mathbb{Q}] = 2 \times 3 = 6\)</td><td>Hasil akhir memiliki tepat 6 suku di pembilang</td></tr>
-                    <tr><td>10</td><td><strong>Invers Elemen Medan</strong></td><td>\(1/s\) dinyatakan dalam basis medan</td><td>Menyelesaikan masalah rasionalisasi</td><td>\(1/s = (A + B\sqrt{3} + \ldots)/G(x)\)</td><td>Jawaban akhir soal</td></tr>
+                    <tr><td>7</td><td><strong>Basis Medan</strong></td><td>Himpunan elemen pembangun medan perluasan</td><td>Menyatakan hasil akhir dalam bentuk standar</td><td>\(\{1, \sqrt{3}, \sqrt[3]{5}, \sqrt[3]{25}, \sqrt{3}\sqrt[3]{5}, \sqrt{3}\sqrt[3]{25}\}\)</td><td>Setiap elemen medan dapat dinyatakan dalam 6 suku</td></tr>
+                    <tr><td>8</td><td><strong>Derajat Perluasan</strong></td><td>Dimensi medan sebagai ruang vektor</td><td>Mengetahui berapa banyak basis yang dibutuhkan</td><td>\([\mathbb{Q}(\sqrt{3},\sqrt[3]{5}):\mathbb{Q}] = 2 \times 3 = 6\)</td><td>Hasil akhir memiliki tepat 6 suku di pembilang</td></tr>
+                    <tr><td>9</td><td><strong>Invers Elemen Medan</strong></td><td>\(1/s\) dinyatakan dalam basis medan</td><td>Menyelesaikan masalah rasionalisasi</td><td>\(1/s = (A + B\sqrt{3} + \ldots)/G(x)\)</td><td>Jawaban akhir soal</td></tr>
                 </tbody>
             </table>
         </div>
