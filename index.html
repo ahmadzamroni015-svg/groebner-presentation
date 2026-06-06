@@ -390,28 +390,6 @@
             border: 2px solid #FF5E00;
             box-shadow: 0 0 20px rgba(255,94,0,0.3);
         }
-        /* Gaya untuk slide penyederhanaan (translation) */
-        .translation-block {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 20px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 5px solid #00B2FF;
-        }
-        .translation-block h3 {
-            font-family: 'Orbitron', monospace;
-            color: #FF5E00;
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-        .translation-block p {
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-        .highlight {
-            color: #00ffaa;
-            font-weight: bold;
-        }
         @media (max-width: 768px) {
             .slide { padding: 70px 20px 60px; }
             .nav-arrow { width: 40px; height: 40px; bottom: 20px; }
@@ -423,7 +401,6 @@
             .flow-item { width: 90%; padding: 8px 15px; font-size: 12px; }
             .page-number-pill { bottom: 70px; font-size: 10px; padding: 2px 12px; }
             .question-image img { max-height: 50vh; }
-            .translation-block { padding: 15px; }
         }
         @media (max-width: 480px) {
             .slide { padding: 60px 15px 70px; }
@@ -462,51 +439,55 @@
     <div id="particles"></div>
 
     <div class="slides-container">
-        <!-- SLIDE 1: SOAL ASLI (gambar) -->
+        <!-- SLIDE 1: ORIGINAL QUESTION -->
         <div class="slide active" id="slide1">
             <span class="badge animate-item">Soal Asli</span>
-            <h2 class="animate-item">2.1.7 – Rasionalkan penyebut</h2>
+            <h2 class="animate-item">2.1.7 – Rationalize the denominator</h2>
             <div class="question-image animate-item">
                 <img src="2.1.7 Question.png" alt="Soal 2.1.7">
             </div>
             <div class="info-box animate-item" style="margin-top: 20px;">
-                <strong>Petunjuk dari buku:</strong> Gunakan ideal \(I = \langle y_1^2 - 3,\; y_2^3 - 5 \rangle\) dan teknik seperti Contoh 2.1.10.
+                <strong>Petunjuk:</strong> Pertimbangkan ideal \(I = \langle y_1^2 - 3,\; y_2^3 - 5 \rangle \subseteq \mathbb{Q}(x)[y_1, y_2]\).  
+                Ikuti teknik dalam Contoh 2.1.10 dengan field \(\mathbb{Q}(x)\).
             </div>
         </div>
 
-        <!-- SLIDE 2: PENYEDERHANAAN / TRANSLASI SOAL (gaya bahasa sehari-hari) -->
+        <!-- SLIDE 2: MEMECAH BENTUK AKAR (TAKE APART) -->
         <div class="slide" id="slide2">
             <span class="badge animate-item">Penyederhanaan</span>
-            <h2 class="animate-item">Apa maksud soal ini?</h2>
+            <h2 class="animate-item">Memecah bentuk akar</h2>
             <div class="animate-item">
-                <div class="translation-block">
-                    <h3>🎯 1. Tujuan sebenarnya</h3>
-                    <p><strong>Yang tertulis:</strong> "Rasionalkan penyebut dari \(\frac{1}{x+\sqrt{3}+\sqrt[3]{25}}\)".</p>
-                    <p><strong>Artinya:</strong> Di bagian bawah pecahan ada tiga "makhluk" berbeda: variabel biasa \(x\), akar kuadrat \(\sqrt{3}\), dan akar pangkat tiga \(\sqrt[3]{25}\). Mereka tidak mau akur. Jika kita kuadratkan penyebut untuk menghilangkan \(\sqrt{3}\), akar pangkat tiganya malah tambah rumit. Sebaliknya, jika kita pangkat tigakan, akar kuadratnya jadi kacau. Trik aljabar SMA tidak akan mempan.</p>
+                <p>Perhatikan setiap komponen penyebut:</p>
+                <div class="formula">
+                    \[
+                    \sqrt{3} \quad\text{dan}\quad \sqrt[3]{25} = \sqrt[3]{5^2} = (\sqrt[3]{5})^2.
+                    \]
                 </div>
-                <div class="translation-block">
-                    <h3>🧠 2. Strategi pemecahan</h3>
-                    <p><strong>Yang tertulis:</strong> "Pertimbangkan ideal \(I = \langle y_1^2 - 3, y_2^3 - 5 \rangle\)".</p>
-                    <p><strong>Artinya:</strong> Kita berhenti melawan akar‑akar ini sebagai angka. Kita beri mereka nama panggilan sebagai variabel:</p>
-                    <ul style="margin-left: 30px; margin-top: 5px;">
-                        <li>\(\sqrt{3}\) kita panggil <span class="highlight">\(y_1\)</span></li>
-                        <li>\(\sqrt[3]{5}\) kita panggil <span class="highlight">\(y_2\)</span> (maka \(\sqrt[3]{25} = y_2^2\))</li>
-                    </ul>
-                    <p>Dan kita buat dua aturan ajaib:</p>
-                    <ul style="margin-left: 30px;">
-                        <li>Jika \(y_1 \times y_1\) (\(y_1^2\)) muncul, langsung berubah menjadi angka biasa <strong>3</strong>.</li>
-                        <li>Jika \(y_2 \times y_2 \times y_2\) (\(y_2^3\)) muncul, langsung berubah menjadi angka biasa <strong>5</strong>.</li>
-                    </ul>
-                    <p>Dengan aturan ini, penyebut \(x + y_1 + y_2^2\) menjadi lebih mudah diutak‑atik.</p>
+                <p>Kita definisikan variabel baru untuk menyederhanakan notasi:</p>
+                <div class="formula">
+                    \[
+                    y_1 = \sqrt{3}, \qquad y_2 = \sqrt[3]{5}.
+                    \]
                 </div>
-                <div class="translation-block">
-                    <h3>✅ 3. Jaminan keberhasilan</h3>
-                    <p><strong>Yang tertulis:</strong> "\(\{y_1^2-3, y_2^3-5\}\) adalah basis Gröbner ..."</p>
-                    <p><strong>Artinya:</strong> Jangan takut dengan istilah "Gröbner basis". Itu hanya jaminan matematis bahwa jika kita mengikuti kedua aturan di atas, proses perhitungan pasti berjalan lancar, tidak akan pernah menemui jalan buntu, dan hasil akhirnya akan bersih (tanpa akar di penyebut). Intinya: <span class="highlight">strategi ini dijamin berhasil!</span></p>
+                <p>Dengan demikian:</p>
+                <div class="formula">
+                    \[
+                    y_1^2 = 3,\qquad y_2^3 = 5,\qquad \sqrt[3]{25} = y_2^2.
+                    \]
                 </div>
-                <div class="info-box" style="margin-top: 10px;">
-                    💡 <strong>Ringkasan untuk presentasi:</strong> “Kita memiliki akar kuadrat dan akar pangkat tiga yang menempel. Tidak bisa dihilangkan dengan cara biasa. Maka kita ganti mereka dengan variabel \(y_1, y_2\) dan membuat aturan bahwa pangkat tinggi langsung rontok menjadi angka 3 dan 5. Dengan aturan ini, matematika akan bekerja dengan sendirinya.”
+                <p>Penyebut menjadi:</p>
+                <div class="formula formula-neon">
+                    \[
+                    f = x + y_1 + y_2^2.
+                    \]
                 </div>
+                <p>Ideal yang merepresentasikan relasi aljabar:</p>
+                <div class="formula">
+                    \[
+                    I = \langle y_1^2 - 3,\; y_2^3 - 5 \rangle \subset \mathbb{Q}(x)[y_1,y_2].
+                    \]
+                </div>
+                <p>Masalahnya sekarang: mencari invers dari \(f\) di dalam ring kuosien \(\mathbb{Q}(x)[y_1,y_2]/I\).</p>
             </div>
         </div>
 
