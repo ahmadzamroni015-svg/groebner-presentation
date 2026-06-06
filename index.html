@@ -675,7 +675,7 @@ poly N = c1 + c2*y2 + c3*y2^2 + c4*y1 + c5*y1*y2 + c6*y1*y2^2;
 
 // ========== Langkah 7 : Verifikasi f*N - 1 ≡ 0 (mod I) ==========
 poly check = reduce(f*N - 1, J);
-"Verification result (should be 0):", check;
+"Hasil Verifikasi:", check;
 
 // ========== Langkah 8 : Tampilkan pembilang panjang (N * D) dan penyebut ==========
 poly num = N * D;
