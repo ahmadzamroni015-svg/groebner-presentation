@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Correct Solution | Rationalizing 1/(x+√3+∛25) – Matrix Method + Singular Code</title>
+    <title>Correct Solution | Rationalizing 1/(x+√3+∛25) – Matrix Method + Flowchart + Singular Code</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         /* === Complete CSS (black/blue/orange neon theme) === */
@@ -377,6 +377,45 @@
             font-size: 0.85rem;
         }
 
+        /* Flowchart */
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .flow-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 94, 0, 0.3);
+            border-radius: 12px;
+            padding: 12px 25px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            width: 80%;
+            max-width: 500px;
+            font-weight: bold;
+        }
+        .flow-item.start, .flow-item.end {
+            background: linear-gradient(135deg, #FF5E00, #00B2FF);
+            border: none;
+            color: white;
+        }
+        .flow-item.highlight {
+            background: rgba(255, 94, 0, 0.2);
+            border-color: #FF5E00;
+        }
+        .arrow-bounce {
+            color: #FF5E00;
+            font-size: 24px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(5px); }
+        }
+
         /* Page Number */
         .page-number {
             position: absolute;
@@ -395,6 +434,7 @@
             .slide-indicators { bottom: 20px; gap: 8px; }
             .indicator { width: 25px; }
             .indicator.active { width: 40px; }
+            .flow-item { width: 90%; padding: 8px 15px; font-size: 12px; }
         }
         @media (max-width: 480px) {
             .slide { padding: 60px 15px 70px; }
@@ -445,11 +485,40 @@
                 <p class="animate-item" style="color:#aaa;">Complete solution using the quotient ring & matrix method</p>
                 <p class="animate-item" style="margin-top: 20px; font-size: 0.9rem;">▼ Use arrow keys or buttons to navigate ▼</p>
             </div>
-            <div class="page-number">1 / 10</div>
+            <div class="page-number">1 / 11</div>
         </div>
 
-        <!-- SLIDE 2: Step 1 -->
+        <!-- SLIDE 2: FLOWCHART -->
         <div class="slide" id="slide2">
+            <span class="badge animate-item">Solution Flowchart</span>
+            <h2 class="animate-item">Step‑by‑step process</h2>
+            <div class="animate-item flowchart">
+                <div class="flow-item start">📥 Problem: \(\frac{1}{x+\sqrt3+\sqrt[3]{25}}\)</div>
+                <div class="arrow-bounce">▼</div>
+                <div class="flow-item">Step 1: Construct quotient ring \(\mathbb{Q}(x)[y_1,y_2]/I\)</div>
+                <div class="arrow-bounce">▼</div>
+                <div class="flow-item">Step 2: Determine basis \(\mathcal{B}\) (dimension 6)</div>
+                <div class="arrow-bounce">▼</div>
+                <div class="flow-item">Step 3: Assume inverse \(g\) in the basis</div>
+                <div class="arrow-bounce">▼</div>
+                <div class="flow-item">Step 4: Expand \(g\cdot f\) and reduce modulo \(I\)</div>
+                <div class="arrow-bounce">▼</div>
+                <div class="flow-item">Step 5: Compare coefficients → linear system</div>
+                <div class="arrow-bounce">▼</div>
+                <div class="flow-item">Step 6: Matrix form \(A\mathbf{c}=\mathbf{b}\)</div>
+                <div class="arrow-bounce">▼</div>
+                <div class="flow-item">Step 7: Solve via Cramer’s rule (determinant \(D(x)\))</div>
+                <div class="arrow-bounce">▼</div>
+                <div class="flow-item">Step 8: Substitute back \(y_1=\sqrt3,\; y_2=\sqrt[3]{5}\)</div>
+                <div class="arrow-bounce">▼</div>
+                <div class="flow-item end">✅ Rationalized form: \(\frac{\text{numerator}(x,\sqrt3,\sqrt[3]{5})}{D(x)}\)</div>
+            </div>
+            <div class="info-box">The matrix method reduces the problem to solving a \(6\times6\) linear system over \(\mathbb{Q}(x)\).</div>
+            <div class="page-number">2 / 11</div>
+        </div>
+
+        <!-- SLIDE 3: Step 1 -->
+        <div class="slide" id="slide3">
             <span class="badge animate-item">Step 1</span>
             <h2 class="animate-item">Construct the quotient ring</h2>
             <div class="animate-item">
@@ -460,11 +529,11 @@
                 <p>The denominator becomes</p>
                 <div class="formula">\[ f = x + y_1 + y_2^2. \]</div>
             </div>
-            <div class="page-number">2 / 10</div>
+            <div class="page-number">3 / 11</div>
         </div>
 
-        <!-- SLIDE 3: Step 2 -->
-        <div class="slide" id="slide3">
+        <!-- SLIDE 4: Step 2 -->
+        <div class="slide" id="slide4">
             <span class="badge animate-item">Step 2</span>
             <h2 class="animate-item">Determine a basis</h2>
             <div class="animate-item">
@@ -472,11 +541,11 @@
                 <div class="formula">\[ \mathcal{B} = \{1,\; y_2,\; y_2^2,\; y_1,\; y_1y_2,\; y_1y_2^2\}. \]</div>
                 <p>Hence the quotient space has dimension \(2\times 3 = 6\) over \(\mathbb{Q}(x)\).</p>
             </div>
-            <div class="page-number">3 / 10</div>
+            <div class="page-number">4 / 11</div>
         </div>
 
-        <!-- SLIDE 4: Step 3 & 4 combined -->
-        <div class="slide" id="slide4">
+        <!-- SLIDE 5: Step 3 & 4 combined -->
+        <div class="slide" id="slide5">
             <span class="badge animate-item">Step 3 &amp; 4</span>
             <h2 class="animate-item">Assume an inverse & expand</h2>
             <div class="animate-item">
@@ -495,11 +564,11 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">4 / 10</div>
+            <div class="page-number">5 / 11</div>
         </div>
 
-        <!-- SLIDE 5: Step 5 -->
-        <div class="slide" id="slide5">
+        <!-- SLIDE 6: Step 5 -->
+        <div class="slide" id="slide6">
             <span class="badge animate-item">Step 5</span>
             <h2 class="animate-item">Compare coefficients</h2>
             <div class="animate-item">
@@ -517,11 +586,11 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">5 / 10</div>
+            <div class="page-number">6 / 11</div>
         </div>
 
-        <!-- SLIDE 6: Step 6 -->
-        <div class="slide" id="slide6">
+        <!-- SLIDE 7: Step 6 -->
+        <div class="slide" id="slide7">
             <span class="badge animate-item">Step 6</span>
             <h2 class="animate-item">Matrix form \(A\mathbf{c}=\mathbf{b}\)</h2>
             <div class="animate-item">
@@ -540,11 +609,11 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">6 / 10</div>
+            <div class="page-number">7 / 11</div>
         </div>
 
-        <!-- SLIDE 7: Step 7 -->
-        <div class="slide" id="slide7">
+        <!-- SLIDE 8: Step 7 -->
+        <div class="slide" id="slide8">
             <span class="badge animate-item">Step 7</span>
             <h2 class="animate-item">Solve the linear system</h2>
             <div class="animate-item">
@@ -564,11 +633,11 @@
                     \]
                 </div>
             </div>
-            <div class="page-number">7 / 10</div>
+            <div class="page-number">8 / 11</div>
         </div>
 
-        <!-- SLIDE 8: Step 8 – Final rationalised form -->
-        <div class="slide" id="slide8">
+        <!-- SLIDE 9: Step 8 – Final rationalised form -->
+        <div class="slide" id="slide9">
             <span class="badge animate-item">Step 8</span>
             <h2 class="animate-item">Final rationalised form</h2>
             <div class="animate-item">
@@ -594,11 +663,11 @@
                 </div>
                 <p>The denominator \(D(x)\) is the rationalised denominator (a polynomial in \(x\) alone).</p>
             </div>
-            <div class="page-number">8 / 10</div>
+            <div class="page-number">9 / 11</div>
         </div>
 
-        <!-- SLIDE 9: Singular CAS verification code -->
-        <div class="slide" id="slide9">
+        <!-- SLIDE 10: Singular CAS verification code -->
+        <div class="slide" id="slide10">
             <span class="badge animate-item">Singular CAS</span>
             <h2 class="animate-item">Verification code (from question to solution)</h2>
             <div class="animate-item">
@@ -680,20 +749,20 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
                     • The final expression matches the boxed result in Step 8.
                 </div>
             </div>
-            <div class="page-number">9 / 10</div>
+            <div class="page-number">10 / 11</div>
         </div>
 
-        <!-- SLIDE 10: Thank you / End slide -->
-        <div class="slide" id="slide10">
+        <!-- SLIDE 11: Thank you / End slide -->
+        <div class="slide" id="slide11">
             <div style="display: flex; flex-direction: column; justify-content: center; min-height: 70%; text-align: center;">
                 <div class="qna-box" style="font-size: clamp(28px, 5vw, 40px); display: inline-block; padding: 20px 40px; border: 1px solid #FF5E00; border-radius: 12px; margin: 30px auto;">
                     ✓ Thank You
                 </div>
                 <p style="color:#00B2FF; font-size: 1.2rem;">Full solution complete – rationalization verified.</p>
-                <p style="margin-top: 20px; color: #aaa;">Matrix method + Singular CAS verification.</p>
+                <p style="margin-top: 20px; color: #aaa;">Matrix method + Flowchart + Singular CAS verification.</p>
                 <p style="margin-top: 40px; font-size: 0.9rem;">End of presentation. Use arrow keys to review.</p>
             </div>
-            <div class="page-number">10 / 10</div>
+            <div class="page-number">11 / 11</div>
         </div>
     </div>
 
@@ -729,7 +798,7 @@ poly N = c[1,1] + c[2,1]*y2 + c[3,1]*y2^2 + c[4,1]*y1 + c[5,1]*y1*y2 + c[6,1]*y1
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         let currentSlide = 0;
-        const totalSlides = slides.length;  // = 10
+        const totalSlides = slides.length;  // = 11
 
         // Create indicators dynamically
         for (let i = 0; i < totalSlides; i++) {
