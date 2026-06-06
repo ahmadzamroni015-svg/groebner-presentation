@@ -442,57 +442,41 @@
         <!-- SLIDE 1: ORIGINAL QUESTION -->
         <div class="slide active" id="slide1">
             <span class="badge animate-item">Soal Asli</span>
-            <h2 class="animate-item">2.1.7 – Rationalize the denominator</h2>
+            <h2 class="animate-item">2.1.7 – Rasionalkan penyebut</h2>
             <div class="question-image animate-item">
                 <img src="2.1.7 Question.png" alt="Soal 2.1.7">
             </div>
             <div class="info-box animate-item" style="margin-top: 20px;">
-                <strong>Petunjuk:</strong> Pertimbangkan ideal \(I = \langle y_1^2 - 3,\; y_2^3 - 5 \rangle \subseteq \mathbb{Q}(x)[y_1, y_2]\).  
-                Ikuti teknik dalam Contoh 2.1.10 dengan field \(\mathbb{Q}(x)\).
+                <strong>Petunjuk:</strong> Gunakan ideal \(I = \langle y_1^2 - 3,\; y_2^3 - 5 \rangle\) dan teknik Contoh 2.1.10.
             </div>
         </div>
 
-        <!-- SLIDE 2: MEMECAH BENTUK AKAR DAN MENGHUBUNGKAN KE CONTOH 2.1.10 -->
+        <!-- SLIDE 2: TRANSFORMASI NOTASI (ringkas, langsung ke inti) -->
         <div class="slide" id="slide2">
-            <span class="badge animate-item">Penyederhanaan</span>
-            <h2 class="animate-item">Memecah bentuk akar</h2>
+            <span class="badge animate-item">Transformasi Notasi</span>
+            <h2 class="animate-item">Memindahkan ke ring polinomial</h2>
             <div class="animate-item">
-                <p>Perhatikan setiap komponen penyebut:</p>
                 <div class="formula">
-                    \[
-                    \sqrt{3} \quad\text{dan}\quad \sqrt[3]{25} = \sqrt[3]{5^2} = (\sqrt[3]{5})^2.
-                    \]
+                    y_1 = \sqrt{3},\qquad y_2 = \sqrt[3]{5}
                 </div>
-                <p>Kita definisikan variabel baru untuk menyederhanakan notasi:</p>
                 <div class="formula">
-                    \[
-                    y_1 = \sqrt{3}, \qquad y_2 = \sqrt[3]{5}.
-                    \]
+                    \sqrt[3]{25} = y_2^2
                 </div>
-                <p>Dengan demikian:</p>
                 <div class="formula">
-                    \[
-                    y_1^2 = 3,\qquad y_2^3 = 5,\qquad \sqrt[3]{25} = y_2^2.
-                    \]
+                    f = x + y_1 + y_2^2
                 </div>
-                <p>Penyebut menjadi:</p>
+                <div class="formula">
+                    I = \langle y_1^2-3,\; y_2^3-5 \rangle \subseteq \mathbb{Q}(x)[y_1,y_2]
+                </div>
+                <p style="margin-top: 20px;">
+                    <strong>Mengikuti metode Contoh 2.1.10, kita mencari \(g\) sehingga</strong>
+                </p>
                 <div class="formula formula-neon">
-                    \[
-                    f = x + y_1 + y_2^2.
-                    \]
-                </div>
-                <p>Ideal yang merepresentasikan relasi aljabar:</p>
-                <div class="formula">
-                    \[
-                    I = \langle y_1^2 - 3,\; y_2^3 - 5 \rangle \subset \mathbb{Q}(x)[y_1,y_2].
-                    \]
-                </div>
-                <p>Mengikuti metode Contoh 2.1.10, kita mencari invers dari \(f\) modulo \(I\), yaitu menentukan \(g\) sehingga</p>
-                <div class="formula formula-neon">
-                    \[
                     f \cdot g \equiv 1 \pmod I.
-                    \]
                 </div>
+                <p class="info-box" style="margin-top: 20px;">
+                    Dengan kata lain: kita akan mencari invers dari \(f\) di dalam ring kuosien \(\mathbb{Q}(x)[y_1,y_2]/I\).
+                </p>
             </div>
         </div>
 
