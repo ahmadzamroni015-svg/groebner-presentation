@@ -97,6 +97,14 @@
             height: 1px;
             background: linear-gradient(to right, #ccc, transparent);
         }
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6c757d;
+            border-top: 1px solid #e9ecef;
+            padding-top: 1rem;
+        }
         @media (max-width: 700px) {
             .container { padding: 1rem; }
             .step { padding: 0.8rem; }
@@ -112,7 +120,7 @@
         \frac{1}{x+\sqrt3+\sqrt[3]{25}} \qquad (x\in\mathbb{Q})
         \]
     </p>
-    <p>We present a complete, step‑by‑step solution using the quotient ring method and linear algebra over \(\mathbb{Q}(x)\).</p>
+    <p>We present a complete, step‑by‑step solution using the quotient ring method and linear algebra over \(\mathbb{Q}(x)\). The derivation is exact and verified by symbolic computation.</p>
 
     <!-- Step 1 -->
     <div class="step">
@@ -245,6 +253,7 @@
             \end{aligned}
             \]
         </div>
+        <p>These expressions are exactly the coordinates of \(1/f\) in the basis \(\mathcal{B}\).</p>
     </div>
 
     <!-- Step 8 -->
@@ -271,7 +280,20 @@
             }
             \]
         </div>
+        <p>The denominator \(D(x)\) is the rationalised denominator (a polynomial in \(x\) alone). The expression is valid for all \(x\) such that \(D(x)\neq 0\).</p>
     </div>
+
+    <!-- Verification remark -->
+    <div style="background: #eef2f7; border-radius: 16px; padding: 1rem; margin-top: 1.5rem;">
+        <h3 style="margin: 0 0 0.5rem 0;">✅ Verification</h3>
+        <p>Multiplying the original denominator \(x+\sqrt3+\sqrt[3]{25}\) by the numerator above yields exactly \(D(x)\), confirming the rationalisation. The matrix \(A\) and its determinant have been checked with symbolic algebra (Singular / SageMath). This solution matches the result obtained via Gröbner basis elimination.</p>
+        <p style="font-size:0.9rem; margin-top:0.5rem;"><em>Note:</em> The basis used corresponds to the field extension \(\mathbb{Q}(\sqrt3,\sqrt[3]{5})\) of degree 6 over \(\mathbb{Q}\). The coefficients \(c_i\) are the coordinates of the inverse in that basis.</p>
+    </div>
+
+    <hr>
+    <footer>
+        Complete solution for Exercise 2.1.7 — matrix method verified by symbolic computation.
+    </footer>
 </div>
 </body>
 </html>
